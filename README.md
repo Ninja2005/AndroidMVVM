@@ -1,3 +1,17 @@
 # AndroidMVVM
-一个整合了大量主流模块的Android MVVM快速集成框架。
-使用Jetpack组件(DataBinding,LiveData,Room,ViewModel), 整合Retrofit+Okhttp+RxJava+Glide等主流模块。
+Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+ViewModel为基础，整合Retrofit+Okhttp+RxJava+Glide等主流模块的快速开发框架。
+
+## 框架流程
+![](./img/fc.png)
+
+## 框架特点
+- **流行框架**
+	1. [retrofit](https://github.com/square/retrofit)+[okhttp](https://github.com/square/okhttp)+[rxJava](https://github.com/ReactiveX/RxJava)负责网络请求
+	2. [gson](https://github.com/google/gson)负责解析json数据
+    3. [glide](https://github.com/bumptech/glide)负责加载图片；
+- **基类封装**
+	BaseActivity、BaseFragment、BaseViewModel
+- **全局操作**
+	1. 全局的Activity堆栈式管理
+	2. LoggingInterceptor全局拦截网络请求日志
+    3. 全局的异常捕获，程序发生异常时不会崩溃，可跳入异常界面重启应用。
