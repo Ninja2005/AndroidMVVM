@@ -27,4 +27,9 @@ Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+Vie
 
 	1. 全局的Activity堆栈式管理
 	2. LoggingInterceptor全局拦截网络请求日志
-    3. 全局的异常捕获，程序发生异常时不会崩溃，可跳入异常界面重启应用。
+    3. 全局的异常捕获，程序发生异常时不会崩溃，返回上个界面。
+
+## 界面
+
+    1. DB+RecyclerView
+    2. Network+RecyclerView
