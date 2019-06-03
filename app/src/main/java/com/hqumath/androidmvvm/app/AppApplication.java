@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.hqumath.androidmvvm.BuildConfig;
 import com.hqumath.androidmvvm.utils.KLog;
+import com.hqumath.androidmvvm.utils.Utils;
 
 /**
  * ****************************************************************
@@ -24,6 +25,8 @@ public class AppApplication extends Application {
     public void onCreate() {
         super.onCreate();
         setApplication(this);
+        //初始化工具类
+        Utils.init(this);
         //是否开启打印日志
         KLog.init(BuildConfig.DEBUG);
         //异常捕获

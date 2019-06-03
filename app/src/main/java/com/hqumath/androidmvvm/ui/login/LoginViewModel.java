@@ -20,16 +20,19 @@ import com.hqumath.androidmvvm.utils.ToastUtil;
  */
 public class LoginViewModel extends BaseViewModel<DemoRepository> {
 
-    public MutableLiveData<String> userName = new MutableLiveData<>();
-    public MutableLiveData<String> password = new MutableLiveData<>();
+    public MutableLiveData<String> userName =  new MutableLiveData<>();
+    public MutableLiveData<String> password =  new MutableLiveData<>();
 
     public LoginViewModel(@NonNull Application application, DemoRepository repository) {
         super(application, repository);
+        //从本地取得数据绑定到View层
+//        userName.set(model.getUserName());
+//        password.set(model.getPassword());
     }
 
-    public void login() {
+    public void login(){
         if (TextUtils.isEmpty(userName.getValue())) {
-            ToastUtil.toast(getApplication(), "请输入账号！");
+            ToastUtil.toast(getApplication(),"请输入账号！");
             return;
         }
         if (TextUtils.isEmpty(password.getValue())) {

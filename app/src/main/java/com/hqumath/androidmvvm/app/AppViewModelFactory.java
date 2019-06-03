@@ -6,8 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import com.hqumath.androidmvvm.data.DemoApiService;
-import com.hqumath.androidmvvm.data.DemoRepository;
+import com.hqumath.androidmvvm.data.*;
 import com.hqumath.androidmvvm.ui.login.LoginViewModel;
 
 /**
@@ -20,7 +19,7 @@ import com.hqumath.androidmvvm.ui.login.LoginViewModel;
  * 版权声明:
  * ****************************************************************
  */
-public class AppViewModelFactory  extends ViewModelProvider.NewInstanceFactory {
+public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @SuppressLint("StaticFieldLeak")
     private static volatile AppViewModelFactory INSTANCE;
     private final Application mApplication;
@@ -39,13 +38,13 @@ public class AppViewModelFactory  extends ViewModelProvider.NewInstanceFactory {
 
     private static DemoRepository getDemoRepository() {
         //网络API服务
-//        DemoApiService apiService = RetrofitClient.getInstance().create(DemoApiService.class);
+        DemoApiService apiService = RetrofitClient.getInstance().create(DemoApiService.class);
 //        //网络数据源
-//        HttpDataSource httpDataSource = HttpDataSourceImpl.getInstance(apiService);
+        HttpDataSource httpDataSource = HttpDataSourceImpl.getInstance(apiService);
 //        //本地数据源
-//        LocalDataSource localDataSource = LocalDataSourceImpl.getInstance();
+        LocalDataSource localDataSource = LocalDataSourceImpl.getInstance();
 //        //两条分支组成一个数据仓库
-//        return DemoRepository.getInstance(httpDataSource, localDataSource);
+        return DemoRepository.getInstance(httpDataSource, localDataSource);
         return null;
     }
 
@@ -64,7 +63,8 @@ public class AppViewModelFactory  extends ViewModelProvider.NewInstanceFactory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         /*if (modelClass.isAssignableFrom(NetWorkViewModel.class)) {
             return (T) new NetWorkViewModel(mApplication, mRepository);
-        } else */if (modelClass.isAssignableFrom(LoginViewModel.class)) {
+        } else */
+        if (modelClass.isAssignableFrom(LoginViewModel.class)) {
             return (T) new LoginViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

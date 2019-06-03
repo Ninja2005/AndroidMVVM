@@ -25,7 +25,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     public LoginViewModel initViewModel() {
-//        return ViewModelProviders.of(this).get(LoginViewModel.class);
         AppViewModelFactory factory = AppViewModelFactory.getInstance(getApplication());
         return ViewModelProviders.of(this, factory).get(LoginViewModel.class);
     }
