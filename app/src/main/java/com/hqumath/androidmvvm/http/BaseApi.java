@@ -42,20 +42,20 @@ public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Ob
 
     @Override
     public T apply(BaseResultEntity<T> httpResult) {
-        String type = httpResult.getType();
-        if (TextUtils.isEmpty(type) || !type.equals(AppNetConfig.SUCCESS)) {
-            String resultCode = httpResult.getResultCode();
-            String resultMsg = httpResult.getResultMsg();
-            //处理特殊错误号
-            switch (resultCode) {
-                case HandleMessageCode.HMC_LOGIN:
-                    throw new HandlerException.ResponseThrowable("请先登录", resultCode);
-                case HandleMessageCode.HMC_LOGIN_OUT:
-                    throw new HandlerException.ResponseThrowable("您的账户已在其他设备登录,请重新登陆！", resultCode);
-                default:
-                    throw new HandlerException.ResponseThrowable(resultMsg, resultCode);
-            }
-        }
+        Boolean res = httpResult.getRes();
+//        if (TextUtils.isEmpty(type) || !type.equals(AppNetConfig.SUCCESS)) {
+//            String resultCode = httpResult.getResultCode();
+//            String resultMsg = httpResult.getResultMsg();
+//            //处理特殊错误号
+//            switch (resultCode) {
+//                case HandleMessageCode.HMC_LOGIN:
+//                    throw new HandlerException.ResponseThrowable("请先登录", resultCode);
+//                case HandleMessageCode.HMC_LOGIN_OUT:
+//                    throw new HandlerException.ResponseThrowable("您的账户已在其他设备登录,请重新登陆！", resultCode);
+//                default:
+//                    throw new HandlerException.ResponseThrowable(resultMsg, resultCode);
+//            }
+//        }
         return httpResult.getData();
     }
 
@@ -98,10 +98,10 @@ public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Ob
      *
      * @param t 创建Subscriber时的泛型类型
      */
-    /*@Override
+    @Override
     public void onNext(T t) {
         if (listener.get() != null) {
             listener.get().onNext(t);
         }
-    }*/
+    }
 }

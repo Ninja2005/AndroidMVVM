@@ -3,7 +3,6 @@ package com.hqumath.androidmvvm.ui.login;
 import android.os.Bundle;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.app.AppViewModelFactory;
 import com.hqumath.androidmvvm.base.BaseActivity;
 import com.hqumath.androidmvvm.databinding.ActivityLoginBinding;
 
@@ -25,8 +24,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     public LoginViewModel initViewModel() {
-        AppViewModelFactory factory = AppViewModelFactory.getInstance(getApplication());
-        return ViewModelProviders.of(this, factory).get(LoginViewModel.class);
+        return ViewModelProviders.of(this).get(LoginViewModel.class);
     }
 
     public void initData() {

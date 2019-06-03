@@ -1,18 +1,25 @@
 package com.hqumath.androidmvvm.data;
 
 import com.hqumath.androidmvvm.entity.DemoEntity;
+import com.hqumath.androidmvvm.entity.LoginResponse;
 import com.hqumath.androidmvvm.http.BaseResultEntity;
 import io.reactivex.Observable;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
+import retrofit2.http.*;
+
+import java.util.Map;
 
 /**
  * Created by goldze on 2017/6/15.
  */
 
 public interface DemoApiService {
+
+    //用户登录
+    @FormUrlEncoded
+    @POST("api/v2/login")
+    Observable<LoginResponse> userLogin(@FieldMap Map<String, Object> maps);
+
+
     @GET("action/apiv2/banner?catalog=1")
     Observable<BaseResultEntity<DemoEntity>> demoGet();
 

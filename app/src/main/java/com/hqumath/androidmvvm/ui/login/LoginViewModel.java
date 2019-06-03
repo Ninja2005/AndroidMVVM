@@ -5,8 +5,18 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import com.hqumath.androidmvvm.base.BaseViewModel;
+import com.hqumath.androidmvvm.data.DemoApiService;
 import com.hqumath.androidmvvm.data.DemoRepository;
+import com.hqumath.androidmvvm.http.BaseApi;
+import com.hqumath.androidmvvm.http.HandlerException;
+import com.hqumath.androidmvvm.http.HttpOnNextListener;
+import com.hqumath.androidmvvm.http.RetrofitClient;
 import com.hqumath.androidmvvm.utils.ToastUtil;
+import io.reactivex.Observable;
+import retrofit2.Retrofit;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ****************************************************************
@@ -20,26 +30,40 @@ import com.hqumath.androidmvvm.utils.ToastUtil;
  */
 public class LoginViewModel extends BaseViewModel<DemoRepository> {
 
-    public MutableLiveData<String> userName =  new MutableLiveData<>();
-    public MutableLiveData<String> password =  new MutableLiveData<>();
+    public MutableLiveData<String> userName = new MutableLiveData<>();
+    public MutableLiveData<String> password = new MutableLiveData<>();
 
-    public LoginViewModel(@NonNull Application application, DemoRepository repository) {
-        super(application, repository);
+    public LoginViewModel(@NonNull Application application) {
+        super(application);
+        model = DemoRepository.getInstance();
         //从本地取得数据绑定到View层
         userName.setValue(model.getUserName());
         password.setValue(model.getPassword());
     }
 
-    public void login(){
+    public void login() {
         if (TextUtils.isEmpty(userName.getValue())) {
-            ToastUtil.toast(getApplication(),"请输入账号！");
+            ToastUtil.toast(getApplication(), "请输入账号！");
             return;
         }
         if (TextUtils.isEmpty(password.getValue())) {
             ToastUtil.toast(getApplication(), "请输入密码！");
             return;
         }
-        //
-//        model
+
+        RetrofitClient.getInstance().sendHttpRequest(new BaseApi(new HttpOnNextListener() {
+            @Override
+            public void onNext(Object o) {
+
+            }
+        }, getLifecycleProvider()) {
+            @Override
+            public Observable getObservable(Retrofit retrofit) {
+                Map<String, Object> map =  new HashMap<>();
+                map.put("userName", userName.getValue());
+                map.put("passWord", password.getValue());
+                return retrofit.create(DemoApiService.class).userLogin(map);
+            }
+        });
     }
 }

@@ -4,37 +4,37 @@ package com.hqumath.androidmvvm.http;
  * 网络请求统一返回格式
  */
 public class BaseResultEntity<T> {
-    //判断标示
-    private String type;
-    //提示信息
-    private String resultMsg;
+    //判断标识
+    private boolean res;
     //错误码
-    private String resultCode;
+    private String errcode;
+    //提示信息
+    private String errmsg;
     //显示数据（用户需要关心的数据）
     private T data;
 
-    public String getType() {
-        return type;
+    public boolean getRes() {
+        return res;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setRes(boolean res) {
+        this.res = res;
     }
 
-    public String getResultMsg() {
-        return resultMsg;
+    public String getErrcode() {
+        return errcode;
     }
 
-    public void setResultMsg(String resultMsg) {
-        this.resultMsg = resultMsg;
+    public void setErrcode(String errcode) {
+        this.errcode = errcode;
     }
 
-    public String getResultCode() {
-        return resultCode;
+    public String getErrmsg() {
+        return errmsg;
     }
 
-    public void setResultCode(String resultCode) {
-        this.resultCode = resultCode;
+    public void setErrmsg(String errmsg) {
+        this.errmsg = errmsg;
     }
 
     public T getData() {

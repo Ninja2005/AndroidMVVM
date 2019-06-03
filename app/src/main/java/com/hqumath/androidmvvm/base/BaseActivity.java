@@ -15,17 +15,20 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
  * 版权声明:
  * ****************************************************************
  */
-public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends RxAppCompatActivity{
+public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends RxAppCompatActivity {
     protected V binding;
     protected VM viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //私有的初始化Databinding和ViewModel方法
         binding = DataBindingUtil.setContentView(this, initContentView(savedInstanceState));
         viewModel = initViewModel();
-        //页面数据初始化方法，设置适配器
+        //让ViewModel拥有View的生命周期感应
+        getLifecycle().addObserver(viewModel);
+        //注入RxLifecycle生命周期
+        viewModel.injectLifecycleProvider(this);
+        //页面数据初始化方法
         initData();
         //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
         initViewObservable();

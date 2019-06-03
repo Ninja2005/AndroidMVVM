@@ -12,9 +12,8 @@ package com.hqumath.androidmvvm.http;
  */
 public class AppNetConfig {
     //API服务器
-    public static final String baseUrl = "http://appapidev1.zifae.cn/appapi/api/";//模拟环境
-
-    public static final String baseUrl1 = "http://appapidev2.zifae.cn/appapi/api/";//模拟环境
+    public static String baseUrl = "https://open.zhundao.net/"; // 主线路
+    public static String baseUrl_1 = "https://open.zhundao.com.cn/"; // 备用
 
     //网络请求成功
     public static final String SUCCESS = "success";
