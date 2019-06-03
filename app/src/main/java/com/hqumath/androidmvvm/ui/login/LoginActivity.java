@@ -1,6 +1,9 @@
 package com.hqumath.androidmvvm.ui.login;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseActivity;
@@ -17,6 +20,7 @@ import com.hqumath.androidmvvm.databinding.ActivityLoginBinding;
  * ****************************************************************
  */
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
+    private ProgressDialog pd;
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -32,6 +36,5 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     public void initViewObservable() {
-
     }
 }

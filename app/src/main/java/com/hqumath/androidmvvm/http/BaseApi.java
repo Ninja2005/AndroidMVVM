@@ -1,14 +1,16 @@
 package com.hqumath.androidmvvm.http;
 
 import android.text.TextUtils;
+
 import com.trello.rxlifecycle2.LifecycleProvider;
+
+import java.lang.ref.WeakReference;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import retrofit2.Retrofit;
-
-import java.lang.ref.WeakReference;
 
 /**
  * ****************************************************************
@@ -25,38 +27,40 @@ import java.lang.ref.WeakReference;
  */
 public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Observer<T> {
     //生命周期绑定
-    private WeakReference<LifecycleProvider> lifecycleProvider;
+    private WeakReference<LifecycleProvider> lifecycle;
     /*回调*/
     private WeakReference<HttpOnNextListener> listener;
 
-    public BaseApi(HttpOnNextListener listener, LifecycleProvider lifecycleProvider) {
+    public BaseApi(HttpOnNextListener listener, WeakReference<LifecycleProvider> lifecycle) {
         this.listener = new WeakReference(listener);
-        this.lifecycleProvider = new WeakReference(lifecycleProvider);
+        this.lifecycle = lifecycle;
     }
 
     public abstract Observable getObservable(Retrofit retrofit);
 
     public LifecycleProvider getLifecycleProvider() {
-        return lifecycleProvider.get();
+        return lifecycle.get();
     }
 
     @Override
     public T apply(BaseResultEntity<T> httpResult) {
         Boolean res = httpResult.getRes();
-//        if (TextUtils.isEmpty(type) || !type.equals(AppNetConfig.SUCCESS)) {
-//            String resultCode = httpResult.getResultCode();
-//            String resultMsg = httpResult.getResultMsg();
-//            //处理特殊错误号
-//            switch (resultCode) {
-//                case HandleMessageCode.HMC_LOGIN:
-//                    throw new HandlerException.ResponseThrowable("请先登录", resultCode);
-//                case HandleMessageCode.HMC_LOGIN_OUT:
-//                    throw new HandlerException.ResponseThrowable("您的账户已在其他设备登录,请重新登陆！", resultCode);
-//                default:
-//                    throw new HandlerException.ResponseThrowable(resultMsg, resultCode);
-//            }
-//        }
-        return httpResult.getData();
+        String token = httpResult.getToken();
+        //登录请求不返回 res，根据token判断请求是否成功
+        if (!res && TextUtils.isEmpty(token)) {
+            String resultCode = httpResult.getErrcode();
+            String resultMsg = httpResult.getErrmsg();
+            //处理特殊错误号
+            switch (resultCode) {
+                case HandleMessageCode.HMC_LOGIN:
+                    throw new HandlerException.ResponseThrowable("请先登录", resultCode);
+                case HandleMessageCode.HMC_LOGIN_OUT:
+                    throw new HandlerException.ResponseThrowable("您的账户已在其他设备登录,请重新登陆！", resultCode);
+                default:
+                    throw new HandlerException.ResponseThrowable(resultMsg, resultCode);
+            }
+        }
+        return httpResult.getData() == null ? (T) "" : httpResult.getData();
     }
 
     /**
@@ -66,9 +70,15 @@ public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Ob
     @Override
     public void onSubscribe(Disposable d) {
         if (listener.get() != null) {
-            listener.get().onStart();
+            listener.get().onSubscribe();
         }
-        //showProgressDialog
+    }
+
+    @Override
+    public void onNext(T t) {
+        if (listener.get() != null) {
+            listener.get().onNext(t);
+        }
     }
 
     /**
@@ -79,7 +89,6 @@ public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Ob
         if (listener.get() != null) {
             listener.get().onComplete();
         }
-        //dismissProgressDialog();
     }
 
     /**
@@ -90,18 +99,6 @@ public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Ob
         if (listener.get() != null) {
             listener.get().onError(HandlerException.handleException(e));
         }
-        //dismissProgressDialog();
     }
 
-    /**
-     * 将onNext方法中的返回结果交给Activity或Fragment自己处理
-     *
-     * @param t 创建Subscriber时的泛型类型
-     */
-    @Override
-    public void onNext(T t) {
-        if (listener.get() != null) {
-            listener.get().onNext(t);
-        }
-    }
 }

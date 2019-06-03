@@ -13,6 +13,10 @@ public class BaseResultEntity<T> {
     //显示数据（用户需要关心的数据）
     private T data;
 
+    //登录接口独有
+    private String token;//新接口令牌
+    private String accessKey;//老接口令牌
+
     public boolean getRes() {
         return res;
     }
@@ -43,5 +47,21 @@ public class BaseResultEntity<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getAccessKey() {
+        return accessKey;
+    }
+
+    public void setAccessKey(String accessKey) {
+        this.accessKey = accessKey;
     }
 }

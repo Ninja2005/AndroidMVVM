@@ -35,8 +35,8 @@ public class BaseViewModel<M> extends AndroidViewModel implements LifecycleObser
         this.lifecycle = new WeakReference<>(lifecycle);
     }
 
-    public LifecycleProvider getLifecycleProvider() {
-        return lifecycle.get();
+    public WeakReference<LifecycleProvider> getLifecycleProvider() {
+        return lifecycle;
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_ANY)

@@ -17,7 +17,7 @@ public interface DemoApiService {
     //用户登录
     @FormUrlEncoded
     @POST("api/v2/login")
-    Observable<LoginResponse> userLogin(@FieldMap Map<String, Object> maps);
+    Observable<BaseResultEntity> userLogin(@FieldMap Map<String, Object> maps);
 
 
     @GET("action/apiv2/banner?catalog=1")
