@@ -3,7 +3,7 @@ package com.hqumath.androidmvvm.app;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
-import com.hqumath.androidmvvm.utils.KLog;
+import com.hqumath.androidmvvm.utils.LogUtil;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -68,9 +68,9 @@ public class AppCrashHandler implements UncaughtExceptionHandler {
                 current.finish();
             String mErrorMessage = getStackTraceString(ex);
             //只是打印出异常即可
-            KLog.e(mErrorMessage);
+            LogUtil.e(mErrorMessage);
         } catch (Exception e) {
-            KLog.e(getStackTraceString(e));
+            LogUtil.e(getStackTraceString(e));
         }
     }
 

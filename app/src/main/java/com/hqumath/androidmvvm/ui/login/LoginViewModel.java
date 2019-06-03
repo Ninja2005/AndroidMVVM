@@ -26,8 +26,8 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
     public LoginViewModel(@NonNull Application application, DemoRepository repository) {
         super(application, repository);
         //从本地取得数据绑定到View层
-//        userName.set(model.getUserName());
-//        password.set(model.getPassword());
+        userName.setValue(model.getUserName());
+        password.setValue(model.getPassword());
     }
 
     public void login(){

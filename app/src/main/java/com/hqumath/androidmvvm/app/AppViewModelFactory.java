@@ -7,6 +7,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import com.hqumath.androidmvvm.data.*;
+import com.hqumath.androidmvvm.http.RetrofitClient;
 import com.hqumath.androidmvvm.ui.login.LoginViewModel;
 
 /**
@@ -29,23 +30,11 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         if (INSTANCE == null) {
             synchronized (AppViewModelFactory.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new AppViewModelFactory(application, getDemoRepository());
+                    INSTANCE = new AppViewModelFactory(application, DemoRepository.getInstance());
                 }
             }
         }
         return INSTANCE;
-    }
-
-    private static DemoRepository getDemoRepository() {
-        //网络API服务
-        DemoApiService apiService = RetrofitClient.getInstance().create(DemoApiService.class);
-//        //网络数据源
-        HttpDataSource httpDataSource = HttpDataSourceImpl.getInstance(apiService);
-//        //本地数据源
-        LocalDataSource localDataSource = LocalDataSourceImpl.getInstance();
-//        //两条分支组成一个数据仓库
-        return DemoRepository.getInstance(httpDataSource, localDataSource);
-        return null;
     }
 
     @VisibleForTesting

@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class KLog {
+public class LogUtil {
 
     private static boolean IS_SHOW_LOG = false;
 
