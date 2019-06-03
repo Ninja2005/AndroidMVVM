@@ -19,19 +19,38 @@ android {
     dataBinding {
         enabled true
     }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //support
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    //rxjava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    //rx系列与View生命周期同步
+    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.2'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
+    //rxbinding以响应式的方式来处理UI的响应问题
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha2'
+    //network
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'//数据解析器
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'//网络请求适配器
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01"
     //room
     implementation "androidx.room:room-runtime:2.1.0-beta01"
     annotationProcessor "androidx.room:room-compiler:2.1.0-beta01"
-
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
