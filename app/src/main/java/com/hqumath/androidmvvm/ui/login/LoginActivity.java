@@ -33,6 +33,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     public void initData() {
         binding.setViewModel(viewModel);
+        binding.setLifecycleOwner(this);
     }
 
     public void initViewObservable() {

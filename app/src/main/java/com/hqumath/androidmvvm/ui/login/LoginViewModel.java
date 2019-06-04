@@ -7,12 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.hqumath.androidmvvm.base.BaseViewModel;
 import com.hqumath.androidmvvm.data.DemoApiService;
 import com.hqumath.androidmvvm.data.DemoRepository;
-import com.hqumath.androidmvvm.entity.LoginResponse;
-import com.hqumath.androidmvvm.http.BaseApi;
-import com.hqumath.androidmvvm.http.BaseResultEntity;
-import com.hqumath.androidmvvm.http.HandlerException;
-import com.hqumath.androidmvvm.http.HttpOnNextListener;
-import com.hqumath.androidmvvm.http.RetrofitClient;
+import com.hqumath.androidmvvm.http.*;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
@@ -40,11 +35,8 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
         super(application);
         model = DemoRepository.getInstance();
         //从本地取得数据绑定到View层
-//        userName.setValue(model.getUserName());
-//        password.setValue(model.getPassword());
-        userName.setValue("18368022680");
-        password.setValue("101110");
-        isLoading.setValue(false);
+        userName.setValue(model.getUserName());
+        password.setValue(model.getPassword());
     }
 
     public void login() {
@@ -60,33 +52,34 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
         RetrofitClient.getInstance().sendHttpRequest(new BaseApi(new HttpOnNextListener() {
             @Override
             public void onSubscribe() {
-                //showDialog("正在请求...");
-                isLoading.postValue(true);
+                isLoading.setValue(true);
             }
 
             @Override
             public void onNext(Object o) {
-                //请求成功
-//                String token = ((BaseResultEntity) o).getToken();
-                ToastUtil.toast(getApplication(),"已登录");
+                String token = ((BaseResultEntity) o).getToken();
+                model.saveUserName(userName.getValue());
+                model.savePassword(password.getValue());
+                model.saveToken(token);
+                ToastUtil.toast(getApplication(), "已登录");
             }
 
             @Override
             public void onError(HandlerException.ResponseThrowable e) {
-                isLoading.postValue(false);
-                ToastUtil.toast(getApplication(),e.getMessage());
+                isLoading.setValue(false);
+                ToastUtil.toast(getApplication(), e.getMessage());
 
             }
 
             @Override
             public void onComplete() {
-                isLoading.postValue(false);
+                isLoading.setValue(false);
             }
         }, getLifecycleProvider()) {
             @Override
             public Observable getObservable(Retrofit retrofit) {
-                Map<String, Object> map =  new HashMap<>();
-                 map.put("userName", userName.getValue());
+                Map<String, Object> map = new HashMap<>();
+                map.put("userName", userName.getValue());
                 map.put("passWord", password.getValue());
                 return retrofit.create(DemoApiService.class).userLogin(map);
             }

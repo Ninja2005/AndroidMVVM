@@ -46,7 +46,7 @@ public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Ob
     public T apply(BaseResultEntity<T> httpResult) {
         Boolean res = httpResult.getRes();
         String token = httpResult.getToken();
-        //登录请求不返回 res，根据token判断请求是否成功
+        //登录请求不返回res，根据token判断请求是否成功
         if (!res && TextUtils.isEmpty(token)) {
             String resultCode = httpResult.getErrcode();
             String resultMsg = httpResult.getErrmsg();

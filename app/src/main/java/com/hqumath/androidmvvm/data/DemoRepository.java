@@ -35,15 +35,23 @@ public class DemoRepository {
         SPUtils.getInstance().put("UserName", userName);
     }
 
-    public void savePassword(String password) {
-        SPUtils.getInstance().put("password", password);
-    }
-
     public String getUserName() {
         return SPUtils.getInstance().getString("UserName");
     }
 
+    public void savePassword(String password) {
+        SPUtils.getInstance().put("password", password);
+    }
+
     public String getPassword() {
         return SPUtils.getInstance().getString("password");
+    }
+
+    public void saveToken(String token) {
+        SPUtils.getInstance().put("token", token);
+    }
+
+    public String getToken() {
+        return SPUtils.getInstance().getString("token");
     }
 }
