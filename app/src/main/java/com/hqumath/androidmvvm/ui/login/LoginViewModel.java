@@ -5,8 +5,8 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import com.hqumath.androidmvvm.base.BaseViewModel;
-import com.hqumath.androidmvvm.data.DemoApiService;
-import com.hqumath.androidmvvm.data.DemoRepository;
+import com.hqumath.androidmvvm.data.MyApiService;
+import com.hqumath.androidmvvm.data.MyRepository;
 import com.hqumath.androidmvvm.http.*;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 import io.reactivex.Observable;
@@ -25,7 +25,7 @@ import java.util.Map;
  * 版权声明:
  * ****************************************************************
  */
-public class LoginViewModel extends BaseViewModel<DemoRepository> {
+public class LoginViewModel extends BaseViewModel<MyRepository> {
 
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     public MutableLiveData<String> userName = new MutableLiveData<>();
@@ -33,7 +33,7 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
-        model = DemoRepository.getInstance();
+        model = MyRepository.getInstance();
         //从本地取得数据绑定到View层
         userName.setValue(model.getUserName());
         password.setValue(model.getPassword());
@@ -57,10 +57,8 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
 
             @Override
             public void onNext(Object o) {
-                String token = ((BaseResultEntity) o).getToken();
                 model.saveUserName(userName.getValue());
                 model.savePassword(password.getValue());
-                model.saveToken(token);
                 ToastUtil.toast(getApplication(), "已登录");
             }
 
@@ -81,7 +79,7 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
                 Map<String, Object> map = new HashMap<>();
                 map.put("userName", userName.getValue());
                 map.put("passWord", password.getValue());
-                return retrofit.create(DemoApiService.class).userLogin(map);
+                return retrofit.create(MyApiService.class).userLogin(map);
             }
         });
     }

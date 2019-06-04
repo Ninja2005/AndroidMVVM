@@ -2,6 +2,7 @@ package com.hqumath.androidmvvm.http;
 
 import android.text.TextUtils;
 
+import com.hqumath.androidmvvm.data.MyRepository;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
 import java.lang.ref.WeakReference;
@@ -46,16 +47,20 @@ public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Ob
     public T apply(BaseResultEntity<T> httpResult) {
         Boolean res = httpResult.getRes();
         String token = httpResult.getToken();
-        //登录请求不返回res，根据token判断请求是否成功
-        if (!res && TextUtils.isEmpty(token)) {
+        //登录请求
+        if(!TextUtils.isEmpty(token)){
+            MyRepository.getInstance().saveToken(token);
+            return (T)"";
+        }
+        if (!res) {
             String resultCode = httpResult.getErrcode();
             String resultMsg = httpResult.getErrmsg();
             //处理特殊错误号
             switch (resultCode) {
-                case HandleMessageCode.HMC_LOGIN:
-                    throw new HandlerException.ResponseThrowable("请先登录", resultCode);
-                case HandleMessageCode.HMC_LOGIN_OUT:
-                    throw new HandlerException.ResponseThrowable("您的账户已在其他设备登录,请重新登陆！", resultCode);
+//                case HandleMessageCode.HMC_LOGIN:
+//                    throw new HandlerException.ResponseThrowable("请先登录", resultCode);
+//                case HandleMessageCode.HMC_LOGIN_OUT:
+//                    throw new HandlerException.ResponseThrowable("您的账户已在其他设备登录,请重新登陆！", resultCode);
                 default:
                     throw new HandlerException.ResponseThrowable(resultMsg, resultCode);
             }

@@ -4,7 +4,7 @@ import com.hqumath.androidmvvm.utils.SPUtils;
 
 /**
  * ****************************************************************
- * 文件名称: DemoRepository
+ * 文件名称: MyRepository
  * 作    者: Created by gyd
  * 创建时间: 2019/6/3 10:29
  * 文件描述: MVVM的Model层，统一模块的数据仓库，可配合Room框架使用
@@ -12,19 +12,19 @@ import com.hqumath.androidmvvm.utils.SPUtils;
  * 版权声明:
  * ****************************************************************
  */
-public class DemoRepository {
-    private volatile static DemoRepository INSTANCE = null;
+public class MyRepository {
+    private volatile static MyRepository INSTANCE = null;
 
-    private DemoRepository() {
+    private MyRepository() {
         //数据库Helper构建
 
     }
 
-    public static DemoRepository getInstance() {
+    public static MyRepository getInstance() {
         if (INSTANCE == null) {
-            synchronized (DemoRepository.class) {
+            synchronized (MyRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new DemoRepository();
+                    INSTANCE = new MyRepository();
                 }
             }
         }
