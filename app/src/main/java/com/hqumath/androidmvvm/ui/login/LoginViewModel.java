@@ -3,6 +3,7 @@ package com.hqumath.androidmvvm.ui.login;
 import android.app.Application;
 import android.text.TextUtils;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.hqumath.androidmvvm.base.BaseViewModel;
 import com.hqumath.androidmvvm.data.MyApiService;
@@ -30,6 +31,7 @@ public class LoginViewModel extends BaseViewModel<MyRepository> {
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     public MutableLiveData<String> userName = new MutableLiveData<>();
     public MutableLiveData<String> password = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isLogin = new MutableLiveData<>();
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
@@ -59,7 +61,8 @@ public class LoginViewModel extends BaseViewModel<MyRepository> {
             public void onNext(Object o) {
                 model.saveUserName(userName.getValue());
                 model.savePassword(password.getValue());
-                ToastUtil.toast(getApplication(), "已登录");
+                //ToastUtil.toast(getApplication(), "已登录");
+                isLogin.setValue(true);
             }
 
             @Override
@@ -82,5 +85,9 @@ public class LoginViewModel extends BaseViewModel<MyRepository> {
                 return retrofit.create(MyApiService.class).userLogin(map);
             }
         });
+    }
+
+    public LiveData<Boolean> isLogin(){
+        return isLogin;
     }
 }

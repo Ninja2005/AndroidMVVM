@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.hqumath.androidmvvm.entity.ActivityEntity" />
+
+        <variable
+            name="callback"
+            type="com.hqumath.androidmvvm.ui.activitylist.ActivityListAdapter.ClickCallback" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:minHeight="100dp"
+        android:orientation="horizontal"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/divider_hor"
+            android:showDividers="middle"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp">
+
+                <ImageView
+                    android:id="@+id/iv_cover"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="10dp"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/iv_cover"
+                    android:singleLine="true"
+                    android:textStyle="bold"
+                    tools:text="TED演讲"
+                    android:text="@{activity.title}"/>
+
+                <TextView
+                    android:id="@+id/tv_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_title"
+                    android:layout_alignStart="@id/tv_title"
+                    android:layout_marginTop="12dp"
+                    android:singleLine="true"
+                    tools:text="报名人数：2" />
+
+                <TextView
+                    android:id="@+id/tv_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_count"
+                    android:layout_alignStart="@id/tv_title"
+                    android:layout_marginTop="6dp"
+                    android:singleLine="true"
+                    tools:text="活动开始：18-10-06 13:33" />
+
+                <TextView
+                    android:id="@+id/tv_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_start"
+                    android:layout_alignStart="@id/tv_title"
+                    android:layout_marginTop="6dp"
+                    android:singleLine="true"
+                    tools:text="报名截止：18-10-05 13:33" />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_ver"
+                android:dividerPadding="10dp"
+                android:orientation="horizontal"
+                android:showDividers="middle">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:onClick="@{() ->  callback.onPersonListClick(activity)}"
+                    android:text="@string/active_name_list" />
+
+                <TextView
+                    android:id="@+id/tv_sign"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:onClick="@{() ->  callback.onSignInClick(activity)}"
+                    android:text="@string/active_name_sign_in" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

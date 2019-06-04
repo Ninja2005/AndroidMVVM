@@ -7,6 +7,7 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,8 @@ public interface MyApiService {
 
     //获取活动列表
     @FormUrlEncoded
-    @POST("api/v2/activity/getActivities?token={token}")
-    Observable<BaseResultEntity<List<ActivityEntity>>> getActivityList(@Path("token") String token,
+    @POST("api/v2/activity/getActivities")
+    Observable<BaseResultEntity<List<ActivityEntity>>> getActivityList(@Query("token") String token,
                                                                        @FieldMap Map<String, Object> maps);
 
 }

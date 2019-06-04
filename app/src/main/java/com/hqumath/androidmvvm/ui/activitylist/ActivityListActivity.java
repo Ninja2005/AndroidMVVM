@@ -1,11 +1,18 @@
 package com.hqumath.androidmvvm.ui.activitylist;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseActivity;
 import com.hqumath.androidmvvm.databinding.ActivityActivityListBinding;
+import com.hqumath.androidmvvm.entity.ActivityEntity;
 import com.hqumath.androidmvvm.ui.login.LoginViewModel;
+import com.hqumath.androidmvvm.utils.ToastUtil;
+
+import java.util.List;
 
 /**
  * ****************************************************************
@@ -19,6 +26,8 @@ import com.hqumath.androidmvvm.ui.login.LoginViewModel;
  */
 public class ActivityListActivity extends BaseActivity<ActivityActivityListBinding, ActivityListViewModel> {
 
+    private ActivityListAdapter adapter;
+
     @Override
     public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_activity_list;
@@ -29,10 +38,32 @@ public class ActivityListActivity extends BaseActivity<ActivityActivityListBindi
     }
 
     public void initData() {
-//        binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
+        adapter = new ActivityListAdapter(clickCallback);
+        binding.rvActivity.setAdapter(adapter);
+        viewModel.getActivityList();
     }
 
     public void initViewObservable() {
+        viewModel.getData().observe(this, new Observer<List<ActivityEntity>>() {
+            @Override
+            public void onChanged(List<ActivityEntity> activityEntities) {
+                adapter.setData(activityEntities);
+                //当绑定的数据修改时更新视图
+                binding.executePendingBindings();
+            }
+        });
     }
+
+    private ActivityListAdapter.ClickCallback clickCallback = new ActivityListAdapter.ClickCallback() {
+        @Override
+        public void onPersonListClick(@NonNull ActivityEntity data) {
+            ToastUtil.toast(getApplication(), "名单" + data.getID());
+        }
+
+        @Override
+        public void onSignInClick(@NonNull ActivityEntity data) {
+            ToastUtil.toast(getApplication(), "签到" + data.getID());
+        }
+    };
 }
