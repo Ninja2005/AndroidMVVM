@@ -60,10 +60,5 @@ public class ActivityListActivity extends BaseActivity<ActivityActivityListBindi
         public void onPersonListClick(@NonNull ActivityEntity data) {
             ToastUtil.toast(getApplication(), "名单" + data.getID());
         }
-
-        @Override
-        public void onSignInClick(@NonNull ActivityEntity data) {
-            ToastUtil.toast(getApplication(), "签到" + data.getID());
-        }
     };
 }

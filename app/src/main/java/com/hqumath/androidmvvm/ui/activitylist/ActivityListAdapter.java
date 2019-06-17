@@ -84,6 +84,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.binding.setActivity(mList.get(position));
+
         holder.binding.executePendingBindings();
     }
 
@@ -100,13 +101,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
          * @param data 活动信息.
          */
         void onPersonListClick(@NonNull ActivityEntity data);
-
-        /**
-         * 点击签到。
-         *
-         * @param data 活动信息.
-         */
-        void onSignInClick(@NonNull ActivityEntity data);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

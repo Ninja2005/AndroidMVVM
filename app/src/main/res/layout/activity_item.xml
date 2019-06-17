@@ -19,15 +19,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:minHeight="100dp"
             android:orientation="horizontal"
-            app:cardUseCompatPadding="true">
+            app:cardUseCompatPadding="true"
+            android:onClick="@{() ->  callback.onPersonListClick(activity)}">
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="@drawable/divider_hor"
-                android:showDividers="middle"
                 android:orientation="vertical"
                 android:padding="15dp">
 
@@ -39,14 +37,6 @@
                     android:textStyle="bold"
                     tools:text="TED演讲"
                     android:text="@{activity.title}"/>
-
-            <TextView
-                    android:id="@+id/tv_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:singleLine="true"
-                    tools:text="报名人数：2"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>
