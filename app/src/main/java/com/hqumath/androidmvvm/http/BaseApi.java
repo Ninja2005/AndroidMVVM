@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.hqumath.androidmvvm.data.MyRepository;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
+import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 
 import io.reactivex.Observable;
@@ -30,10 +31,10 @@ public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Ob
     //生命周期绑定
     private WeakReference<LifecycleProvider> lifecycle;
     /*回调*/
-    private WeakReference<HttpOnNextListener> listener;
+    private SoftReference<HttpOnNextListener> listener;
 
     public BaseApi(HttpOnNextListener listener, WeakReference<LifecycleProvider> lifecycle) {
-        this.listener = new WeakReference(listener);
+        this.listener = new SoftReference<>(listener);
         this.lifecycle = lifecycle;
     }
 
