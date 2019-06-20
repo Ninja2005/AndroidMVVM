@@ -45,7 +45,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:onClick="@{() -> viewModel.login()}"
-                android:text="登录" />
+                android:text="登录(接口无效)" />
         </LinearLayout>
 
         <ProgressBar

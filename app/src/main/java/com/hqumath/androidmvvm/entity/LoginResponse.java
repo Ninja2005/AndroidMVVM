@@ -12,9 +12,8 @@ import com.hqumath.androidmvvm.http.BaseResultEntity;
  * 版权声明:
  * ****************************************************************
  */
-public class LoginResponse extends BaseResultEntity {
-    public String token;//新接口令牌
-    public String accessKey;//老接口令牌
+public class LoginResponse {
+    private String token;//新接口令牌
 
     public String getToken() {
         return token;
@@ -22,13 +21,5 @@ public class LoginResponse extends BaseResultEntity {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getAccessKey() {
-        return accessKey;
-    }
-
-    public void setAccessKey(String accessKey) {
-        this.accessKey = accessKey;
     }
 }

@@ -8,7 +8,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.hqumath.androidmvvm.base.BaseViewModel;
 import com.hqumath.androidmvvm.data.MyApiService;
 import com.hqumath.androidmvvm.data.MyRepository;
-import com.hqumath.androidmvvm.http.*;
+import com.hqumath.androidmvvm.entity.LoginResponse;
+import com.hqumath.androidmvvm.http.BaseApi;
+import com.hqumath.androidmvvm.http.HandlerException;
+import com.hqumath.androidmvvm.http.HttpOnNextListener;
+import com.hqumath.androidmvvm.http.RetrofitClient;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
@@ -59,9 +63,11 @@ public class LoginViewModel extends BaseViewModel<MyRepository> {
 
             @Override
             public void onNext(Object o) {
+                //ToastUtil.toast(getApplication(), "已登录");
                 model.saveUserName(userName.getValue());
                 model.savePassword(password.getValue());
-                //ToastUtil.toast(getApplication(), "已登录");
+                LoginResponse data = (LoginResponse) o;
+                model.saveToken(data.getToken());
                 isLogin.setValue(true);
             }
 
@@ -87,7 +93,7 @@ public class LoginViewModel extends BaseViewModel<MyRepository> {
         });
     }
 
-    public LiveData<Boolean> isLogin(){
+    public LiveData<Boolean> isLogin() {
         return isLogin;
     }
 }

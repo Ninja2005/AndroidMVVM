@@ -1,10 +1,7 @@
 package com.hqumath.androidmvvm.ui.login;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseActivity;
@@ -39,7 +36,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     public void initViewObservable() {
         viewModel.isLogin().observe(this, b -> {
-            if(b){
+            if (b) {
                 startActivity(new Intent(LoginActivity.this, ActivityListActivity.class));
                 finish();
             }

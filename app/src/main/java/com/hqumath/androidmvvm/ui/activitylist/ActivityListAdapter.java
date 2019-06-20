@@ -2,15 +2,13 @@ package com.hqumath.androidmvvm.ui.activitylist;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.databinding.ActivityItemBinding;
-import com.hqumath.androidmvvm.entity.ActivityEntity;
+import com.hqumath.androidmvvm.entity.CommitEntity;
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ import java.util.List;
  * ****************************************************************
  */
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.MyViewHolder> {
-    private List<ActivityEntity> mList;
+    private List<CommitEntity> mList;
 
     private final ClickCallback clickCallback;
 
@@ -34,7 +32,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         setHasStableIds(true);
     }
 
-    public void setData(List<ActivityEntity> list) {
+    public void setData(List<CommitEntity> list) {
         if (mList == null) {
             mList = list;
             notifyItemRangeInserted(0, list.size());
@@ -54,17 +52,15 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return mList.get(oldItemPosition).getID() == list.get(newItemPosition).getID();
+                    return mList.get(oldItemPosition).getNode_id().equals(list.get(newItemPosition).getNode_id());
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    ActivityEntity oldItem = mList.get(oldItemPosition);
-                    ActivityEntity newItem = list.get(newItemPosition);
-                    return oldItem.getID() == newItem.getID()
-                            && oldItem.getTitle().endsWith(newItem.getTitle())
-                            && oldItem.getTimeStart().endsWith(newItem.getTimeStart())
-                            && oldItem.getAddTime().endsWith(newItem.getAddTime());
+                    CommitEntity oldItem = mList.get(oldItemPosition);
+                    CommitEntity newItem = list.get(newItemPosition);
+                    return oldItem.getNode_id().equals(newItem.getNode_id())
+                            && oldItem.getSha().equals(newItem.getSha());
                 }
             });
             mList = list;
@@ -100,7 +96,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
          *
          * @param data 活动信息.
          */
-        void onPersonListClick(@NonNull ActivityEntity data);
+        void onPersonListClick(@NonNull CommitEntity data);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

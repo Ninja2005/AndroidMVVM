@@ -7,7 +7,7 @@
 
         <variable
                 name="activity"
-                type="com.hqumath.androidmvvm.entity.ActivityEntity"/>
+                type="com.hqumath.androidmvvm.entity.CommitEntity"/>
 
         <variable
                 name="callback"
@@ -36,7 +36,7 @@
                     android:singleLine="true"
                     android:textStyle="bold"
                     tools:text="TED演讲"
-                    android:text="@{activity.title}"/>
+                    android:text="@{activity.commit.message}"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

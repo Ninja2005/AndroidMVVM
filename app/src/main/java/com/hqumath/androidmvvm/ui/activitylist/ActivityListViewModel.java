@@ -11,6 +11,7 @@ import com.hqumath.androidmvvm.base.BaseViewModel;
 import com.hqumath.androidmvvm.data.MyApiService;
 import com.hqumath.androidmvvm.data.MyRepository;
 import com.hqumath.androidmvvm.entity.ActivityEntity;
+import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.http.BaseApi;
 import com.hqumath.androidmvvm.http.HandlerException;
 import com.hqumath.androidmvvm.http.HttpOnNextListener;
@@ -36,7 +37,7 @@ import retrofit2.Retrofit;
  */
 public class ActivityListViewModel extends BaseViewModel<MyRepository> {
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
-    private MediatorLiveData<List<ActivityEntity>> list = new MediatorLiveData<>();
+    private MediatorLiveData<List<CommitEntity>> list = new MediatorLiveData<>();
 
     public ActivityListViewModel(@NonNull Application application) {
         super(application);
@@ -52,7 +53,7 @@ public class ActivityListViewModel extends BaseViewModel<MyRepository> {
 
             @Override
             public void onNext(Object o) {
-                list.setValue((List<ActivityEntity>)o);
+                list.setValue((List<CommitEntity>)o);
             }
 
             @Override
@@ -70,15 +71,15 @@ public class ActivityListViewModel extends BaseViewModel<MyRepository> {
             @Override
             public Observable getObservable(Retrofit retrofit) {
                 Map<String, Object> map = new HashMap<>();
-                map.put("Type", 0);
-                map.put("pageSize", 10);
-                map.put("pageIndex", 1);
-                return retrofit.create(MyApiService.class).getActivityList(model.getToken(), map);
+                map.put("per_page", 10);
+                map.put("page", 1);
+                map.put("sha", "master");
+                return retrofit.create(MyApiService.class).getActivityList(map);
             }
         });
     }
 
-    public LiveData<List<ActivityEntity>> getData() {
+    public LiveData<List<CommitEntity>> getData() {
         return list;
     }
 }

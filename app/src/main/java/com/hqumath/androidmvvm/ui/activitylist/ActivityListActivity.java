@@ -9,6 +9,7 @@ import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseActivity;
 import com.hqumath.androidmvvm.databinding.ActivityActivityListBinding;
 import com.hqumath.androidmvvm.entity.ActivityEntity;
+import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.ui.login.LoginViewModel;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 
@@ -45,9 +46,9 @@ public class ActivityListActivity extends BaseActivity<ActivityActivityListBindi
     }
 
     public void initViewObservable() {
-        viewModel.getData().observe(this, new Observer<List<ActivityEntity>>() {
+        viewModel.getData().observe(this, new Observer<List<CommitEntity>>() {
             @Override
-            public void onChanged(List<ActivityEntity> activityEntities) {
+            public void onChanged(List<CommitEntity> activityEntities) {
                 adapter.setData(activityEntities);
                 //当绑定的数据修改时更新视图
                 binding.executePendingBindings();
@@ -57,8 +58,8 @@ public class ActivityListActivity extends BaseActivity<ActivityActivityListBindi
 
     private ActivityListAdapter.ClickCallback clickCallback = new ActivityListAdapter.ClickCallback() {
         @Override
-        public void onPersonListClick(@NonNull ActivityEntity data) {
-            ToastUtil.toast(getApplication(), "名单" + data.getID());
+        public void onPersonListClick(@NonNull CommitEntity data) {
+            ToastUtil.toast(getApplication(), "名单" + data.getNode_id());
         }
     };
 }

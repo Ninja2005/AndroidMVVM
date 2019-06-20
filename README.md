@@ -33,3 +33,8 @@ Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+Vie
 
     1. DB+RecyclerView
     2. Network+RecyclerView
+
+## 注意
+
+    1.登录接口不支持调试
+    2.其它接口使用github api

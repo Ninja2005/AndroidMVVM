@@ -1,18 +1,15 @@
 package com.hqumath.androidmvvm.http;
 
-import android.text.TextUtils;
-
-import com.hqumath.androidmvvm.data.MyRepository;
 import com.trello.rxlifecycle2.LifecycleProvider;
-
-import java.lang.ref.SoftReference;
-import java.lang.ref.WeakReference;
-
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
+import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 
 /**
  * ****************************************************************
@@ -27,7 +24,7 @@ import retrofit2.Retrofit;
  * 版权声明:
  * ****************************************************************
  */
-public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Observer<T> {
+public abstract class BaseApi<T> implements Function<Response<T>, T>, Observer<T> {
     //生命周期绑定
     private WeakReference<LifecycleProvider> lifecycle;
     /*回调*/
@@ -45,28 +42,27 @@ public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Ob
     }
 
     @Override
-    public T apply(BaseResultEntity<T> httpResult) {
-        Boolean res = httpResult.getRes();
-        String token = httpResult.getToken();
-        //登录请求
-        if(!TextUtils.isEmpty(token)){
-            MyRepository.getInstance().saveToken(token);
-            return (T)"";
+    public T apply(Response<T> httpResult) {
+        if (httpResult.isSuccessful() && httpResult.body() != null) {
+            return httpResult.body();
+        } else {
+            throw new HandlerException.ResponseThrowable(httpResult.message(), httpResult.code() + "");
         }
+        /*Boolean res = httpResult.getRes();
         if (!res) {
             String resultCode = httpResult.getErrcode();
             String resultMsg = httpResult.getErrmsg();
             //处理特殊错误号
             switch (resultCode) {
-//                case HandleMessageCode.HMC_LOGIN:
-//                    throw new HandlerException.ResponseThrowable("请先登录", resultCode);
-//                case HandleMessageCode.HMC_LOGIN_OUT:
-//                    throw new HandlerException.ResponseThrowable("您的账户已在其他设备登录,请重新登陆！", resultCode);
+                case HandleMessageCode.HMC_LOGIN:
+                    throw new HandlerException.ResponseThrowable("请先登录", resultCode);
+                case HandleMessageCode.HMC_LOGIN_OUT:
+                    throw new HandlerException.ResponseThrowable("您的账户已在其他设备登录,请重新登陆！", resultCode);
                 default:
                     throw new HandlerException.ResponseThrowable(resultMsg, resultCode);
             }
         }
-        return httpResult.getData() == null ? (T) "" : httpResult.getData();
+        return httpResult.getData() == null ? (T) "" : httpResult.getData();*/
     }
 
     /**
