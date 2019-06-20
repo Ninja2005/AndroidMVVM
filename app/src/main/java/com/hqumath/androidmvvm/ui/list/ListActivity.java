@@ -36,6 +36,7 @@ public class ListActivity extends BaseActivity<ActivityListBinding, ListViewMode
     }
 
     public void initData() {
+        setTitle("Commits");
         binding.setLifecycleOwner(this);
         adapter = new ListAdapter(clickCallback);
         binding.rvActivity.setAdapter(adapter);
@@ -56,7 +57,7 @@ public class ListActivity extends BaseActivity<ActivityListBinding, ListViewMode
     private ListAdapter.ClickCallback clickCallback = new ListAdapter.ClickCallback() {
         @Override
         public void onPersonListClick(@NonNull CommitEntity data) {
-            ToastUtil.toast(getApplication(), "名单" + data.getNode_id());
+            ToastUtil.toast(getApplication(), data.getSha());
         }
     };
 }
