@@ -11,7 +11,7 @@
 
         <variable
                 name="callback"
-                type="com.hqumath.androidmvvm.ui.activitylist.ActivityListAdapter.ClickCallback"/>
+                type="com.hqumath.androidmvvm.ui.list.ListAdapter.ClickCallback"/>
     </data>
 
     <androidx.cardview.widget.CardView

@@ -1,4 +1,4 @@
-package com.hqumath.androidmvvm.ui.activitylist;
+package com.hqumath.androidmvvm.ui.list;
 
 import android.app.Application;
 
@@ -10,7 +10,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.hqumath.androidmvvm.base.BaseViewModel;
 import com.hqumath.androidmvvm.data.MyApiService;
 import com.hqumath.androidmvvm.data.MyRepository;
-import com.hqumath.androidmvvm.entity.ActivityEntity;
 import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.http.BaseApi;
 import com.hqumath.androidmvvm.http.HandlerException;
@@ -27,7 +26,7 @@ import retrofit2.Retrofit;
 
 /**
  * ****************************************************************
- * 文件名称: ActivityListViewModel
+ * 文件名称: ListViewModel
  * 作    者: Created by gyd
  * 创建时间: 2019/6/4 16:54
  * 文件描述:
@@ -35,11 +34,11 @@ import retrofit2.Retrofit;
  * 版权声明:
  * ****************************************************************
  */
-public class ActivityListViewModel extends BaseViewModel<MyRepository> {
+public class ListViewModel extends BaseViewModel<MyRepository> {
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     private MediatorLiveData<List<CommitEntity>> list = new MediatorLiveData<>();
 
-    public ActivityListViewModel(@NonNull Application application) {
+    public ListViewModel(@NonNull Application application) {
         super(application);
         model = MyRepository.getInstance();
     }

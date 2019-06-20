@@ -8,7 +8,7 @@
 
         <variable
                 name="viewModel"
-                type="com.hqumath.androidmvvm.ui.activitylist.ActivityListViewModel"/>
+                type="com.hqumath.androidmvvm.ui.list.ListViewModel"/>
     </data>
 
     <RelativeLayout

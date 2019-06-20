@@ -1,23 +1,20 @@
-package com.hqumath.androidmvvm.ui.activitylist;
+package com.hqumath.androidmvvm.ui.list;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseActivity;
-import com.hqumath.androidmvvm.databinding.ActivityActivityListBinding;
-import com.hqumath.androidmvvm.entity.ActivityEntity;
+import com.hqumath.androidmvvm.databinding.ActivityListBinding;
 import com.hqumath.androidmvvm.entity.CommitEntity;
-import com.hqumath.androidmvvm.ui.login.LoginViewModel;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 
 import java.util.List;
 
 /**
  * ****************************************************************
- * 文件名称: ActivityListActivity
+ * 文件名称: ListActivity
  * 作    者: Created by gyd
  * 创建时间: 2019/6/4 16:52
  * 文件描述:
@@ -25,22 +22,22 @@ import java.util.List;
  * 版权声明:
  * ****************************************************************
  */
-public class ActivityListActivity extends BaseActivity<ActivityActivityListBinding, ActivityListViewModel> {
+public class ListActivity extends BaseActivity<ActivityListBinding, ListViewModel> {
 
-    private ActivityListAdapter adapter;
+    private ListAdapter adapter;
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
-        return R.layout.activity_activity_list;
+        return R.layout.activity_list;
     }
 
-    public ActivityListViewModel initViewModel() {
-        return ViewModelProviders.of(this).get(ActivityListViewModel.class);
+    public ListViewModel initViewModel() {
+        return ViewModelProviders.of(this).get(ListViewModel.class);
     }
 
     public void initData() {
         binding.setLifecycleOwner(this);
-        adapter = new ActivityListAdapter(clickCallback);
+        adapter = new ListAdapter(clickCallback);
         binding.rvActivity.setAdapter(adapter);
         viewModel.getActivityList();
     }
@@ -56,7 +53,7 @@ public class ActivityListActivity extends BaseActivity<ActivityActivityListBindi
         });
     }
 
-    private ActivityListAdapter.ClickCallback clickCallback = new ActivityListAdapter.ClickCallback() {
+    private ListAdapter.ClickCallback clickCallback = new ListAdapter.ClickCallback() {
         @Override
         public void onPersonListClick(@NonNull CommitEntity data) {
             ToastUtil.toast(getApplication(), "名单" + data.getNode_id());

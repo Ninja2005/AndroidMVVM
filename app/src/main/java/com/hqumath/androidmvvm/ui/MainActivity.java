@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.databinding.ActivityMainBinding;
-import com.hqumath.androidmvvm.ui.activitylist.ActivityListActivity;
+import com.hqumath.androidmvvm.ui.list.ListActivity;
 import com.hqumath.androidmvvm.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         });
         binding.btnList.setOnClickListener(o -> {
-            startActivity(new Intent(MainActivity.this, ActivityListActivity.class));
+            startActivity(new Intent(MainActivity.this, ListActivity.class));
         });
     }
 }

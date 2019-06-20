@@ -1,14 +1,11 @@
 package com.hqumath.androidmvvm.data;
 
-import com.hqumath.androidmvvm.entity.ActivityEntity;
 import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.LoginResponse;
-import com.hqumath.androidmvvm.http.BaseResultEntity;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
