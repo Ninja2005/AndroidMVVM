@@ -1,5 +1,8 @@
 package com.hqumath.androidmvvm.entity;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+
 import java.util.List;
 
 /**

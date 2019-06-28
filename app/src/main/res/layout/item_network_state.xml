@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <import type="com.hqumath.androidmvvm.entity.NetworkState"/>
+
+        <variable
+                name="network"
+                type="com.hqumath.androidmvvm.entity.NetworkState"/>
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+        <TextView
+                android:id="@+id/error_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@{network.msg}"
+                android:visibility="@{network.msg!=null ?View.VISIBLE:View.INVISIBLE}"/>
+
+
+        <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{network.status==NetworkState.Status.LOADING ?View.VISIBLE:View.INVISIBLE}"/>
+
+        <Button
+                android:id="@+id/retry_button"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/retry"
+                android:visibility="@{network.status==NetworkState.Status.FAILED ?View.VISIBLE:View.INVISIBLE}"/>
+    </LinearLayout>
+</layout>

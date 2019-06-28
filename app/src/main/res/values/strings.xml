@@ -3,4 +3,7 @@
 
     <string name="active_name_list">名单</string>
     <string name="active_name_sign_in">签到</string>
+
+    <string name="retry">Retry</string>
+
 </resources>
