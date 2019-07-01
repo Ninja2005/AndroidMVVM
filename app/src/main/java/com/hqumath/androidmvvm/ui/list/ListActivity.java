@@ -42,11 +42,10 @@ public class ListActivity extends BaseActivity<ActivityListBinding, ListViewMode
         binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                viewModel.refresh();
+                viewModel.refresh();
                 binding.swipeRefresh.setRefreshing(false);
             }
         });
-
 //        viewModel.refresh();
     }
 

@@ -25,8 +25,9 @@ import com.hqumath.androidmvvm.entity.NetworkState;
  * ****************************************************************
  */
 public class ListViewModel extends BaseViewModel<MyRepository> {
+    private CommitFactory commitFactory;
+
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
-    //    private MediatorLiveData<List<CommitEntity>> list = new MediatorLiveData<>();
     private LiveData<NetworkState> networkState;//请求状态
     private LiveData<PagedList<CommitEntity>> list;
 
@@ -37,53 +38,21 @@ public class ListViewModel extends BaseViewModel<MyRepository> {
     }
 
     private void init() {
-
-        CommitFactory commitFactory = new CommitFactory();
+        commitFactory = new CommitFactory();
         //转换操作
         networkState = Transformations.switchMap(commitFactory.getSourceLiveData(), CommitSource::getNetworkState);
-
         PagedList.Config pagedListConfig =
                 (new PagedList.Config.Builder())
                         .setEnablePlaceholders(false)
                         .setInitialLoadSizeHint(10)
                         .setPageSize(10).build();
-//
         list = new LivePagedListBuilder<>(commitFactory, pagedListConfig).build();
     }
-    /*public void refresh() {
-        RetrofitClient.getInstance().sendHttpRequest(new BaseApi(new HttpOnNextListener() {
-            @Override
-            public void onSubscribe() {
-                isLoading.setValue(true);
-            }
 
-            @Override
-            public void onNext(Object o) {
-                list.setValue((List<CommitEntity>)o);
-            }
+    public void refresh(){
+        commitFactory.getSourceLiveData().getValue().invalidate();
+    }
 
-            @Override
-            public void onError(HandlerException.ResponseThrowable e) {
-                isLoading.setValue(false);
-                ToastUtil.toast(getApplication(), e.getMessage());
-
-            }
-
-            @Override
-            public void onComplete() {
-                isLoading.setValue(false);
-            }
-        }, getLifecycleProvider()) {
-            @Override
-            public Observable getObservable(Retrofit retrofit) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("per_page", 10);
-                map.put("page", 1);
-                map.put("sha", "master");
-                return retrofit.create(MyApiService.class).getActivityList(map);
-            }
-        });
-    }*/
 
     public LiveData<PagedList<CommitEntity>> getData() {
         return list;
