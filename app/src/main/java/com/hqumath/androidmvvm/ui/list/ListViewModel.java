@@ -1,31 +1,18 @@
 package com.hqumath.androidmvvm.ui.list;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-
+import androidx.lifecycle.Transformations;
+import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 import com.hqumath.androidmvvm.base.BaseViewModel;
-import com.hqumath.androidmvvm.data.MyApiService;
 import com.hqumath.androidmvvm.data.MyRepository;
+import com.hqumath.androidmvvm.datasource.CommitFactory;
+import com.hqumath.androidmvvm.datasource.CommitSource;
 import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.NetworkState;
-import com.hqumath.androidmvvm.http.BaseApi;
-import com.hqumath.androidmvvm.http.HandlerException;
-import com.hqumath.androidmvvm.http.HttpOnNextListener;
-import com.hqumath.androidmvvm.http.RetrofitClient;
-import com.hqumath.androidmvvm.utils.ToastUtil;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Executors;
-
-import io.reactivex.Observable;
-import retrofit2.Retrofit;
 
 /**
  * ****************************************************************
@@ -39,32 +26,31 @@ import retrofit2.Retrofit;
  */
 public class ListViewModel extends BaseViewModel<MyRepository> {
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
-//    private MediatorLiveData<List<CommitEntity>> list = new MediatorLiveData<>();
-    private MutableLiveData<NetworkState> networkState;//请求状态
-    private MutableLiveData<PagedList<CommitEntity>> list;
+    //    private MediatorLiveData<List<CommitEntity>> list = new MediatorLiveData<>();
+    private LiveData<NetworkState> networkState;//请求状态
+    private LiveData<PagedList<CommitEntity>> list;
 
     public ListViewModel(@NonNull Application application) {
         super(application);
         //model = MyRepository.getInstance();
         init();
     }
+
     private void init() {
 
-//        FeedDataFactory feedDataFactory = new FeedDataFactory(appController);
-//        networkState = Transformations.switchMap(feedDataFactory.getMutableLiveData(),
-//                dataSource -> dataSource.getNetworkState());
+        CommitFactory commitFactory = new CommitFactory();
+        //转换操作
+        networkState = Transformations.switchMap(commitFactory.getSourceLiveData(), CommitSource::getNetworkState);
+
+        PagedList.Config pagedListConfig =
+                (new PagedList.Config.Builder())
+                        .setEnablePlaceholders(false)
+                        .setInitialLoadSizeHint(10)
+                        .setPageSize(10).build();
 //
-//        PagedList.Config pagedListConfig =
-//                (new PagedList.Config.Builder())
-//                        .setEnablePlaceholders(false)
-//                        .setInitialLoadSizeHint(10)
-//                        .setPageSize(20).build();
-//
-//        articleLiveData = new LivePagedListBuilder<>(feedDataFactory, pagedListConfig)
-//                .setFetchExecutor(executor)
-//                .build();
+        list = new LivePagedListBuilder<>(commitFactory, pagedListConfig).build();
     }
-    public void refresh() {
+    /*public void refresh() {
         RetrofitClient.getInstance().sendHttpRequest(new BaseApi(new HttpOnNextListener() {
             @Override
             public void onSubscribe() {
@@ -97,7 +83,7 @@ public class ListViewModel extends BaseViewModel<MyRepository> {
                 return retrofit.create(MyApiService.class).getActivityList(map);
             }
         });
-    }
+    }*/
 
     public LiveData<PagedList<CommitEntity>> getData() {
         return list;

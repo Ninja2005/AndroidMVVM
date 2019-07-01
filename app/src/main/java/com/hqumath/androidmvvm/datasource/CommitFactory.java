@@ -1,5 +1,12 @@
 package com.hqumath.androidmvvm.datasource;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
+import com.trello.rxlifecycle2.LifecycleProvider;
+
+import java.lang.ref.WeakReference;
+
 /**
  * ****************************************************************
  * 文件名称: CommitFactory
@@ -10,5 +17,21 @@ package com.hqumath.androidmvvm.datasource;
  * 版权声明:
  * ****************************************************************
  */
-public class CommitFactory {
+public class CommitFactory extends DataSource.Factory {
+    private MutableLiveData<CommitSource> sourceLiveData = new MutableLiveData<>();
+
+    public CommitFactory(){
+    }
+
+    @NonNull
+    @Override
+    public DataSource create() {
+        CommitSource commitSource = new CommitSource();
+        sourceLiveData.postValue(commitSource);
+        return commitSource;
+    }
+
+    public MutableLiveData<CommitSource> getSourceLiveData(){
+        return sourceLiveData;
+    }
 }

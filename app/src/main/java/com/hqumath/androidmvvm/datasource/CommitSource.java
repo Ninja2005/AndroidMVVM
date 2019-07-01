@@ -10,11 +10,9 @@ import com.hqumath.androidmvvm.http.BaseApi;
 import com.hqumath.androidmvvm.http.HandlerException;
 import com.hqumath.androidmvvm.http.HttpOnNextListener;
 import com.hqumath.androidmvvm.http.RetrofitClient;
-import com.trello.rxlifecycle2.LifecycleProvider;
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
 
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,25 +28,22 @@ import java.util.Map;
  * ****************************************************************
  */
 public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
-    private MutableLiveData<NetworkState> networkState;//请求状态
-    private WeakReference<LifecycleProvider> lifecycle;
+    private MutableLiveData<NetworkState> networkState = new MutableLiveData<>();//请求状态
 
-    public CommitSource(WeakReference<LifecycleProvider> lifecycle) {
-        networkState = new MutableLiveData<>();
-        this.lifecycle = lifecycle;
+    public CommitSource() {
     }
 
-    public MutableLiveData getNetworkState() {
+    public MutableLiveData<NetworkState> getNetworkState() {
         return networkState;
     }
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Long> params,
                             @NonNull LoadInitialCallback<Long, CommitEntity> callback) {
-        RetrofitClient.getInstance().sendHttpRequest(new BaseApi(new HttpOnNextListener() {
+        RetrofitClient.getInstance().sendHttpRequestIO(new BaseApi(new HttpOnNextListener() {
             @Override
             public void onSubscribe() {
-                networkState.setValue(new NetworkState(NetworkState.Status.LOADING, ""));
+                networkState.postValue(new NetworkState(NetworkState.Status.LOADING, ""));
             }
 
             @Override
@@ -58,14 +53,14 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
 
             @Override
             public void onError(HandlerException.ResponseThrowable e) {
-                networkState.setValue(new NetworkState(NetworkState.Status.FAILED, e.getMessage()));
+                networkState.postValue(new NetworkState(NetworkState.Status.FAILED, e.getMessage()));
             }
 
             @Override
             public void onComplete() {
-                networkState.setValue(new NetworkState(NetworkState.Status.SUCCESS, ""));
+                networkState.postValue(new NetworkState(NetworkState.Status.SUCCESS, ""));
             }
-        }, lifecycle) {
+        }, null) {
             @Override
             public Observable getObservable(Retrofit retrofit) {
                 Map<String, Object> map = new HashMap<>();
@@ -84,29 +79,28 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
 
     @Override
     public void loadAfter(@NonNull LoadParams<Long> params, @NonNull LoadCallback<Long, CommitEntity> callback) {
-        RetrofitClient.getInstance().sendHttpRequest(new BaseApi(new HttpOnNextListener() {
+        RetrofitClient.getInstance().sendHttpRequestIO(new BaseApi(new HttpOnNextListener() {
             @Override
             public void onSubscribe() {
-                networkState.setValue(new NetworkState(NetworkState.Status.LOADING, ""));
+                networkState.postValue(new NetworkState(NetworkState.Status.LOADING, ""));
             }
 
             @Override
             public void onNext(Object o) {
                 List<CommitEntity> list = (List<CommitEntity>) o;
-                long nextKey = (list != null && list.size() > 0) ?  params.key + 1 : null;
-                callback.onResult((List<CommitEntity>) o, nextKey);
+                callback.onResult((List<CommitEntity>) o, (list != null && list.size() > 0) ? params.key + 1 : null);
             }
 
             @Override
             public void onError(HandlerException.ResponseThrowable e) {
-                networkState.setValue(new NetworkState(NetworkState.Status.FAILED, e.getMessage()));
+                networkState.postValue(new NetworkState(NetworkState.Status.FAILED, e.getMessage()));
             }
 
             @Override
             public void onComplete() {
-                networkState.setValue(new NetworkState(NetworkState.Status.SUCCESS, ""));
+                networkState.postValue(new NetworkState(NetworkState.Status.SUCCESS, ""));
             }
-        }, lifecycle) {
+        }, null) {
             @Override
             public Observable getObservable(Retrofit retrofit) {
                 Map<String, Object> map = new HashMap<>();

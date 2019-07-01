@@ -79,4 +79,15 @@ public class RetrofitClient {
                 .subscribe(basePar);
     }
 
+    /**
+     * 在IO线程观察
+     * @param basePar
+     */
+    public void sendHttpRequestIO(BaseApi basePar) {
+        /*rx处理*/
+        basePar.getObservable(retrofit)
+                /*结果判断*/
+                .map(basePar)
+                .subscribe(basePar);
+    }
 }
