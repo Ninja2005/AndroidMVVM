@@ -13,7 +13,4 @@ package com.hqumath.androidmvvm.http;
 public class AppNetConfig {
     //API服务器
     public static String baseUrl = "https://api.github.com/"; // 主线路
-
-    //网络请求成功
-    public static final String SUCCESS = "success";
 }

@@ -3,6 +3,7 @@ package com.hqumath.androidmvvm.base;
 import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.*;
+import com.hqumath.androidmvvm.app.AppExecutors;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
 import java.lang.ref.WeakReference;
@@ -21,9 +22,11 @@ public class BaseViewModel<M> extends AndroidViewModel implements LifecycleObser
     protected M model;
     //弱引用持有
     private WeakReference<LifecycleProvider> lifecycle;
+    protected AppExecutors appExecutors;
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
+        appExecutors = AppExecutors.getInstance();
     }
 
     /**

@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.hqumath.androidmvvm.BuildConfig;
+import com.hqumath.androidmvvm.utils.Density;
 import com.hqumath.androidmvvm.utils.LogUtil;
 import com.hqumath.androidmvvm.utils.Utils;
 
@@ -31,6 +32,8 @@ public class AppApplication extends Application {
         LogUtil.init(BuildConfig.DEBUG);
         //异常捕获
         AppCrashHandler.getInstance().init();
+        //屏幕适配方案，根据ui图修改,屏幕最小宽度375dp
+        Density.setDensity(this, 375f);
     }
 
     public static synchronized void setApplication(@NonNull Application application) {

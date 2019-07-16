@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">AndroidMVVM</string>
+    <string name="app_name">MVVMDemo</string>
 
-    <string name="active_name_list">名单</string>
-    <string name="active_name_sign_in">签到</string>
-
-    <string name="retry">Retry</string>
+    <string name="user_name">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="user_name_warning">Invalid username!</string>
+    <string name="password_warning">Invalid password!</string>
 
 </resources>

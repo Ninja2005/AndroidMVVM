@@ -2,7 +2,6 @@ package com.hqumath.androidmvvm.http;
 
 import com.hqumath.androidmvvm.BuildConfig;
 import com.hqumath.androidmvvm.utils.LogUtil;
-import com.trello.rxlifecycle2.android.ActivityEvent;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
@@ -64,7 +63,10 @@ public class RetrofitClient {
                 .build();
     }
 
-    public void sendHttpRequest(BaseApi basePar) {
+    /**
+     * 在主线程观察
+     */
+    public void sendHttpRequestMain(BaseApi basePar) {
         /*rx处理*/
         basePar.getObservable(retrofit)
                 /*生命周期管理*/
@@ -81,11 +83,17 @@ public class RetrofitClient {
 
     /**
      * 在IO线程观察
-     * @param basePar
      */
     public void sendHttpRequestIO(BaseApi basePar) {
         /*rx处理*/
         basePar.getObservable(retrofit)
+                /*生命周期管理*/
+                .compose(basePar.getLifecycleProvider().bindToLifecycle())
+                /*http请求线程*/
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                /*回调线程*/
+                .observeOn(Schedulers.io())
                 /*结果判断*/
                 .map(basePar)
                 .subscribe(basePar);

@@ -1,29 +1,39 @@
 package com.hqumath.androidmvvm.base;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 
 /**
  * ****************************************************************
- * 文件名称: BaseActivity
+ * 文件名称: BaseFragment
  * 作    者: Created by gyd
- * 创建时间: 2019/7/2 14:56
+ * 创建时间: 2019/7/2 16:04
  * 文件描述:
  * 注意事项:
  * 版权声明:
  * ****************************************************************
  */
-public abstract class BaseActivity<V extends ViewDataBinding> extends RxAppCompatActivity {
+public abstract class BaseFragment<V extends ViewDataBinding> extends RxFragment {
     protected V binding;
-    protected BaseActivity mContext;
+    protected Activity mContext;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = this;
-        binding = DataBindingUtil.setContentView(this, initContentView(savedInstanceState));
+        mContext = getActivity();
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, initContentView(savedInstanceState), container, false);
         binding.setLifecycleOwner(this);
         //viewModel
         initViewModel();
@@ -33,6 +43,7 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends RxAppCompa
         initData();
         //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
         initViewObservable();
+        return binding.getRoot();
     }
 
     /**

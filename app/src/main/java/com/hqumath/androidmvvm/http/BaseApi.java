@@ -5,7 +5,6 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import java.lang.ref.SoftReference;
@@ -24,11 +23,11 @@ import java.lang.ref.WeakReference;
  * 版权声明:
  * ****************************************************************
  */
-public abstract class BaseApi<T> implements Function<Response<T>, T>, Observer<T> {
+public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Observer<T> {
     //生命周期绑定
     private WeakReference<LifecycleProvider> lifecycle;
     /*回调*/
-    private SoftReference<HttpOnNextListener> listener;
+    protected SoftReference<HttpOnNextListener> listener;
 
     public BaseApi(HttpOnNextListener listener, WeakReference<LifecycleProvider> lifecycle) {
         this.listener = new SoftReference<>(listener);
@@ -41,28 +40,18 @@ public abstract class BaseApi<T> implements Function<Response<T>, T>, Observer<T
         return lifecycle.get();
     }
 
+    public HttpOnNextListener getHttpOnNextListener() {
+        return listener.get();
+    }
+
     @Override
-    public T apply(Response<T> httpResult) {
-        if (httpResult.isSuccessful() && httpResult.body() != null) {
-            return httpResult.body();
+    public T apply(BaseResultEntity<T> httpResult) {
+        int res = httpResult.getRes();
+        if (res == 0) {
+            return httpResult.getData() == null ? (T) "{}" : httpResult.getData();//不能返回空值
         } else {
-            throw new HandlerException.ResponseThrowable(httpResult.message(), httpResult.code() + "");
+            throw new HandlerException.ResponseThrowable(httpResult.getMsg(), httpResult.getRes() + "");
         }
-        /*Boolean res = httpResult.getRes();
-        if (!res) {
-            String resultCode = httpResult.getErrcode();
-            String resultMsg = httpResult.getErrmsg();
-            //处理特殊错误号
-            switch (resultCode) {
-                case HandleMessageCode.HMC_LOGIN:
-                    throw new HandlerException.ResponseThrowable("请先登录", resultCode);
-                case HandleMessageCode.HMC_LOGIN_OUT:
-                    throw new HandlerException.ResponseThrowable("您的账户已在其他设备登录,请重新登陆！", resultCode);
-                default:
-                    throw new HandlerException.ResponseThrowable(resultMsg, resultCode);
-            }
-        }
-        return httpResult.getData() == null ? (T) "" : httpResult.getData();*/
     }
 
     /**

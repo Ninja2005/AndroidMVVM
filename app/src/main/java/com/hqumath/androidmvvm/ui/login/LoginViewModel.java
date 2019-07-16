@@ -1,24 +1,11 @@
 package com.hqumath.androidmvvm.ui.login;
 
 import android.app.Application;
-import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.hqumath.androidmvvm.base.BaseViewModel;
-import com.hqumath.androidmvvm.data.MyApiService;
 import com.hqumath.androidmvvm.data.MyRepository;
-import com.hqumath.androidmvvm.entity.LoginResponse;
-import com.hqumath.androidmvvm.http.BaseApi;
-import com.hqumath.androidmvvm.http.HandlerException;
-import com.hqumath.androidmvvm.http.HttpOnNextListener;
-import com.hqumath.androidmvvm.http.RetrofitClient;
-import com.hqumath.androidmvvm.utils.ToastUtil;
-import io.reactivex.Observable;
-import retrofit2.Retrofit;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * ****************************************************************
@@ -46,50 +33,15 @@ public class LoginViewModel extends BaseViewModel<MyRepository> {
     }
 
     public void login() {
-        if (TextUtils.isEmpty(userName.getValue())) {
-            ToastUtil.toast(getApplication(), "请输入账号！");
-            return;
-        }
-        if (TextUtils.isEmpty(password.getValue())) {
-            ToastUtil.toast(getApplication(), "请输入密码！");
-            return;
-        }
-
-        RetrofitClient.getInstance().sendHttpRequest(new BaseApi(new HttpOnNextListener() {
-            @Override
-            public void onSubscribe() {
-                isLoading.setValue(true);
+        appExecutors.diskIO().execute(() -> {
+            isLoading.postValue(true);
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            @Override
-            public void onNext(Object o) {
-                //ToastUtil.toast(getApplication(), "已登录");
-                model.saveUserName(userName.getValue());
-                model.savePassword(password.getValue());
-                LoginResponse data = (LoginResponse) o;
-                model.saveToken(data.getToken());
-                isLogin.setValue(true);
-            }
-
-            @Override
-            public void onError(HandlerException.ResponseThrowable e) {
-                isLoading.setValue(false);
-                ToastUtil.toast(getApplication(), e.getMessage());
-
-            }
-
-            @Override
-            public void onComplete() {
-                isLoading.setValue(false);
-            }
-        }, getLifecycleProvider()) {
-            @Override
-            public Observable getObservable(Retrofit retrofit) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("userName", userName.getValue());
-                map.put("passWord", password.getValue());
-                return retrofit.create(MyApiService.class).userLogin(map);
-            }
+            isLoading.postValue(false);
+            isLogin.postValue(true);
         });
     }
 

@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <!--标题栏-->
+    <color name="colorPrimary">#454545</color>
+    <!--状态栏-->
+    <color name="colorPrimaryDark">#454545</color>
+    <!--主题-->
+    <!--<color name="colorAccent">#3896F9</color>-->
+    <color name="colorAccent">#09BA07</color>
+    <!--背景色-->
+    <color name="windowBackground">#FFFFFF</color>
 
-    <color name="drivider">#DDDDDD</color>
+
+    <color name="black">#000000</color>
+    <color name="gray">#ADADAD</color>
+    <color name="gray1">#666666</color>
+    <color name="white">#ffffff</color>
+    <color name="green">#6EB502</color>
+
+    <color name="line">#E3E3E3</color>
+    <color name="background">#eeeeee</color>
 
 </resources>

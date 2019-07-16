@@ -1,8 +1,6 @@
 package com.hqumath.androidmvvm.http;
 
 
-import io.reactivex.Observable;
-
 /**
  * 成功回调处理
  */
@@ -30,4 +28,14 @@ public abstract class HttpOnNextListener<T> {
      * 完成
      */
     public abstract void onComplete();
+
+    /**
+     * 下载进度
+     *
+     * @param readLength
+     * @param countLength
+     */
+    public void updateProgress(long readLength, long countLength) {
+
+    }
 }
