@@ -54,6 +54,11 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.1.0"
     //paging
     implementation "androidx.paging:paging-runtime:2.1.0"
+    //navigation
+    implementation "androidx.navigation:navigation-fragment:2.0.0"
+    implementation "androidx.navigation:navigation-ui:2.0.0"
+    //picture
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

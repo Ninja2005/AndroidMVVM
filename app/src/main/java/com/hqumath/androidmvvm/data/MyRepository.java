@@ -48,7 +48,7 @@ public class MyRepository {
         return SPUtils.getInstance().getString("password");
     }
 
-    /*public void saveToken(String token) {
+    public void saveToken(String token) {
         SPUtils.getInstance().put("token", token);
     }
 
@@ -56,7 +56,7 @@ public class MyRepository {
         return SPUtils.getInstance().getString("token");
     }
 
-    public void saveIMEI(String imei) {
+    /*public void saveIMEI(String imei) {
         SPUtils.getInstance().put("imei", imei);
     }
 

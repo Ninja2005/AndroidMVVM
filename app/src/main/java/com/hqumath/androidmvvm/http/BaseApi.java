@@ -5,6 +5,7 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import java.lang.ref.SoftReference;
@@ -23,7 +24,7 @@ import java.lang.ref.WeakReference;
  * 版权声明:
  * ****************************************************************
  */
-public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Observer<T> {
+public abstract class BaseApi<T> implements Function<Response<T>, T>, Observer<T> {
     //生命周期绑定
     private WeakReference<LifecycleProvider> lifecycle;
     /*回调*/
@@ -45,12 +46,11 @@ public abstract class BaseApi<T> implements Function<BaseResultEntity<T>, T>, Ob
     }
 
     @Override
-    public T apply(BaseResultEntity<T> httpResult) {
-        int res = httpResult.getRes();
-        if (res == 0) {
-            return httpResult.getData() == null ? (T) "{}" : httpResult.getData();//不能返回空值
+    public T apply(Response<T> httpResult) {
+        if (httpResult.isSuccessful() && httpResult.body() != null) {
+            return httpResult.body();
         } else {
-            throw new HandlerException.ResponseThrowable(httpResult.getMsg(), httpResult.getRes() + "");
+            throw new HandlerException.ResponseThrowable(httpResult.message(), httpResult.code() + "");
         }
     }
 

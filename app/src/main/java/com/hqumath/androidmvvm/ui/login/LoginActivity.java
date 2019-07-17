@@ -1,11 +1,13 @@
 package com.hqumath.androidmvvm.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseViewModelActivity;
 import com.hqumath.androidmvvm.databinding.ActivityLoginBinding;
+import com.hqumath.androidmvvm.ui.main.MainActivity;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 
 /**
@@ -60,8 +62,8 @@ public class LoginActivity extends BaseViewModelActivity<ActivityLoginBinding, L
     public void initViewObservable() {
         viewModel.isLogin().observe(this, b -> {
             if (b) {
-                /*startActivity(new Intent(LoginActivity.this, ListActivity.class));
-                finish();*/
+                startActivity(new Intent(mContext, MainActivity.class));
+                finish();
             }
         });
     }
