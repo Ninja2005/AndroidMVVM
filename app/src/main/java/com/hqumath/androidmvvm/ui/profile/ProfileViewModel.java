@@ -57,6 +57,7 @@ public class ProfileViewModel extends BaseViewModel<MyRepository> {
                 blog.postValue(user.getBlog());
                 location.postValue(user.getLocation());
                 createdTime.postValue(user.getCreated_at());
+                isLoading.postValue(false);
             }
 
             @Override

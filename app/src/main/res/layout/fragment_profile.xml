@@ -91,9 +91,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_marginStart="40dp"
                             android:gravity="end"
                             tools:text="xxx"
                             android:text="@{viewModel.blog}"
+                            android:singleLine="true"
+                            android:ellipsize="end"
                             android:textSize="16sp"
                             android:textColor="@color/black"/>
                 </LinearLayout>

@@ -2,9 +2,11 @@ package com.hqumath.androidmvvm.http.service;
 
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +23,6 @@ public interface MyApiService {
 
     //获取用户信息
     @GET("users/ninja2005")
-    Observable<UserInfoEntity> getUserInfo();
+    Observable<Response<UserInfoEntity>> getUserInfo();
 
 }
