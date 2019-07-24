@@ -24,11 +24,11 @@
                 android:icon="@drawable/ic_menu_person"
                 android:title="@string/profile"/>
         <item
-                android:id="@+id/nav_owned"
+                android:id="@+id/myrepos_fragment"
                 android:icon="@drawable/ic_menu_repo"
                 android:title="@string/my_repos"/>
         <item
-                android:id="@+id/nav_starred"
+                android:id="@+id/starred_fragment"
                 android:icon="@drawable/ic_menu_star"
                 android:title="@string/starred_repos"/>
     </group>

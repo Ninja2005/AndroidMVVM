@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="data"
+                type="com.hqumath.androidmvvm.entity.ReposEntity"/>
+
+        <variable
+                name="callback"
+                type="com.hqumath.androidmvvm.adapters.MyReposListAdapter.ClickCallback"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            app:cardUseCompatPadding="true"
+            android:onClick="@{() ->  callback.onClick(data)}">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorAccent"
+                    tools:text="Name"
+                    android:text="@{data.name}"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    tools:text="introduction"
+                    android:text="@{data.description}"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray1"
+                    tools:text="author"
+                    android:text="@{data.owner.login}"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

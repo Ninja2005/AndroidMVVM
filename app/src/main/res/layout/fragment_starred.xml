@@ -9,7 +9,7 @@
 
         <variable
                 name="viewModel"
-                type="com.hqumath.androidmvvm.ui.myrepos.MyReposViewModel"/>
+                type="com.hqumath.androidmvvm.ui.starred.StarredViewModel"/>
     </data>
 
     <LinearLayout

@@ -28,6 +28,9 @@ public interface MyApiService {
 
     //获取用户仓库
     @GET("users/ninja2005/repos")
-    Observable<Response<ReposEntity>> getMyRepos();
+    Observable<Response<List<ReposEntity>>> getMyRepos();
 
+    //获取星标仓库
+    @GET("users/ninja2005/starred")
+    Observable<Response<List<ReposEntity>>> getStarred();
 }

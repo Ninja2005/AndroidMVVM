@@ -18,21 +18,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/profile_fragment">
+    app:startDestination="@+id/myrepos_fragment">
 
     <fragment
         android:id="@+id/profile_fragment"
         android:name="com.hqumath.androidmvvm.ui.profile.ProfileFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_profile">
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile"/>
 
-        <!--<action
-            android:id="@+id/action_garden_fragment_to_plant_detail_fragment"
-            app:destination="@id/plant_detail_fragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />-->
-    </fragment>
+    <fragment
+            android:id="@+id/myrepos_fragment"
+            android:name="com.hqumath.androidmvvm.ui.myrepos.MyReposFragment"
+            android:label="@string/my_repos"
+            tools:layout="@layout/fragment_myrepos"/>
+
+    <fragment
+            android:id="@+id/starred_fragment"
+            android:name="com.hqumath.androidmvvm.ui.starred.StarredFragment"
+            android:label="@string/starred_repos"
+            tools:layout="@layout/fragment_starred"/>
 
 </navigation>

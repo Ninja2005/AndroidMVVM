@@ -1,15 +1,15 @@
-package com.hqumath.androidmvvm.ui.myrepos;
+package com.hqumath.androidmvvm.ui.starred;
 
 import android.os.Bundle;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.adapters.MyReposListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
-import com.hqumath.androidmvvm.databinding.FragmentMyreposBinding;
+import com.hqumath.androidmvvm.databinding.FragmentStarredBinding;
 
 /**
  * ****************************************************************
- * 文件名称: MyReposFragment
+ * 文件名称: StarredFragment
  * 作    者: Created by gyd
  * 创建时间: 2019/7/24 15:41
  * 文件描述:
@@ -17,18 +17,18 @@ import com.hqumath.androidmvvm.databinding.FragmentMyreposBinding;
  * 版权声明:
  * ****************************************************************
  */
-public class MyReposFragment extends BaseViewModelFragment<FragmentMyreposBinding, MyReposViewModel> {
+public class StarredFragment extends BaseViewModelFragment<FragmentStarredBinding, StarredViewModel> {
 
     private MyReposListAdapter adapter;
 
     @Override
-    public MyReposViewModel getViewModel() {
-        return ViewModelProviders.of(this).get(MyReposViewModel.class);
+    public StarredViewModel getViewModel() {
+        return ViewModelProviders.of(this).get(StarredViewModel.class);
     }
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
-        return R.layout.fragment_myrepos;
+        return R.layout.fragment_starred;
     }
 
     @Override

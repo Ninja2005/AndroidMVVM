@@ -1,4 +1,4 @@
-package com.hqumath.androidmvvm.ui.myrepos;
+package com.hqumath.androidmvvm.ui.starred;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * ****************************************************************
- * 文件名称: MyReposViewModel
+ * 文件名称: StarredViewModel
  * 作    者: Created by gyd
  * 创建时间: 2019/7/24 15:41
  * 文件描述:
@@ -27,12 +27,12 @@ import java.util.List;
  * 版权声明:
  * ****************************************************************
  */
-public class MyReposViewModel extends BaseViewModel<MyRepository> {
+public class StarredViewModel extends BaseViewModel<MyRepository> {
 
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     public MutableLiveData<List<ReposEntity>> list = new MutableLiveData<>();
 
-    public MyReposViewModel(@NonNull Application application) {
+    public StarredViewModel(@NonNull Application application) {
         super(application);
         model = MyRepository.getInstance();
     }
@@ -62,7 +62,7 @@ public class MyReposViewModel extends BaseViewModel<MyRepository> {
         }, getLifecycleProvider()) {
             @Override
             public Observable getObservable(Retrofit retrofit) {
-                return retrofit.create(MyApiService.class).getMyRepos();
+                return retrofit.create(MyApiService.class).getStarred();
             }
         });
     }
