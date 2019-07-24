@@ -33,4 +33,12 @@ public interface MyApiService {
     //获取星标仓库
     @GET("users/ninja2005/starred")
     Observable<Response<List<ReposEntity>>> getStarred();
+
+    //获取跟随
+    @GET("users/ninja2005/following")
+    Observable<Response<List<UserInfoEntity>>> getFollowing();
+
+    //获取跟随者
+    @GET("users/ninja2005/followers")
+    Observable<Response<List<UserInfoEntity>>> getFollowers();
 }

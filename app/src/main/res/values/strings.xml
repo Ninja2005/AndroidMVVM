@@ -11,6 +11,9 @@
     <string name="profile">Profile</string>
     <string name="my_repos">My repos</string>
     <string name="starred_repos">Starred repos</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
+
     <string name="settings">Settings</string>
     <string name="about">About</string>
     <string name="logout">Logout</string>
