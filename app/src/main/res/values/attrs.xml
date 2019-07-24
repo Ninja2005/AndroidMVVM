@@ -1,0 +1,5 @@
+<resources>
+    <!--属性-->
+    <attr name="icon_color" format="color|reference"/>
+
+</resources>

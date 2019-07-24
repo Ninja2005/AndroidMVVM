@@ -1,5 +1,6 @@
 package com.hqumath.androidmvvm.http.service;
 
+import com.hqumath.androidmvvm.entity.ReposEntity;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import io.reactivex.Observable;
 import retrofit2.Response;
@@ -24,5 +25,9 @@ public interface MyApiService {
     //获取用户信息
     @GET("users/ninja2005")
     Observable<Response<UserInfoEntity>> getUserInfo();
+
+    //获取用户仓库
+    @GET("users/ninja2005/repos")
+    Observable<Response<ReposEntity>> getMyRepos();
 
 }

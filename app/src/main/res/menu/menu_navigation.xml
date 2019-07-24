@@ -17,11 +17,37 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/profile_fragment"
-        android:title="Profile"/>
+    <group
+            android:id="@+id/my">
+        <item
+                android:id="@+id/profile_fragment"
+                android:icon="@drawable/ic_menu_person"
+                android:title="@string/profile"/>
+        <item
+                android:id="@+id/nav_owned"
+                android:icon="@drawable/ic_menu_repo"
+                android:title="@string/my_repos"/>
+        <item
+                android:id="@+id/nav_starred"
+                android:icon="@drawable/ic_menu_star"
+                android:title="@string/starred_repos"/>
+    </group>
 
-    <item
-            android:id="@+id/test"
-            android:title="测试"/>
+    <group
+            android:id="@+id/setting">
+        <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_settings"
+                android:title="@string/settings"/>
+        <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_about"
+                android:title="@string/about"/>
+        <item
+                android:id="@+id/nav_logout"
+                android:checkable="false"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/logout"/>
+    </group>
+
 </menu>

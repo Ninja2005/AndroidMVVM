@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--标题栏-->
-    <color name="colorPrimary">#454545</color>
+    <color name="colorPrimary">#3F51B5</color>
     <!--状态栏-->
-    <color name="colorPrimaryDark">#454545</color>
+    <color name="colorPrimaryDark">#3F51B5</color>
     <!--主题-->
     <!--<color name="colorAccent">#3896F9</color>-->
-    <color name="colorAccent">#09BA07</color>
+    <color name="colorAccent">#3F51B5</color>
     <!--背景色-->
     <color name="windowBackground">#FFFFFF</color>
+
+    <color name="light_teal_icon_color">#000000</color>
 
 
     <color name="black">#000000</color>
