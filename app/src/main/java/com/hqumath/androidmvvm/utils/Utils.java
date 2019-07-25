@@ -2,6 +2,8 @@ package com.hqumath.androidmvvm.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 
 /**
@@ -36,5 +38,20 @@ public final class Utils {
             return context;
         }
         throw new NullPointerException("should be initialized in application");
+    }
+
+    /**
+     * 获取版本号
+     *
+     * @return
+     */
+    public static String getVersion() {
+        try {
+            PackageInfo pi = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pi.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 }

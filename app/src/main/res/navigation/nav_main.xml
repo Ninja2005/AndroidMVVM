@@ -48,4 +48,16 @@
                 app:destination="@id/profile_fragment"/>
     </fragment>
 
+    <fragment
+            android:id="@+id/settings_fragment"
+            android:name="com.hqumath.androidmvvm.ui.settings.SettingsFragment"
+            android:label="@string/settings"
+            tools:layout="@layout/fragment_settings"/>
+
+    <fragment
+            android:id="@+id/about_fragment"
+            android:name="com.hqumath.androidmvvm.ui.about.AboutFragment"
+            android:label="@string/about"
+            tools:layout="@layout/fragment_about"/>
+
 </navigation>

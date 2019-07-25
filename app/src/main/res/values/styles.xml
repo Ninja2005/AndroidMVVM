@@ -6,33 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/windowBackground</item>
+        <!--<item name="android:windowBackground">@color/windowBackground</item>-->
         <!--控件的颜色-->
         <!--<item name="colorControlNormal">#E3E3E3</item>-->
 
         <item name="icon_color">@color/light_teal_icon_color</item>
 
     </style>
-
-    <!--<style name="ThemeLightTeal" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/light_teal_color_primary</item>
-        <item name="colorPrimaryDark">@color/light_teal_color_primary_dark</item>
-        <item name="colorAccent">@color/light_teal_color_accent</item>
-        <item name="android:windowBackground">@color/light_teal_window_background</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="android:textColorPrimary">@color/light_teal_text_color_primary</item>
-        <item name="android:textColorSecondary">@color/light_teal_text_color_secondary</item>
-        <item name="android:textColorTertiary">@color/material_grey_700</item>
-        <item name="icon_color">@color/light_teal_icon_color</item>
-        <item name="card_background">@color/light_teal_card_background</item>
-        <item name="title_color">@color/light_teal_title_color</item>
-        <item name="subtitle_color">@color/light_teal_subtitle_color</item>
-        <item name="selected_color">@color/light_teal_selected_color</item>
-        <item name="color_primary_blur">@color/light_teal_color_primary_blur</item>
-        <item name="popup_theme">@style/PopupThemeLightTeal</item>
-        <item name="appbar_theme">@style/AppbarThemeLightTeal</item>
-        <item name="android:contextPopupMenuStyle" tools:targetApi="n">@style/ContextPopupThemeLightTeal</item>
-        <item name="popup_menu_theme">@style/PopupMenuLightTeal</item>
-    </style>-->
 
 </resources>
