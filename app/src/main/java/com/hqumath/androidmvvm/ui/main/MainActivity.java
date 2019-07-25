@@ -33,10 +33,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     @Override
     public void initView() {
-        binding.navigationView.setNavigationItemSelectedListener(menuItem -> {
-            ToastUtil.toast("点击" + menuItem.getItemId());
-            return true;
-        });
     }
 
     @Override
@@ -48,6 +44,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         setSupportActionBar(binding.toolbar);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navigationView, navController);
+
     }
 
     @Override

@@ -42,5 +42,10 @@
             android:id="@+id/following_fragment"
             android:name="com.hqumath.androidmvvm.ui.following.FollowingFragment"
             android:label="@string/following"
-            tools:layout="@layout/fragment_following"/>
+            tools:layout="@layout/fragment_following">
+        <action
+                android:id="@+id/action_following_fragment_to_profile_fragment"
+                app:destination="@id/profile_fragment"/>
+    </fragment>
+
 </navigation>

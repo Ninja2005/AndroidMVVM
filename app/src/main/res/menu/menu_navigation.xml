@@ -37,10 +37,10 @@
                 android:icon="@drawable/ic_menu_trace"
                 android:title="@string/following"/>
 
-        <item
+        <!--<item
                 android:id="@+id/followers_fragment"
                 android:icon="@drawable/ic_menu_trace"
-                android:title="@string/followers"/>
+                android:title="@string/followers"/>-->
     </group>
 
     <group
@@ -53,11 +53,11 @@
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_menu_about"
                 android:title="@string/about"/>
-        <item
+        <!--<item
                 android:id="@+id/nav_logout"
                 android:checkable="false"
                 android:icon="@drawable/ic_logout"
-                android:title="@string/logout"/>
+                android:title="@string/logout"/>-->
     </group>
 
 </menu>
