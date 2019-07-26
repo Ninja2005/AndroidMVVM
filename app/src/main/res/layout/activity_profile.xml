@@ -14,18 +14,21 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appBarLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="250dp"
+                android:fitsSystemWindows="true"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/mCollapsingToolbarLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
                     app:contentScrim="?attr/colorPrimary"
                     app:collapsedTitleGravity="start"
                     app:expandedTitleGravity="top"
@@ -37,6 +40,7 @@
                         android:id="@+id/iv_avatar_bg"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:fitsSystemWindows="true"
                         app:layout_collapseMode="parallax"
                         app:layout_collapseParallaxMultiplier="0.5"
                         android:scaleType="centerCrop"/>
@@ -44,6 +48,7 @@
                 <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:fitsSystemWindows="true"
                         app:layout_collapseMode="parallax"
                         android:background="#DD3F51B5"/>
 
@@ -53,8 +58,7 @@
                         android:layout_gravity="start|top"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
-                        android:layout_marginTop="70dp"
-                        android:layout_marginBottom="50dp">
+                        android:layout_marginTop="90dp">
 
                     <ImageView
                             android:id="@+id/iv_avatar"
@@ -134,6 +138,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:drawableStart="@drawable/ic_group_secondary"
+                                tools:visibility="visible"
+                                android:visibility="gone"
                                 android:text="@{viewModel.company}"
                                 android:padding="8dp"
                                 android:drawablePadding="16dp"
@@ -146,6 +152,8 @@
                                 android:layout_height="wrap_content"
                                 android:background="?android:selectableItemBackground"
                                 android:drawableStart="@drawable/ic_mail_secondary"
+                                tools:visibility="visible"
+                                android:visibility="gone"
                                 android:text="@{viewModel.email}"
                                 android:padding="8dp"
                                 android:drawablePadding="16dp"
@@ -157,6 +165,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:drawableStart="@drawable/ic_link_secondary"
+                                tools:visibility="visible"
+                                android:visibility="gone"
                                 android:text="@{viewModel.blog}"
                                 android:padding="8dp"
                                 android:background="?android:selectableItemBackground"

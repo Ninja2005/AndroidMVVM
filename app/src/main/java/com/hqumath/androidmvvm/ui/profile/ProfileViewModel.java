@@ -59,8 +59,8 @@ public class ProfileViewModel extends BaseViewModel<MyRepository> {
                 login.postValue(user.getLogin());
                 avatarUrl.postValue(user.getAvatar_url());
                 location.postValue(user.getLocation());
-                createdTime.postValue(user.getCreated_at());
-                name.postValue(user.getLogin());
+                createdTime.postValue(user.getCreated_at().replace("T", " ").replace("Z", ""));
+                name.postValue(user.getName());
                 company.postValue(user.getCompany());
                 blog.postValue(user.getBlog());
                 email.postValue(user.getEmail());
