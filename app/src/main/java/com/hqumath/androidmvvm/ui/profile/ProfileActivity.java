@@ -5,20 +5,23 @@ import android.os.Bundle;
 import androidx.lifecycle.ViewModelProviders;
 import com.bumptech.glide.Glide;
 import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.base.BaseViewModelFragment;
-import com.hqumath.androidmvvm.databinding.FragmentProfileBinding;
+import com.hqumath.androidmvvm.base.BaseViewModelActivity;
+import com.hqumath.androidmvvm.databinding.ActivityProfileBinding;
 
 /**
  * ****************************************************************
- * 文件名称: ProfileFragment
+ * 文件名称: ProfileActivity
  * 作    者: Created by gyd
- * 创建时间: 2019/7/17 11:44
+ * 创建时间: 2019/7/26 10:04
  * 文件描述:
  * 注意事项:
  * 版权声明:
  * ****************************************************************
  */
-public class ProfileFragment extends BaseViewModelFragment<FragmentProfileBinding, ProfileViewModel> {
+public class ProfileActivity extends BaseViewModelActivity<ActivityProfileBinding, ProfileViewModel> {
+
+    private String userName;
+
     @Override
     public ProfileViewModel getViewModel() {
         return ViewModelProviders.of(this).get(ProfileViewModel.class);
@@ -26,19 +29,21 @@ public class ProfileFragment extends BaseViewModelFragment<FragmentProfileBindin
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
-        return R.layout.fragment_profile;
+        return R.layout.activity_profile;
     }
 
     @Override
     public void initView() {
         binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData("ninja2005"));
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData(userName));
     }
 
     @Override
     public void initData() {
+        userName = getIntent().getStringExtra("UserName");
+
         binding.setViewModel(viewModel);
-        viewModel.getData("ninja2005");
+        viewModel.getData(userName);
         binding.swipeRefreshLayout.setRefreshing(true);
     }
 

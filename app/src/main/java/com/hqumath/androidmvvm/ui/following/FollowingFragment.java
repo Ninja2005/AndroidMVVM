@@ -1,11 +1,13 @@
 package com.hqumath.androidmvvm.ui.following;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.adapters.UserListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentFollowingBinding;
+import com.hqumath.androidmvvm.ui.profile.ProfileActivity;
 
 /**
  * ****************************************************************
@@ -41,9 +43,9 @@ public class FollowingFragment extends BaseViewModelFragment<FragmentFollowingBi
     public void initData() {
         binding.setViewModel(viewModel);
         adapter = new UserListAdapter(data -> {
-            /*Intent intent = new Intent(mContext, CheckInActActivity.class);
-            intent.putExtra("CheckInActID", data.getId());
-            startActivity(intent);*/
+            Intent intent = new Intent(mContext, ProfileActivity.class);
+            intent.putExtra("UserName", data.getLogin());
+            startActivity(intent);
         });
         binding.list.setAdapter(adapter);
         viewModel.getData();

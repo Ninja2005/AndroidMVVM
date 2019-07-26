@@ -65,10 +65,10 @@ public class UserInfoEntity {
     private String type;
     private boolean site_admin;
     private String name;
-    private Object company;
+    private String company;
     private String blog;
     private String location;
-    private Object email;
+    private String email;
     private Object hireable;
     private Object bio;
     private int public_repos;
@@ -230,11 +230,11 @@ public class UserInfoEntity {
         this.name = name;
     }
 
-    public Object getCompany() {
+    public String getCompany() {
         return company;
     }
 
-    public void setCompany(Object company) {
+    public void setCompany(String company) {
         this.company = company;
     }
 
@@ -254,11 +254,11 @@ public class UserInfoEntity {
         this.location = location;
     }
 
-    public Object getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Object email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

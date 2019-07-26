@@ -5,10 +5,9 @@ import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.GET;
-import retrofit2.http.QueryMap;
+import retrofit2.http.Path;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * ****************************************************************
@@ -23,8 +22,11 @@ import java.util.Map;
 public interface MyApiService {
 
     //获取用户信息
-    @GET("users/ninja2005")
-    Observable<Response<UserInfoEntity>> getUserInfo();
+//    @GET("users/ninja2005")
+//    Observable<Response<UserInfoEntity>> getUserInfo();
+
+    @GET("users/{userName}")
+    Observable<Response<UserInfoEntity>> getUserInfo(@Path("userName") String userName);
 
     //获取用户仓库
     @GET("users/ninja2005/repos")

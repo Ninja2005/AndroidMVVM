@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.databinding.ItemUserBinding;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
@@ -84,7 +86,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         UserInfoEntity data = mList.get(position);
         holder.binding.setData(data);
         if (!TextUtils.isEmpty(data.getAvatar_url())) {
-            Glide.with(Utils.getContext()).load(data.getAvatar_url()).into(holder.binding.ivHead);
+            Glide.with(Utils.getContext())
+                    .load(data.getAvatar_url())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))//圆形
+                    .into(holder.binding.ivHead);
         }
         holder.binding.executePendingBindings();
 
