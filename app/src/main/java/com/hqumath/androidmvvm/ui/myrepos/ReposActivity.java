@@ -65,7 +65,7 @@ public class ReposActivity extends BaseViewModelActivity<ActivityReposBinding, R
         reposEntity.setLanguage(language);
         viewModel.data = reposEntity;
         //ui
-        binding.toolbar.setTitle(name);
+        setTitle(name);
         binding.setViewModel(viewModel);
         Glide.with(mContext).load(avatar_url).into(binding.ivAvatarBg);
 

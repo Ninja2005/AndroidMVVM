@@ -55,7 +55,8 @@ public class ProfileActivity extends BaseViewModelActivity<ActivityProfileBindin
     @Override
     public void initData() {
         userName = getIntent().getStringExtra("UserName");
-        binding.toolbar.setTitle(userName);
+        //binding.toolbar.setTitle(userName);
+        setTitle(userName);
         binding.setViewModel(viewModel);
         viewModel.getData(userName);
         binding.swipeRefreshLayout.setRefreshing(true);
