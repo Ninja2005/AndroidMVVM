@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'//数据解析器
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'//网络请求适配器
     //lifecycle
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha02"
     //room
     implementation "androidx.room:room-runtime:2.1.0"
     annotationProcessor "androidx.room:room-compiler:2.1.0"

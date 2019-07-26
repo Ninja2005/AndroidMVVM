@@ -1,5 +1,6 @@
 package com.hqumath.androidmvvm.ui.myrepos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
@@ -42,9 +43,15 @@ public class MyReposFragment extends BaseViewModelFragment<FragmentMyreposBindin
     public void initData() {
         binding.setViewModel(viewModel);
         adapter = new MyReposListAdapter(data -> {
-            /*Intent intent = new Intent(mContext, CheckInActActivity.class);
-            intent.putExtra("CheckInActID", data.getId());
-            startActivity(intent);*/
+            Intent intent = new Intent(mContext, ReposActivity.class);
+            intent.putExtra("avatar_url", data.getArchive_url());
+            intent.putExtra("name", data.getName());
+            intent.putExtra("description", data.getDescription());
+            intent.putExtra("full_name", data.getFull_name());
+            intent.putExtra("created_at", data.getCreated_at());
+            intent.putExtra("language", data.getLanguage());
+            intent.putExtra("size", data.getSize());
+            startActivity(intent);
         });
         binding.list.setAdapter(adapter);
         viewModel.getData();
