@@ -33,6 +33,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     @Override
     public void initView() {
+        setSupportActionBar(binding.toolbar);
     }
 
     @Override
@@ -41,7 +42,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
                 .setDrawerLayout(binding.drawerLayout).build();
 
-        setSupportActionBar(binding.toolbar);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navigationView, navController);
 

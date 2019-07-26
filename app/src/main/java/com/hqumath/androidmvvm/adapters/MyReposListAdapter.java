@@ -2,13 +2,16 @@ package com.hqumath.androidmvvm.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.databinding.ItemMyreposBinding;
 import com.hqumath.androidmvvm.entity.ReposEntity;
+import com.hqumath.androidmvvm.utils.StringUtils;
 
 import java.util.List;
 
@@ -58,9 +61,9 @@ public class MyReposListAdapter extends RecyclerView.Adapter<MyReposListAdapter.
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     ReposEntity oldItem = mList.get(oldItemPosition);
                     ReposEntity newItem = list.get(newItemPosition);
-                    return oldItem.getName().equals(newItem.getName())
-                            && oldItem.getDescription().equals(newItem.getDescription())
-                            && oldItem.getOwner().getLogin().equals(newItem.getOwner().getLogin());
+                    return StringUtils.equals(oldItem.getName(), newItem.getName())
+                            && StringUtils.equals(oldItem.getDescription(), newItem.getDescription())
+                            && StringUtils.equals(oldItem.getOwner().getLogin(), newItem.getOwner().getLogin());
                 }
             });
             mList = list;

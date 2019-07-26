@@ -40,6 +40,7 @@ public class ProfileActivity extends BaseViewModelActivity<ActivityProfileBindin
 
     @Override
     public void initView() {
+        setSupportActionBar(binding.toolbar);
         binding.toolbar.setNavigationOnClickListener(v -> finish());
         binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData(userName));

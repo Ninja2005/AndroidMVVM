@@ -7,10 +7,14 @@ import android.view.View;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseViewModelActivity;
 import com.hqumath.androidmvvm.databinding.ActivityReposBinding;
 import com.hqumath.androidmvvm.entity.ReposEntity;
+import com.hqumath.androidmvvm.utils.StringUtils;
+
+import java.util.Locale;
 
 public class ReposActivity extends BaseViewModelActivity<ActivityReposBinding, ReposViewModel> {
 
@@ -27,6 +31,8 @@ public class ReposActivity extends BaseViewModelActivity<ActivityReposBinding, R
 
     @Override
     public void initView() {
+        setSupportActionBar(binding.toolbar);
+
         binding.toolbar.setNavigationOnClickListener(v -> finish());
         binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData());
@@ -48,6 +54,8 @@ public class ReposActivity extends BaseViewModelActivity<ActivityReposBinding, R
         String created_at = getIntent().getStringExtra("created_at");
         String language = getIntent().getStringExtra("language");
         int size = getIntent().getIntExtra("size",0);
+        language = String.format(Locale.getDefault(), "Language %s, size %s",
+                language, StringUtils.getSizeString(size * 1024));
         ReposEntity reposEntity = new ReposEntity();
         reposEntity.setArchive_url(avatar_url);
         reposEntity.setName(name);
@@ -55,12 +63,11 @@ public class ReposActivity extends BaseViewModelActivity<ActivityReposBinding, R
         reposEntity.setFull_name(full_name);
         reposEntity.setCreated_at(created_at);
         reposEntity.setLanguage(language);
-        reposEntity.setSize(size);
         viewModel.data = reposEntity;
         //ui
         binding.toolbar.setTitle(name);
         binding.setViewModel(viewModel);
-//        Glide.with(mContext).load(avatar_url).into(binding.ivAvatarBg);
+        Glide.with(mContext).load(avatar_url).into(binding.ivAvatarBg);
 
 //        viewModel.getData();
 //        binding.swipeRefreshLayout.setRefreshing(true);
@@ -80,4 +87,6 @@ public class ReposActivity extends BaseViewModelActivity<ActivityReposBinding, R
                     .into(binding.ivAvatar);
         });*/
     }
+
+
 }

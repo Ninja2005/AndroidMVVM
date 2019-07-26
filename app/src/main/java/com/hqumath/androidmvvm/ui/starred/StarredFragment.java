@@ -1,11 +1,13 @@
 package com.hqumath.androidmvvm.ui.starred;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.adapters.MyReposListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentStarredBinding;
+import com.hqumath.androidmvvm.ui.myrepos.ReposActivity;
 
 /**
  * ****************************************************************
@@ -42,9 +44,15 @@ public class StarredFragment extends BaseViewModelFragment<FragmentStarredBindin
     public void initData() {
         binding.setViewModel(viewModel);
         adapter = new MyReposListAdapter(data -> {
-            /*Intent intent = new Intent(mContext, CheckInActActivity.class);
-            intent.putExtra("CheckInActID", data.getId());
-            startActivity(intent);*/
+            Intent intent = new Intent(mContext, ReposActivity.class);
+            intent.putExtra("avatar_url", data.getOwner().getAvatar_url());
+            intent.putExtra("name", data.getName());
+            intent.putExtra("description", data.getDescription());
+            intent.putExtra("full_name", data.getFull_name());
+            intent.putExtra("created_at", data.getCreated_at());
+            intent.putExtra("language", data.getLanguage());
+            intent.putExtra("size", data.getSize());
+            startActivity(intent);
         });
         binding.list.setAdapter(adapter);
         viewModel.getData();

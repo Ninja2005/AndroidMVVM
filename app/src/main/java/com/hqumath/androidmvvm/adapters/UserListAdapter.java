@@ -3,16 +3,19 @@ package com.hqumath.androidmvvm.adapters;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.databinding.ItemUserBinding;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
+import com.hqumath.androidmvvm.utils.StringUtils;
 import com.hqumath.androidmvvm.utils.Utils;
 
 import java.util.List;
@@ -63,8 +66,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     UserInfoEntity oldItem = mList.get(oldItemPosition);
                     UserInfoEntity newItem = list.get(newItemPosition);
-                    return oldItem.getLogin().equals(newItem.getLogin())
-                            && oldItem.getAvatar_url().equals(newItem.getAvatar_url());
+                    return StringUtils.equals(oldItem.getLogin(), newItem.getLogin())
+                            && StringUtils.equals(oldItem.getAvatar_url(), newItem.getAvatar_url());
                 }
             });
             mList = list;

@@ -44,7 +44,7 @@ public class MyReposFragment extends BaseViewModelFragment<FragmentMyreposBindin
         binding.setViewModel(viewModel);
         adapter = new MyReposListAdapter(data -> {
             Intent intent = new Intent(mContext, ReposActivity.class);
-            intent.putExtra("avatar_url", data.getArchive_url());
+            intent.putExtra("avatar_url", data.getOwner().getAvatar_url());
             intent.putExtra("name", data.getName());
             intent.putExtra("description", data.getDescription());
             intent.putExtra("full_name", data.getFull_name());
