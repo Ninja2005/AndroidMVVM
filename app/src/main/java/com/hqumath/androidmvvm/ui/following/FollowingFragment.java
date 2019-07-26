@@ -33,9 +33,8 @@ public class FollowingFragment extends BaseViewModelFragment<FragmentFollowingBi
 
     @Override
     public void initView() {
+        binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData());
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData());
-
     }
 
     @Override

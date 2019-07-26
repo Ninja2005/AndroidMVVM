@@ -33,7 +33,7 @@ public class StarredFragment extends BaseViewModelFragment<FragmentStarredBindin
 
     @Override
     public void initView() {
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData());
+        binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData());
 
     }

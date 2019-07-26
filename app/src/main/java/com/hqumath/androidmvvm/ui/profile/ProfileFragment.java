@@ -31,6 +31,7 @@ public class ProfileFragment extends BaseViewModelFragment<FragmentProfileBindin
 
     @Override
     public void initView() {
+        binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData());
     }
 
