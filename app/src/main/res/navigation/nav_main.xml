@@ -21,12 +21,6 @@
     app:startDestination="@+id/myrepos_fragment">
 
     <fragment
-        android:id="@+id/profile_fragment"
-        android:name="com.hqumath.androidmvvm.ui.profile.ProfileFragment"
-        android:label="@string/profile"
-        tools:layout="@layout/fragment_profile"/>
-
-    <fragment
             android:id="@+id/myrepos_fragment"
             android:name="com.hqumath.androidmvvm.ui.myrepos.MyReposFragment"
             android:label="@string/my_repos"
@@ -43,9 +37,7 @@
             android:name="com.hqumath.androidmvvm.ui.following.FollowingFragment"
             android:label="@string/following"
             tools:layout="@layout/fragment_following">
-        <action
-                android:id="@+id/action_following_fragment_to_profile_fragment"
-                app:destination="@id/profile_fragment"/>
+
     </fragment>
 
     <fragment

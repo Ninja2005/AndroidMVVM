@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -11,174 +12,167 @@
                 type="com.hqumath.androidmvvm.ui.profile.ProfileViewModel"/>
     </data>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/mCollapsingToolbarLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:collapsedTitleGravity="start"
+                    app:expandedTitleGravity="top"
+                    app:expandedTitleMarginStart="105dp"
+                    app:expandedTitleMarginTop="70dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <ImageView
+                        android:id="@+id/iv_avatar_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_collapseMode="parallax"
+                        app:layout_collapseParallaxMultiplier="0.5"
+                        android:scaleType="centerCrop"/>
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_collapseMode="parallax"
+                        android:background="#DD3F51B5"/>
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|top"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginTop="70dp"
+                        android:layout_marginBottom="50dp">
+
+                    <ImageView
+                            android:id="@+id/iv_avatar"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"/>
+
+                    <TextView
+                            android:id="@+id/location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/white"
+                            android:text="@{viewModel.location}"
+                            android:layout_toEndOf="@+id/iv_avatar"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="40dp"/>
+
+                    <TextView
+                            android:id="@+id/joined_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textSize="14sp"
+                            android:textColor="@color/white"
+                            android:text="@{viewModel.createdTime}"
+                            android:layout_below="@+id/location"
+                            android:layout_toEndOf="@+id/iv_avatar"
+                            android:layout_marginStart="12dp"/>
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:navigationIcon="?attr/homeAsUpIndicator"
+                        app:layout_collapseMode="pin"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipeRefreshLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:orientation="horizontal">
+                        android:layout_margin="8dp"
+                        app:contentPadding="10dp">
 
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="姓名"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"/>
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-                    <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            tools:text="001"
-                            android:text="@{viewModel.name}"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"/>
-                </LinearLayout>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:lines="1"
+                                android:textSize="18sp"
+                                android:textColor="?android:textColorPrimary"
+                                tools:text="Name"
+                                android:text="@{viewModel.name}"
+                                android:padding="8dp"/>
 
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line"/>
+                        <TextView
+                                android:id="@+id/company"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_group_secondary"
+                                android:text="@{viewModel.company}"
+                                android:padding="8dp"
+                                android:drawablePadding="16dp"
+                                android:textSize="16sp"
+                                android:textColor="?android:textColorPrimary"/>
 
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:orientation="horizontal">
+                        <TextView
+                                android:id="@+id/email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?android:selectableItemBackground"
+                                android:drawableStart="@drawable/ic_mail_secondary"
+                                android:text="@{viewModel.email}"
+                                android:padding="8dp"
+                                android:drawablePadding="16dp"
+                                android:textSize="16sp"
+                                android:textColor="?android:colorAccent"/>
 
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="博客"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"/>
+                        <TextView
+                                android:id="@+id/link"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_link_secondary"
+                                android:text="@{viewModel.blog}"
+                                android:padding="8dp"
+                                android:background="?android:selectableItemBackground"
+                                android:drawablePadding="16dp"
+                                android:textSize="16sp"
+                                android:textColor="?android:colorAccent"
+                                android:lines="1"/>
 
-                    <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="40dp"
-                            android:gravity="end"
-                            tools:text="xxx"
-                            android:text="@{viewModel.blog}"
-                            android:singleLine="true"
-                            android:ellipsize="end"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"/>
-                </LinearLayout>
+                    </LinearLayout>
 
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line"/>
+                </androidx.cardview.widget.CardView>
 
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:orientation="horizontal">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="位置"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"/>
-
-                    <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            tools:text="x公司"
-                            android:text="@{viewModel.location}"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line"/>
-
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:orientation="horizontal">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="加入时间"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"/>
-
-                    <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            tools:text="xx"
-                            android:text="@{viewModel.createdTime}"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line"/>
-
-                <LinearLayout
-                        android:id="@+id/ll_face"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:orientation="vertical">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="头像"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"/>
-
-                    <ImageView
-                            android:id="@+id/iv_face"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:layout_marginTop="10dp"
-                            android:scaleType="centerCrop"/>
-                </LinearLayout>
-
-                <View
-                        android:id="@+id/line_face"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/line"/>
-            </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
-    </LinearLayout>
-
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

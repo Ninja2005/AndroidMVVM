@@ -1,12 +1,14 @@
 package com.hqumath.androidmvvm.ui.profile;
 
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.lifecycle.ViewModelProviders;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseViewModelActivity;
 import com.hqumath.androidmvvm.databinding.ActivityProfileBinding;
+import com.hqumath.androidmvvm.utils.Utils;
 
 /**
  * ****************************************************************
@@ -34,14 +36,16 @@ public class ProfileActivity extends BaseViewModelActivity<ActivityProfileBindin
 
     @Override
     public void initView() {
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
         binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData(userName));
+
     }
 
     @Override
     public void initData() {
         userName = getIntent().getStringExtra("UserName");
-
+        binding.toolbar.setTitle(userName);
         binding.setViewModel(viewModel);
         viewModel.getData(userName);
         binding.swipeRefreshLayout.setRefreshing(true);
@@ -54,7 +58,12 @@ public class ProfileActivity extends BaseViewModelActivity<ActivityProfileBindin
             }
         });
         viewModel.avatarUrl.observe(this, url -> {
-            Glide.with(mContext).load(viewModel.avatarUrl.getValue()).into(binding.ivFace);
+            Glide.with(mContext).load(url).into(binding.ivAvatarBg);
+            Glide.with(Utils.getContext())
+                    .load(url)
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))//圆形
+                    .into(binding.ivAvatar);
+
         });
     }
 }

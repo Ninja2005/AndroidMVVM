@@ -20,10 +20,6 @@
     <group
             android:id="@+id/my">
         <item
-                android:id="@+id/profile_fragment"
-                android:icon="@drawable/ic_menu_person"
-                android:title="@string/profile"/>
-        <item
                 android:id="@+id/myrepos_fragment"
                 android:icon="@drawable/ic_menu_repo"
                 android:title="@string/my_repos"/>
@@ -37,10 +33,6 @@
                 android:icon="@drawable/ic_menu_trace"
                 android:title="@string/following"/>
 
-        <!--<item
-                android:id="@+id/followers_fragment"
-                android:icon="@drawable/ic_menu_trace"
-                android:title="@string/followers"/>-->
     </group>
 
     <group
@@ -53,11 +45,6 @@
                 android:id="@+id/about_fragment"
                 android:icon="@drawable/ic_menu_about"
                 android:title="@string/about"/>
-        <!--<item
-                android:id="@+id/nav_logout"
-                android:checkable="false"
-                android:icon="@drawable/ic_logout"
-                android:title="@string/logout"/>-->
     </group>
 
 </menu>
