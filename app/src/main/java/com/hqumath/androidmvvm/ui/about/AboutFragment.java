@@ -1,12 +1,15 @@
 package com.hqumath.androidmvvm.ui.about;
 
+import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.lifecycle.ViewModelProviders;
+
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentAboutBinding;
-import com.hqumath.androidmvvm.databinding.FragmentSettingsBinding;
-import com.hqumath.androidmvvm.ui.settings.SettingsViewModel;
+import com.hqumath.androidmvvm.ui.myrepos.ReposActivity;
+import com.hqumath.androidmvvm.ui.profile.ProfileActivity;
 
 /**
  * ****************************************************************
@@ -31,11 +34,21 @@ public class AboutFragment extends BaseViewModelFragment<FragmentAboutBinding, A
 
     @Override
     public void initView() {
-        binding.setViewModel(viewModel);
+        binding.llSourcecode.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, ReposActivity.class);
+            intent.putExtra("name", "AndroidMVVM");
+            intent.putExtra("login", "ninja2005");
+            startActivity(intent);
+        });
+        binding.llProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, ProfileActivity.class);
+            intent.putExtra("UserName", "ninja2005");
+            startActivity(intent);
+        });
     }
 
     @Override
     public void initData() {
-
+        binding.setViewModel(viewModel);
     }
 }

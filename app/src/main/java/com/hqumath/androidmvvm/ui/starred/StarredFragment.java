@@ -45,13 +45,8 @@ public class StarredFragment extends BaseViewModelFragment<FragmentStarredBindin
         binding.setViewModel(viewModel);
         adapter = new MyReposListAdapter(data -> {
             Intent intent = new Intent(mContext, ReposActivity.class);
-            intent.putExtra("avatar_url", data.getOwner().getAvatar_url());
             intent.putExtra("name", data.getName());
-            intent.putExtra("description", data.getDescription());
-            intent.putExtra("full_name", data.getFull_name());
-            intent.putExtra("created_at", data.getCreated_at());
-            intent.putExtra("language", data.getLanguage());
-            intent.putExtra("size", data.getSize());
+            intent.putExtra("login", data.getOwner().getLogin());
             startActivity(intent);
         });
         binding.list.setAdapter(adapter);
