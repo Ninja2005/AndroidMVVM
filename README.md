@@ -13,13 +13,13 @@ Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+Vie
 	4. Navigation
 	5. Paging
 	6. Room
-    	7. ViewModel
+    7. ViewModel
 
 - **流行框架**
 
 	1. [retrofit](https://github.com/square/retrofit)+[okhttp](https://github.com/square/okhttp)+[rxJava](https://github.com/ReactiveX/RxJava)负责网络请求
 	2. [gson](https://github.com/google/gson)负责解析json数据
-    	3. [glide](https://github.com/bumptech/glide)负责加载图片；
+    3. [glide](https://github.com/bumptech/glide)负责加载图片；
 
 - **基类封装**
 
@@ -35,13 +35,13 @@ Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+Vie
 
 ## 界面
 
-    1.登录界面（使用任意账户登录）
-    2.我的仓库列表
-    3.我的star仓库列表
-    4.我的following列表
-    5.仓库详情
-    6.用户详情
+    1. 登录界面（使用任意账户登录）
+    2. 我的仓库列表
+    3. 我的star仓库列表
+    4. 我的following列表
+    5. 仓库详情
+    6. 用户详情
 
 ## 注意
 
-    1.接口使用GitHub API v3，单IP限制每小时60次requests
+    1. 接口使用GitHub API v3，单IP限制每小时60次requests
