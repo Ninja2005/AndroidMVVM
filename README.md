@@ -8,14 +8,18 @@ Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+Vie
 - **Jetpack组件**
 
 	1. DataBinding
-	2. LiveData
-    3. ViewModel
+	2. Lifecycles
+	3. LiveData
+	4. Navigation
+	5. Paging
+	6. Room
+    	7. ViewModel
 
 - **流行框架**
 
 	1. [retrofit](https://github.com/square/retrofit)+[okhttp](https://github.com/square/okhttp)+[rxJava](https://github.com/ReactiveX/RxJava)负责网络请求
 	2. [gson](https://github.com/google/gson)负责解析json数据
-    3. [glide](https://github.com/bumptech/glide)负责加载图片；
+    	3. [glide](https://github.com/bumptech/glide)负责加载图片；
 
 - **基类封装**
 
@@ -27,14 +31,17 @@ Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+Vie
 
 	1. 全局的Activity堆栈式管理
 	2. LoggingInterceptor全局拦截网络请求日志
-    3. 全局的异常捕获，程序发生异常时不会崩溃，返回上个界面。
+   	3. 全局的异常捕获，程序发生异常时不会崩溃，返回上个界面。
 
 ## 界面
 
-    1. DB+RecyclerView
-    2. Network+RecyclerView
+    1.登录界面（使用任意账户登录）
+    2.我的仓库列表
+    3.我的star仓库列表
+    4.我的following列表
+    5.仓库详情
+    6.用户详情
 
 ## 注意
 
-    1.登录接口不支持调试
-    2.其它接口使用github api
+    1.接口使用GitHub API v3，单IP限制每小时60次requests
