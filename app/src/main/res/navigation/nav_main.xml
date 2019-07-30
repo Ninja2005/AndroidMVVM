@@ -36,9 +36,13 @@
             android:id="@+id/following_fragment"
             android:name="com.hqumath.androidmvvm.ui.following.FollowingFragment"
             android:label="@string/following"
-            tools:layout="@layout/fragment_following">
+            tools:layout="@layout/fragment_following"/>
 
-    </fragment>
+    <fragment
+            android:id="@+id/paging_fragment"
+            android:name="com.hqumath.androidmvvm.ui.paging.PagingFragment"
+            android:label="paging"
+            tools:layout="@layout/fragment_paging"/>
 
     <fragment
             android:id="@+id/settings_fragment"

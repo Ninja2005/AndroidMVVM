@@ -1,5 +1,8 @@
 package com.hqumath.androidmvvm.entity;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * ****************************************************************
  * 文件名称: UserInfoEntity
@@ -10,6 +13,7 @@ package com.hqumath.androidmvvm.entity;
  * 版权声明:
  * ****************************************************************
  */
+@Entity(tableName = "user_info")
 public class UserInfoEntity {
 
     /**
@@ -47,6 +51,7 @@ public class UserInfoEntity {
      */
 
     private String login;
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String node_id;
     private String avatar_url;
@@ -69,8 +74,8 @@ public class UserInfoEntity {
     private String blog;
     private String location;
     private String email;
-    private Object hireable;
-    private Object bio;
+    private String hireable;
+    private String bio;
     private int public_repos;
     private int public_gists;
     private int followers;
@@ -262,19 +267,19 @@ public class UserInfoEntity {
         this.email = email;
     }
 
-    public Object getHireable() {
+    public String getHireable() {
         return hireable;
     }
 
-    public void setHireable(Object hireable) {
+    public void setHireable(String hireable) {
         this.hireable = hireable;
     }
 
-    public Object getBio() {
+    public String getBio() {
         return bio;
     }
 
-    public void setBio(Object bio) {
+    public void setBio(String bio) {
         this.bio = bio;
     }
 

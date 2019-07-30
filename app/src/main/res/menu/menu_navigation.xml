@@ -33,6 +33,10 @@
                 android:icon="@drawable/ic_menu_trace"
                 android:title="@string/following"/>
 
+        <item
+                android:id="@+id/paging_fragment"
+                android:icon="@drawable/ic_menu_trace"
+                android:title="paging"/>
     </group>
 
     <group

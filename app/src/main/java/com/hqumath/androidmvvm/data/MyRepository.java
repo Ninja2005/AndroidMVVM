@@ -1,7 +1,11 @@
 package com.hqumath.androidmvvm.data;
 
+import androidx.lifecycle.LiveData;
+import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import com.hqumath.androidmvvm.utils.SPUtils;
 import com.hqumath.androidmvvm.utils.Utils;
+
+import java.util.List;
 
 /**
  * ****************************************************************
@@ -15,11 +19,11 @@ import com.hqumath.androidmvvm.utils.Utils;
  */
 public class MyRepository {
     private static volatile MyRepository INSTANCE = null;//禁止重排序
-//    private AppDatabase mDatabase;
-//
-//    private MyRepository() {
-//        mDatabase = AppDatabase.getInstance(Utils.getContext());
-//    }
+    private AppDatabase mDatabase;
+
+    private MyRepository() {
+        mDatabase = AppDatabase.getInstance(Utils.getContext());
+    }
 
     public static MyRepository getInstance() {
         if (INSTANCE == null) {
@@ -56,23 +60,6 @@ public class MyRepository {
         return SPUtils.getInstance().getString("token");
     }
 
-    /*public void saveIMEI(String imei) {
-        SPUtils.getInstance().put("imei", imei);
-    }
-
-    public String getIMEI() {
-        return SPUtils.getInstance().getString("imei");
-    }
-
-    //横幅广告图下载地址
-    public void saveBanner(String bannerUrl) {
-        SPUtils.getInstance().put("bannerUrl", bannerUrl);
-    }
-
-    public String getBanner() {
-        return SPUtils.getInstance().getString("bannerUrl");
-    }
-
     //用户信息表操作
     public LiveData<List<UserInfoEntity>> loadAllUsers() {
         return mDatabase.userInfoDao().loadAll();
@@ -89,8 +76,4 @@ public class MyRepository {
     public void deleteAllUsers() {
         mDatabase.userInfoDao().deleteAll();
     }
-
-    public UserInfoEntity getUserByUserCode(String userCode) {
-        return mDatabase.userInfoDao().getUserByUserCode(userCode);
-    }*/
 }
