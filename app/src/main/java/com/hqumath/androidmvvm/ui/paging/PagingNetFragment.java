@@ -3,9 +3,8 @@ package com.hqumath.androidmvvm.ui.paging;
 import android.os.Bundle;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.adapters.MyPagedListAdapter;
+import com.hqumath.androidmvvm.adapters.CommitPagedListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
-import com.hqumath.androidmvvm.databinding.FragmentPagingDbBinding;
 import com.hqumath.androidmvvm.databinding.FragmentPagingNetBinding;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 
@@ -21,7 +20,7 @@ import com.hqumath.androidmvvm.utils.ToastUtil;
  */
 public class PagingNetFragment extends BaseViewModelFragment<FragmentPagingNetBinding, PagingNetViewModel> {
 
-    private MyPagedListAdapter adapter;
+    private CommitPagedListAdapter adapter;
 
     @Override
     public PagingNetViewModel getViewModel() {
@@ -36,18 +35,21 @@ public class PagingNetFragment extends BaseViewModelFragment<FragmentPagingNetBi
     @Override
     public void initView() {
         binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData());
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
+            viewModel.refresh();
+            binding.swipeRefreshLayout.setRefreshing(false);
+        });
     }
 
     @Override
     public void initData() {
+        viewModel.init();
+
         binding.setViewModel(viewModel);
-        adapter = new MyPagedListAdapter(data -> {
-            ToastUtil.toast(data.getLogin());
+        adapter = new CommitPagedListAdapter(data -> {
+            ToastUtil.toast(data.getSha());
         });
         binding.list.setAdapter(adapter);
-        viewModel.getData();
-        binding.swipeRefreshLayout.setRefreshing(true);
     }
 
     public void initViewObservable() {

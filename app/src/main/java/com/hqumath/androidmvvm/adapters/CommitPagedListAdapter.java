@@ -8,8 +8,8 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.databinding.ItemUserPagingBinding;
-import com.hqumath.androidmvvm.entity.UserInfoEntity;
+import com.hqumath.androidmvvm.databinding.ItemCommitPagingBinding;
+import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.utils.StringUtils;
 
 /**
@@ -22,23 +22,24 @@ import com.hqumath.androidmvvm.utils.StringUtils;
  * 版权声明:
  * ****************************************************************
  */
-public class MyPagedListAdapter extends PagedListAdapter<UserInfoEntity, MyPagedListAdapter.MyViewHolder> {
+public class CommitPagedListAdapter extends PagedListAdapter<CommitEntity, CommitPagedListAdapter.MyViewHolder> {
 
     private ClickCallback clickCallback;
 
-    public MyPagedListAdapter(@NonNull ClickCallback clickCallback) {
-        super(new DiffUtil.ItemCallback<UserInfoEntity>() {
+    public CommitPagedListAdapter(@NonNull ClickCallback clickCallback) {
+        super(new DiffUtil.ItemCallback<CommitEntity>() {
             //这个是用来判断是否是一个对象的
             @Override
-            public boolean areItemsTheSame(@NonNull UserInfoEntity oldItem, @NonNull UserInfoEntity newItem) {
-                return oldItem.getId() == (newItem.getId());
+            public boolean areItemsTheSame(@NonNull CommitEntity oldItem, @NonNull CommitEntity newItem) {
+                return oldItem.getSha().equals(newItem.getSha());
             }
 
             //这个是用来判断相同对象的内容是否相同 和UI展示的相同
             @Override
-            public boolean areContentsTheSame(@NonNull UserInfoEntity oldItem, @NonNull UserInfoEntity newItem) {
-                return StringUtils.equals(oldItem.getLogin(), newItem.getLogin())
-                        && StringUtils.equals(oldItem.getAvatar_url(), newItem.getAvatar_url());
+            public boolean areContentsTheSame(@NonNull CommitEntity oldItem, @NonNull CommitEntity newItem) {
+                return StringUtils.equals(oldItem.getCommit().getCommitter().getName(),
+                        newItem.getCommit().getCommitter().getName())
+                        && StringUtils.equals(oldItem.getCommit().getMessage(), newItem.getCommit().getMessage());
             }
         });
         this.clickCallback = clickCallback;
@@ -47,8 +48,8 @@ public class MyPagedListAdapter extends PagedListAdapter<UserInfoEntity, MyPaged
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemUserPagingBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                R.layout.item_user_paging, parent, false);
+        ItemCommitPagingBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.item_commit_paging, parent, false);
         return new MyViewHolder(binding);
     }
 
@@ -60,13 +61,13 @@ public class MyPagedListAdapter extends PagedListAdapter<UserInfoEntity, MyPaged
     }
 
     public interface ClickCallback {
-        void onClick(@NonNull UserInfoEntity data);
+        void onClick(@NonNull CommitEntity data);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        private ItemUserPagingBinding binding;
+        private ItemCommitPagingBinding binding;
 
-        private MyViewHolder(ItemUserPagingBinding binding) {
+        private MyViewHolder(ItemCommitPagingBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

@@ -3,7 +3,7 @@ package com.hqumath.androidmvvm.ui.paging;
 import android.os.Bundle;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.adapters.MyPagedListAdapter;
+import com.hqumath.androidmvvm.adapters.UserPagedListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentPagingDbBinding;
 import com.hqumath.androidmvvm.utils.ToastUtil;
@@ -20,7 +20,7 @@ import com.hqumath.androidmvvm.utils.ToastUtil;
  */
 public class PagingDBFragment extends BaseViewModelFragment<FragmentPagingDbBinding, PagingDBViewModel> {
 
-    private MyPagedListAdapter adapter;
+    private UserPagedListAdapter adapter;
 
     @Override
     public PagingDBViewModel getViewModel() {
@@ -41,7 +41,7 @@ public class PagingDBFragment extends BaseViewModelFragment<FragmentPagingDbBind
     @Override
     public void initData() {
         binding.setViewModel(viewModel);
-        adapter = new MyPagedListAdapter(data -> {
+        adapter = new UserPagedListAdapter(data -> {
             ToastUtil.toast(data.getLogin());
         });
         binding.list.setAdapter(adapter);

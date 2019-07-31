@@ -3,13 +3,13 @@ package com.hqumath.androidmvvm.http.service;
 import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.ReposEntity;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
-
-import java.util.List;
-
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
+
+import java.util.List;
 
 /**
  * ****************************************************************
@@ -39,11 +39,22 @@ public interface MyApiService {
     @GET("users/ninja2005/following")
     Observable<Response<List<UserInfoEntity>>> getFollowing();
 
+    //获取跟随
+    @GET("users/ninja2005/following")
+    Observable<Response<List<UserInfoEntity>>> getFollowing1(@Query("per_page") int per_page, @Query("page") long page);
+
     //获取仓库信息
     @GET("repos/{userName}/{reposName}")
-    Observable<Response<ReposEntity>> getReposInfo(@Path("userName") String userName, @Path("reposName") String reposName);
+    Observable<Response<ReposEntity>> getReposInfo(@Path("userName") String userName,
+                                                   @Path("reposName") String reposName);
 
     //获取仓库提交记录
     @GET("repos/{userName}/{reposName}/commits?sha=master")
-    Observable<Response<List<CommitEntity>>> getCommits(@Path("userName") String userName, @Path("reposName") String reposName);
+    Observable<Response<List<CommitEntity>>> getCommits(@Path("userName") String userName,
+                                                        @Path("reposName") String reposName);
+
+    @GET("repos/{userName}/{reposName}/commits?sha=master")
+    Observable<Response<List<CommitEntity>>> getCommits1(@Path("userName") String userName,
+                                                        @Path("reposName") String reposName,
+                                                        @Query("per_page") int per_page, @Query("page") long page);
 }

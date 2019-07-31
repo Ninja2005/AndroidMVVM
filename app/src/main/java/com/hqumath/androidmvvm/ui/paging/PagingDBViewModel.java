@@ -26,13 +26,13 @@ import java.util.List;
 public class PagingDBViewModel extends BaseViewModel<MyRepository> {
 
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
-    public final LiveData<PagedList<UserInfoEntity>> list;
+    public LiveData<PagedList<UserInfoEntity>> list;
 
     public PagingDBViewModel(@NonNull Application application) {
         super(application);
         model = MyRepository.getInstance();
         list = new LivePagedListBuilder<>(
-                model.loadAllUsers2(), 50).build();
+                model.loadAllUsers2(), 20).build();
 
         //PagedList.Config config = new PagedList.Config.Builder().setPageSize(50).build();
         /*int mPageSize = 50;
