@@ -1,17 +1,12 @@
 package com.hqumath.androidmvvm.ui.paging;
 
 import android.os.Bundle;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.adapters.UserListAdapter;
-import com.hqumath.androidmvvm.app.AppExecutors;
+import com.hqumath.androidmvvm.adapters.MyPagedListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
-import com.hqumath.androidmvvm.data.MyRepository;
 import com.hqumath.androidmvvm.databinding.FragmentPagingBinding;
-import com.hqumath.androidmvvm.entity.UserInfoEntity;
-
-import java.util.List;
+import com.hqumath.androidmvvm.utils.ToastUtil;
 
 /**
  * ****************************************************************
@@ -25,8 +20,7 @@ import java.util.List;
  */
 public class PagingFragment extends BaseViewModelFragment<FragmentPagingBinding, PagingViewModel> {
 
-    private UserListAdapter adapter;
-
+    private MyPagedListAdapter adapter;
 
     @Override
     public PagingViewModel getViewModel() {
@@ -47,10 +41,8 @@ public class PagingFragment extends BaseViewModelFragment<FragmentPagingBinding,
     @Override
     public void initData() {
         binding.setViewModel(viewModel);
-        adapter = new UserListAdapter(data -> {
-            /*Intent intent = new Intent(mContext, ProfileActivity.class);
-            intent.putExtra("UserName", data.getLogin());
-            startActivity(intent);*/
+        adapter = new MyPagedListAdapter(data -> {
+            ToastUtil.toast(data.getLogin());
         });
         binding.list.setAdapter(adapter);
         viewModel.getData();
@@ -58,23 +50,8 @@ public class PagingFragment extends BaseViewModelFragment<FragmentPagingBinding,
     }
 
     public void initViewObservable() {
-        viewModel.isLoading.observe(this, b -> {
-            if (!b) {
-                binding.swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-        //列表绑定数据库
-        AppExecutors appExecutors = AppExecutors.getInstance();
-        MyRepository model = MyRepository.getInstance();
-        appExecutors.diskIO().execute(() -> {
-            LiveData<List<UserInfoEntity>> list = model.loadAllUsers();
-            appExecutors.mainThread().execute(() -> {
-                list.observe(this, data -> {
-                    adapter.setData(data);
-                    binding.executePendingBindings();
-                });
-            });
-        });
+        viewModel.isLoading.observe(this, binding.swipeRefreshLayout::setRefreshing);
+        viewModel.list.observe(this, adapter::submitList);
     }
 
 }

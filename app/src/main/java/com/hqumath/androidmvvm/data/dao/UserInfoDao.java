@@ -1,6 +1,7 @@
 package com.hqumath.androidmvvm.data.dao;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -26,6 +27,9 @@ public interface UserInfoDao {
 
     @Query("select * from user_info")
     List<UserInfoEntity> loadAll1();
+
+    @Query("SELECT * FROM user_info")
+    DataSource.Factory<Integer, UserInfoEntity> loadAll2();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<UserInfoEntity> entity);

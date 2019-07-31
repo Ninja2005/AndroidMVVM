@@ -1,6 +1,7 @@
 package com.hqumath.androidmvvm.data;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import com.hqumath.androidmvvm.utils.SPUtils;
 import com.hqumath.androidmvvm.utils.Utils;
@@ -69,9 +70,14 @@ public class MyRepository {
         return mDatabase.userInfoDao().loadAll1();
     }
 
+    public DataSource.Factory<Integer, UserInfoEntity> loadAllUsers2() {
+        return mDatabase.userInfoDao().loadAll2();
+    }
+
     public void insertAllUsers(List<UserInfoEntity> list) {
         mDatabase.userInfoDao().insertAll(list);
     }
+
 
     public void deleteAllUsers() {
         mDatabase.userInfoDao().deleteAll();
