@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * ****************************************************************
- * 文件名称: PagingViewModel
+ * 文件名称: PagingDBViewModel
  * 作    者: Created by gyd
  * 创建时间: 2019/7/30 15:17
  * 文件描述:
@@ -23,12 +23,12 @@ import java.util.List;
  * 版权声明:
  * ****************************************************************
  */
-public class PagingViewModel extends BaseViewModel<MyRepository> {
+public class PagingDBViewModel extends BaseViewModel<MyRepository> {
 
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     public final LiveData<PagedList<UserInfoEntity>> list;
 
-    public PagingViewModel(@NonNull Application application) {
+    public PagingDBViewModel(@NonNull Application application) {
         super(application);
         model = MyRepository.getInstance();
         list = new LivePagedListBuilder<>(

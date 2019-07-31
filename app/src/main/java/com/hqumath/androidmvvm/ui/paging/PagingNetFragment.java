@@ -5,12 +5,13 @@ import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.adapters.MyPagedListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
-import com.hqumath.androidmvvm.databinding.FragmentPagingBinding;
+import com.hqumath.androidmvvm.databinding.FragmentPagingDbBinding;
+import com.hqumath.androidmvvm.databinding.FragmentPagingNetBinding;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 
 /**
  * ****************************************************************
- * 文件名称: PagingFragment
+ * 文件名称: PagingDBFragment
  * 作    者: Created by gyd
  * 创建时间: 2019/7/30 15:16
  * 文件描述:
@@ -18,18 +19,18 @@ import com.hqumath.androidmvvm.utils.ToastUtil;
  * 版权声明:
  * ****************************************************************
  */
-public class PagingFragment extends BaseViewModelFragment<FragmentPagingBinding, PagingViewModel> {
+public class PagingNetFragment extends BaseViewModelFragment<FragmentPagingNetBinding, PagingNetViewModel> {
 
     private MyPagedListAdapter adapter;
 
     @Override
-    public PagingViewModel getViewModel() {
-        return ViewModelProviders.of(this).get(PagingViewModel.class);
+    public PagingNetViewModel getViewModel() {
+        return ViewModelProviders.of(this).get(PagingNetViewModel.class);
     }
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
-        return R.layout.fragment_paging;
+        return R.layout.fragment_paging_net;
     }
 
     @Override

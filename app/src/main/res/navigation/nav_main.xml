@@ -39,10 +39,16 @@
             tools:layout="@layout/fragment_following"/>
 
     <fragment
-            android:id="@+id/paging_fragment"
-            android:name="com.hqumath.androidmvvm.ui.paging.PagingFragment"
-            android:label="paging"
-            tools:layout="@layout/fragment_paging"/>
+            android:id="@+id/paging_db_fragment"
+            android:name="com.hqumath.androidmvvm.ui.paging.PagingDBFragment"
+            android:label="pagingDB"
+            tools:layout="@layout/fragment_paging_db"/>
+
+    <fragment
+            android:id="@+id/paging_net_fragment"
+            android:name="com.hqumath.androidmvvm.ui.paging.PagingNetFragment"
+            android:label="pagingNet"
+            tools:layout="@layout/fragment_paging_net"/>
 
     <fragment
             android:id="@+id/settings_fragment"

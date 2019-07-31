@@ -34,9 +34,14 @@
                 android:title="@string/following"/>
 
         <item
-                android:id="@+id/paging_fragment"
+                android:id="@+id/paging_db_fragment"
                 android:icon="@drawable/ic_menu_trace"
-                android:title="paging"/>
+                android:title="pagingDB"/>
+
+        <item
+                android:id="@+id/paging_net_fragment"
+                android:icon="@drawable/ic_menu_trace"
+                android:title="pagingNet"/>
     </group>
 
     <group
