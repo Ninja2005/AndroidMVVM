@@ -51,6 +51,7 @@ public class PagingNetViewModel extends BaseViewModel<MyRepository> {
                         .setPageSize(20)
                         .setEnablePlaceholders(false)//不明确item数目
                         .build())
+                .setFetchExecutor(appExecutors.networkIO())
                 .build();
 
         /*PagedList.Config config1 = new PagedList.Config.Builder()
@@ -66,6 +67,12 @@ public class PagingNetViewModel extends BaseViewModel<MyRepository> {
         CommitSource commitSource = commitFactory.getSourceLiveData().getValue();
         if(commitSource != null)
             commitSource.invalidate();
+    }
+
+    public void retry(){
+        CommitSource commitSource = commitFactory.getSourceLiveData().getValue();
+        if(commitSource != null)
+            commitSource.retryAllFailed();
     }
 
 }

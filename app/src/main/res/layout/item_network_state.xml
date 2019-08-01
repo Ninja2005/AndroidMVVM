@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <import type="com.hqumath.androidmvvm.entity.NetworkState.Status"/>
+
+        <import type="android.text.TextUtils"/>
+
+        <variable
+                name="data"
+                type="com.hqumath.androidmvvm.entity.NetworkState"/>
+
+        <variable
+                name="callback"
+                type="com.hqumath.androidmvvm.adapters.CommitPagedListAdapter.ClickCallback"/>
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+        <TextView
+                android:id="@+id/error_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@{data.msg}"
+                android:visibility="@{data.msg != null ? View.VISIBLE : View.INVISIBLE}"/>
+
+        <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{data.status == Status.LOADING ? View.VISIBLE : View.INVISIBLE}"/>
+
+        <Button
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="@{() -> callback.onRetry()}"
+                android:text="Retry"
+                android:visibility="@{data.status == Status.FAILED ? View.VISIBLE : View.INVISIBLE}"/>
+
+    </LinearLayout>
+</layout>

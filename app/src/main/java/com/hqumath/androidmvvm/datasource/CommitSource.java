@@ -3,6 +3,7 @@ package com.hqumath.androidmvvm.datasource;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
+import com.hqumath.androidmvvm.app.AppExecutors;
 import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.http.BaseApi;
@@ -32,10 +33,18 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
     private WeakReference<LifecycleProvider> lifecycle;
     public MutableLiveData<NetworkState> networkState = new MutableLiveData<>();//网络状态
     public MutableLiveData<NetworkState> initialLoad = new MutableLiveData<>();//初始化加载状态
-
+    private Runnable retry = null;
 
     public CommitSource(WeakReference<LifecycleProvider> lifecycle) {
         this.lifecycle = lifecycle;
+    }
+
+    public void retryAllFailed() {
+        if (retry != null) {
+            Runnable prevRetry = retry;
+            retry = null;
+            AppExecutors.getInstance().networkIO().execute(prevRetry);
+        }
     }
 
     @Override
@@ -55,6 +64,7 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
 
             @Override
             public void onError(HandlerException.ResponseThrowable e) {
+                retry = () -> loadInitial(params, callback);
                 NetworkState error = new NetworkState(NetworkState.Status.FAILED, e.getMessage());
                 networkState.postValue(error);
                 initialLoad.postValue(error);
@@ -62,6 +72,7 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
 
             @Override
             public void onComplete() {
+                retry = null;
                 networkState.postValue(NetworkState.LOADED);
                 initialLoad.postValue(NetworkState.LOADED);
             }
@@ -95,11 +106,14 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
 
             @Override
             public void onError(HandlerException.ResponseThrowable e) {
+                retry = () -> loadAfter(params, callback);
                 networkState.postValue(new NetworkState(NetworkState.Status.FAILED, e.getMessage()));
+
             }
 
             @Override
             public void onComplete() {
+                retry = null;
                 networkState.postValue(NetworkState.LOADED);
             }
         }, lifecycle) {

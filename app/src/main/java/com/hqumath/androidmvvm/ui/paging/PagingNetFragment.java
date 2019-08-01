@@ -1,11 +1,13 @@
 package com.hqumath.androidmvvm.ui.paging;
 
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.adapters.CommitPagedListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentPagingNetBinding;
+import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 
@@ -46,8 +48,16 @@ public class PagingNetFragment extends BaseViewModelFragment<FragmentPagingNetBi
         viewModel.init();
 
         binding.setViewModel(viewModel);
-        adapter = new CommitPagedListAdapter(data -> {
-            ToastUtil.toast(data.getSha());
+        adapter = new CommitPagedListAdapter(new CommitPagedListAdapter.ClickCallback(){
+            @Override
+            public void onClick(@NonNull CommitEntity data) {
+                ToastUtil.toast(data.getSha());
+            }
+
+            @Override
+            public void onRetry() {
+                viewModel.retry();
+            }
         });
         binding.list.setAdapter(adapter);
     }
@@ -56,6 +66,7 @@ public class PagingNetFragment extends BaseViewModelFragment<FragmentPagingNetBi
         viewModel.list.observe(this, adapter::submitList);
         viewModel.refreshState.observe(this, state ->
                 binding.swipeRefreshLayout.setRefreshing(state == NetworkState.LOADING));
+        viewModel.networkState.observe(this, adapter::setNetworkState);
     }
 
 }
