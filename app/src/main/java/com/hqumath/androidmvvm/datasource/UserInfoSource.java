@@ -46,7 +46,7 @@ public class UserInfoSource extends PageKeyedDataSource<Long, UserInfoEntity> {
 
             @Override
             public void onNext(Object o) {
-                callback.onResult((List<UserInfoEntity>) o, null, 2l);
+                callback.onResult((List<UserInfoEntity>) o, null, 2L);
             }
 
             @Override

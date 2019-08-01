@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 import com.hqumath.androidmvvm.entity.CommitEntity;
+import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.http.BaseApi;
 import com.hqumath.androidmvvm.http.HandlerException;
 import com.hqumath.androidmvvm.http.HttpOnNextListener;
@@ -28,8 +29,10 @@ import java.util.List;
  */
 public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
 
-    public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     private WeakReference<LifecycleProvider> lifecycle;
+    public MutableLiveData<NetworkState> networkState = new MutableLiveData<>();//网络状态
+    public MutableLiveData<NetworkState> initialLoad = new MutableLiveData<>();//初始化加载状态
+
 
     public CommitSource(WeakReference<LifecycleProvider> lifecycle) {
         this.lifecycle = lifecycle;
@@ -41,22 +44,26 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
         RetrofitClient.getInstance().sendHttpRequestIO(new BaseApi(new HttpOnNextListener() {
             @Override
             public void onSubscribe() {
-                isLoading.postValue(true);
+                networkState.postValue(NetworkState.LOADING);
+                initialLoad.postValue(NetworkState.LOADING);
             }
 
             @Override
             public void onNext(Object o) {
-                callback.onResult((List<CommitEntity>) o, null, 2l);
+                callback.onResult((List<CommitEntity>) o, null, 2L);
             }
 
             @Override
             public void onError(HandlerException.ResponseThrowable e) {
-                isLoading.postValue(false);
+                NetworkState error = new NetworkState(NetworkState.Status.FAILED, e.getMessage());
+                networkState.postValue(error);
+                initialLoad.postValue(error);
             }
 
             @Override
             public void onComplete() {
-                isLoading.postValue(false);
+                networkState.postValue(NetworkState.LOADED);
+                initialLoad.postValue(NetworkState.LOADED);
             }
         }, lifecycle) {
             @Override
@@ -77,7 +84,7 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
         RetrofitClient.getInstance().sendHttpRequestIO(new BaseApi(new HttpOnNextListener() {
             @Override
             public void onSubscribe() {
-                isLoading.postValue(true);
+                networkState.postValue(NetworkState.LOADING);
             }
 
             @Override
@@ -88,12 +95,12 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
 
             @Override
             public void onError(HandlerException.ResponseThrowable e) {
-                isLoading.postValue(false);
+                networkState.postValue(new NetworkState(NetworkState.Status.FAILED, e.getMessage()));
             }
 
             @Override
             public void onComplete() {
-                isLoading.postValue(false);
+                networkState.postValue(NetworkState.LOADED);
             }
         }, lifecycle) {
             @Override

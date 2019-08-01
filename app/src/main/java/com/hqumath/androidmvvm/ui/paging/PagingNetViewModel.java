@@ -4,6 +4,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 import com.hqumath.androidmvvm.base.BaseViewModel;
@@ -13,6 +14,7 @@ import com.hqumath.androidmvvm.datasource.CommitSource;
 import com.hqumath.androidmvvm.datasource.UserInfoFactory;
 import com.hqumath.androidmvvm.datasource.UserInfoSource;
 import com.hqumath.androidmvvm.entity.CommitEntity;
+import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
 
 /**
@@ -29,8 +31,9 @@ public class PagingNetViewModel extends BaseViewModel<MyRepository> {
 
     private CommitFactory commitFactory;
 
-    public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     public LiveData<PagedList<CommitEntity>> list;
+    public LiveData<NetworkState> networkState;//网络状态
+    public LiveData<NetworkState> refreshState;//初始化加载状态
 
     public PagingNetViewModel(@NonNull Application application) {
         super(application);
@@ -39,6 +42,8 @@ public class PagingNetViewModel extends BaseViewModel<MyRepository> {
 
     public void init(){
         commitFactory = new CommitFactory(getLifecycleProvider());
+        networkState = Transformations.switchMap(commitFactory.getSourceLiveData(), source -> source.networkState);
+        refreshState = Transformations.switchMap(commitFactory.getSourceLiveData(), source -> source.initialLoad);
 
         list = new LivePagedListBuilder<>(
                 commitFactory,

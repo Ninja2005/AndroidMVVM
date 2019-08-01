@@ -6,6 +6,7 @@ import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.adapters.CommitPagedListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentPagingNetBinding;
+import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 
 /**
@@ -37,7 +38,6 @@ public class PagingNetFragment extends BaseViewModelFragment<FragmentPagingNetBi
         binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         binding.swipeRefreshLayout.setOnRefreshListener(() -> {
             viewModel.refresh();
-            binding.swipeRefreshLayout.setRefreshing(false);
         });
     }
 
@@ -53,8 +53,9 @@ public class PagingNetFragment extends BaseViewModelFragment<FragmentPagingNetBi
     }
 
     public void initViewObservable() {
-        viewModel.isLoading.observe(this, binding.swipeRefreshLayout::setRefreshing);
         viewModel.list.observe(this, adapter::submitList);
+        viewModel.refreshState.observe(this, state ->
+                binding.swipeRefreshLayout.setRefreshing(state == NetworkState.LOADING));
     }
 
 }
