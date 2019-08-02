@@ -4,6 +4,7 @@ import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.ReposEntity;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import io.reactivex.Observable;
+import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -57,4 +58,9 @@ public interface MyApiService {
     Observable<Response<List<CommitEntity>>> getCommits1(@Path("userName") String userName,
                                                         @Path("reposName") String reposName,
                                                         @Query("per_page") int per_page, @Query("page") long page);
+
+    @GET("repos/{userName}/{reposName}/commits?sha=master")
+    Call<List<CommitEntity>> getCommits2(@Path("userName") String userName,
+                                                   @Path("reposName") String reposName,
+                                                   @Query("per_page") int per_page, @Query("page") long page);
 }

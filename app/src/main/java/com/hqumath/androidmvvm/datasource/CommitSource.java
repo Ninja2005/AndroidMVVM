@@ -13,8 +13,10 @@ import com.hqumath.androidmvvm.http.RetrofitClient;
 import com.hqumath.androidmvvm.http.service.MyApiService;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -50,39 +52,31 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<Long,
             CommitEntity> callback) {
-        RetrofitClient.getInstance().sendHttpRequestIO(new BaseApi(new HttpOnNextListener() {
-            @Override
-            public void onSubscribe() {
-                networkState.postValue(NetworkState.LOADING);
-                initialLoad.postValue(NetworkState.LOADING);
-            }
+        networkState.postValue(NetworkState.LOADING);
+        initialLoad.postValue(NetworkState.LOADING);
 
-            @Override
-            public void onNext(Object o) {
-                callback.onResult((List<CommitEntity>) o, null, 2L);
-            }
-
-            @Override
-            public void onError(HandlerException.ResponseThrowable e) {
-                retry = () -> loadInitial(params, callback);
-                NetworkState error = new NetworkState(NetworkState.Status.FAILED, e.getMessage());
-                networkState.postValue(error);
-                initialLoad.postValue(error);
-            }
-
-            @Override
-            public void onComplete() {
+        // triggered by a refresh, we better execute sync
+        // 初始化请求不能异步
+        try {
+            Response<List<CommitEntity>> response = RetrofitClient.getInstance().getRetrofit().create(MyApiService.class)
+                    .getCommits2("ThirtyDegreesRay", "OpenHub", params.requestedLoadSize, 1).execute();
+            if (response.isSuccessful() && response.body() != null) {
                 retry = null;
                 networkState.postValue(NetworkState.LOADED);
                 initialLoad.postValue(NetworkState.LOADED);
+                callback.onResult(response.body(), null, 2L);
+            } else {
+                retry = () -> loadInitial(params, callback);
+                NetworkState error = new NetworkState(NetworkState.Status.FAILED, "error code" + response.code());
+                networkState.postValue(error);
+                initialLoad.postValue(error);
             }
-        }, lifecycle) {
-            @Override
-            public Observable getObservable(Retrofit retrofit) {
-                return retrofit.create(MyApiService.class).getCommits1("ThirtyDegreesRay", "OpenHub",
-                        params.requestedLoadSize, 1);
-            }
-        });
+        } catch (IOException e) {
+            retry = () -> loadInitial(params, callback);
+            NetworkState error = new NetworkState(NetworkState.Status.FAILED, e.getMessage());
+            networkState.postValue(error);
+            initialLoad.postValue(error);
+        }
     }
 
     @Override

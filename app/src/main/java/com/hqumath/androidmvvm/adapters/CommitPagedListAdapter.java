@@ -27,7 +27,7 @@ import com.hqumath.androidmvvm.utils.StringUtils;
 public class CommitPagedListAdapter extends PagedListAdapter<CommitEntity, RecyclerView.ViewHolder> {
 
     private ClickCallback clickCallback;
-    private NetworkState networkState;
+    private NetworkState networkState = null;
 
     public CommitPagedListAdapter(@NonNull ClickCallback clickCallback) {
         super(new DiffUtil.ItemCallback<CommitEntity>() {
@@ -62,20 +62,13 @@ public class CommitPagedListAdapter extends PagedListAdapter<CommitEntity, Recyc
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (getItemViewType(position) == R.layout.item_network_state) {
+        if (holder instanceof NetworkStateItemViewHolder) {
             ((NetworkStateItemViewHolder) holder).binding.setData(networkState);
             ((NetworkStateItemViewHolder) holder).binding.setCallback(clickCallback);
         } else {
             ((MyViewHolder) holder).binding.setData(getItem(position));
             ((MyViewHolder) holder).binding.setCallback(clickCallback);
         }
-        /*if (holder instanceof NetworkStateItemViewHolder) {
-            ((NetworkStateItemViewHolder) holder).binding.setData(networkState);
-            ((NetworkStateItemViewHolder) holder).binding.setCallback(clickCallback);
-        } else {
-            ((MyViewHolder) holder).binding.setData(getItem(position));
-            ((MyViewHolder) holder).binding.setCallback(clickCallback);
-        }*/
     }
 
     /**
@@ -109,9 +102,9 @@ public class CommitPagedListAdapter extends PagedListAdapter<CommitEntity, Recyc
         boolean hasExtraRow = hasExtraRow();
         if (hadExtraRow != hasExtraRow) {
             if (hadExtraRow) {
-                notifyItemRemoved(getItemCount());
+                notifyItemRemoved(super.getItemCount());
             } else {
-                notifyItemInserted(getItemCount());
+                notifyItemInserted(super.getItemCount());
             }
         } else if (hasExtraRow && previousState != newNetworkState) {
             notifyItemChanged(getItemCount() - 1);

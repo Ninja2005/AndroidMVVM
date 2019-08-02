@@ -63,6 +63,10 @@ public class RetrofitClient {
                 .build();
     }
 
+    public Retrofit getRetrofit(){
+        return retrofit;
+    }
+
     /**
      * 在主线程观察
      */

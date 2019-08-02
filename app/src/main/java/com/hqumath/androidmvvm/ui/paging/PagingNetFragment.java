@@ -38,9 +38,7 @@ public class PagingNetFragment extends BaseViewModelFragment<FragmentPagingNetBi
     @Override
     public void initView() {
         binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
-            viewModel.refresh();
-        });
+        binding.swipeRefreshLayout.setOnRefreshListener(viewModel::refresh);
     }
 
     @Override
@@ -48,7 +46,7 @@ public class PagingNetFragment extends BaseViewModelFragment<FragmentPagingNetBi
         viewModel.init();
 
         binding.setViewModel(viewModel);
-        adapter = new CommitPagedListAdapter(new CommitPagedListAdapter.ClickCallback(){
+        adapter = new CommitPagedListAdapter(new CommitPagedListAdapter.ClickCallback() {
             @Override
             public void onClick(@NonNull CommitEntity data) {
                 ToastUtil.toast(data.getSha());
