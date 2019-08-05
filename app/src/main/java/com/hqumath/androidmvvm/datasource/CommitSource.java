@@ -43,7 +43,7 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
     public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<Long,
             CommitEntity> callback) {
         networkState.postValue(NetworkState.LOADING);
-        initialLoad.postValue(NetworkState.LOADING);
+        //initialLoad.postValue(NetworkState.LOADING);
 
         // triggered by a refresh, we better execute sync
         // 初始化请求不能异步

@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="12dp">
 
         <TextView
                 android:id="@+id/error_msg"
@@ -30,14 +30,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@{data.msg}"
-                android:visibility="@{data.msg != null ? View.VISIBLE : View.INVISIBLE}"/>
+                android:visibility="@{data.msg != null ? View.VISIBLE : View.GONE}"/>
 
         <ProgressBar
                 style="?android:attr/progressBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="@{data.status == Status.LOADING ? View.VISIBLE : View.INVISIBLE}"/>
+                android:visibility="@{data.status == Status.LOADING ? View.VISIBLE : View.GONE}"/>
 
         <Button
                 style="@style/Widget.AppCompat.Button.Colored"
@@ -45,8 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:onClick="@{() -> callback.onRetry()}"
-                android:text="Retry"
-                android:visibility="@{data.status == Status.FAILED ? View.VISIBLE : View.INVISIBLE}"/>
+                android:text="@string/retry"
+                android:visibility="@{data.status == Status.FAILED ? View.VISIBLE : View.GONE}"/>
 
     </LinearLayout>
 </layout>
