@@ -37,7 +37,6 @@ public class PagingNetViewModel extends BaseViewModel<MyRepository> {
 
     public PagingNetViewModel(@NonNull Application application) {
         super(application);
-        model = MyRepository.getInstance();
     }
 
     public void init(){

@@ -51,6 +51,12 @@
             tools:layout="@layout/fragment_paging_net"/>
 
     <fragment
+            android:id="@+id/paging_net_db_fragment"
+            android:name="com.hqumath.androidmvvm.ui.paging.PagingNetAndDbFragment"
+            android:label="pagingNetAndDb"
+            tools:layout="@layout/fragment_paging_net"/>
+
+    <fragment
             android:id="@+id/settings_fragment"
             android:name="com.hqumath.androidmvvm.ui.settings.SettingsFragment"
             android:label="@string/settings"

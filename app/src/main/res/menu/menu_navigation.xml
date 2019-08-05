@@ -42,6 +42,11 @@
                 android:id="@+id/paging_net_fragment"
                 android:icon="@drawable/ic_menu_trace"
                 android:title="pagingNet"/>
+
+        <item
+                android:id="@+id/paging_net_db_fragment"
+                android:icon="@drawable/ic_menu_trace"
+                android:title="pagingNetAndDb"/>
     </group>
 
     <group
