@@ -54,11 +54,12 @@ public interface MyApiService {
     Observable<Response<List<CommitEntity>>> getCommits(@Path("userName") String userName,
                                                         @Path("reposName") String reposName);
 
-    @GET("repos/{userName}/{reposName}/commits?sha=master")
+    /*@GET("repos/{userName}/{reposName}/commits?sha=master")
     Observable<Response<List<CommitEntity>>> getCommits1(@Path("userName") String userName,
                                                         @Path("reposName") String reposName,
-                                                        @Query("per_page") int per_page, @Query("page") long page);
+                                                        @Query("per_page") int per_page, @Query("page") long page);*/
 
+    //获取仓库提交记录 分页
     @GET("repos/{userName}/{reposName}/commits?sha=master")
     Call<List<CommitEntity>> getCommits2(@Path("userName") String userName,
                                                    @Path("reposName") String reposName,

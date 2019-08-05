@@ -41,7 +41,7 @@ public class PagingNetViewModel extends BaseViewModel<MyRepository> {
     }
 
     public void init(){
-        commitFactory = new CommitFactory(getLifecycleProvider());
+        commitFactory = new CommitFactory();
         networkState = Transformations.switchMap(commitFactory.getSourceLiveData(), source -> source.networkState);
         refreshState = Transformations.switchMap(commitFactory.getSourceLiveData(), source -> source.initialLoad);
 

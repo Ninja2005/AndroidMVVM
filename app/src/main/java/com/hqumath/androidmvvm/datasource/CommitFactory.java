@@ -4,9 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import com.hqumath.androidmvvm.entity.CommitEntity;
-import com.trello.rxlifecycle2.LifecycleProvider;
-
-import java.lang.ref.WeakReference;
 
 /**
  * ****************************************************************
@@ -21,16 +18,11 @@ import java.lang.ref.WeakReference;
 public class CommitFactory extends DataSource.Factory<Long, CommitEntity> {
 
     private MutableLiveData<CommitSource> sourceLiveData = new MutableLiveData<>();
-    private WeakReference<LifecycleProvider> lifecycle;
-
-    public CommitFactory(WeakReference<LifecycleProvider> lifecycle) {
-        this.lifecycle = lifecycle;
-    }
 
     @NonNull
     @Override
     public DataSource<Long, CommitEntity> create() {
-        CommitSource commitSource = new CommitSource(lifecycle);
+        CommitSource commitSource = new CommitSource();
         sourceLiveData.postValue(commitSource);
         return commitSource;
     }
