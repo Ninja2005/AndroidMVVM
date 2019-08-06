@@ -37,6 +37,10 @@ public class MyRepository {
         return INSTANCE;
     }
 
+    public void runInTransaction(Runnable runnable){
+        mDatabase.runInTransaction(runnable);
+    }
+
     public void saveUserName(String userName) {
         SPUtils.getInstance().put("UserName", userName);
     }

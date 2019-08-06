@@ -8,7 +8,11 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.hqumath.androidmvvm.R;
+import com.hqumath.androidmvvm.databinding.ItemCommitPagingBinding;
+import com.hqumath.androidmvvm.databinding.ItemNetworkStateBinding;
 import com.hqumath.androidmvvm.databinding.ItemUserPagingBinding;
+import com.hqumath.androidmvvm.entity.UserInfoEntity;
+import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import com.hqumath.androidmvvm.utils.StringUtils;
 
@@ -22,9 +26,10 @@ import com.hqumath.androidmvvm.utils.StringUtils;
  * 版权声明:
  * ****************************************************************
  */
-public class UserPagedListAdapter extends PagedListAdapter<UserInfoEntity, UserPagedListAdapter.MyViewHolder> {
+public class UserPagedListAdapter extends PagedListAdapter<UserInfoEntity, RecyclerView.ViewHolder> {
 
     private ClickCallback clickCallback;
+    private NetworkState networkState = null;
 
     public UserPagedListAdapter(@NonNull ClickCallback clickCallback) {
         super(new DiffUtil.ItemCallback<UserInfoEntity>() {
@@ -46,21 +51,74 @@ public class UserPagedListAdapter extends PagedListAdapter<UserInfoEntity, UserP
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemUserPagingBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                R.layout.item_user_paging, parent, false);
-        return new MyViewHolder(binding);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == R.layout.item_network_state) {
+            return new NetworkStateItemViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                    R.layout.item_network_state, parent, false));
+        } else {
+            return new MyViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                    R.layout.item_user_paging, parent, false));
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.binding.setData(getItem(position));
-        holder.binding.setCallback(clickCallback);
-        holder.binding.executePendingBindings();
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof NetworkStateItemViewHolder) {
+            ((NetworkStateItemViewHolder) holder).binding.setData(networkState);
+            ((NetworkStateItemViewHolder) holder).binding.btnRetry.setOnClickListener(v -> clickCallback.onRetry());
+        } else {
+            ((MyViewHolder) holder).binding.setData(getItem(position));
+            ((MyViewHolder) holder).binding.setCallback(clickCallback);
+        }
     }
 
-    public interface ClickCallback {
-        void onClick(@NonNull UserInfoEntity data);
+    /**
+     * true 加载中或失败
+     * false 加载成功
+     *
+     * @return 是否有其他行
+     */
+    private boolean hasExtraRow() {
+        return networkState != null && networkState != NetworkState.LOADED;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (hasExtraRow() && position == getItemCount() - 1) {
+            return R.layout.item_network_state;
+        } else {
+            return R.layout.item_user_paging;
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return super.getItemCount() + (hasExtraRow() ? 1 : 0);
+    }
+
+    public void setNetworkState(NetworkState newNetworkState) {
+        NetworkState previousState = this.networkState;
+        boolean hadExtraRow = hasExtraRow();
+        this.networkState = newNetworkState;
+        boolean hasExtraRow = hasExtraRow();
+        if (hadExtraRow != hasExtraRow) {
+            if (hadExtraRow) {
+                notifyItemRemoved(super.getItemCount());
+            } else {
+                notifyItemInserted(super.getItemCount());
+            }
+        } else if (hasExtraRow && previousState != newNetworkState) {
+            notifyItemChanged(getItemCount() - 1);
+        }
+    }
+
+    public static class NetworkStateItemViewHolder extends RecyclerView.ViewHolder {
+        private ItemNetworkStateBinding binding;
+
+        private NetworkStateItemViewHolder(ItemNetworkStateBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -70,5 +128,11 @@ public class UserPagedListAdapter extends PagedListAdapter<UserInfoEntity, UserP
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    public interface ClickCallback {
+        void onClick(@NonNull UserInfoEntity data);
+
+        void onRetry();
     }
 }

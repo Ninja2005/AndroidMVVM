@@ -3,19 +3,17 @@ package com.hqumath.androidmvvm.ui.paging;
 import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 import com.hqumath.androidmvvm.base.BaseViewModel;
 import com.hqumath.androidmvvm.data.MyRepository;
-import com.hqumath.androidmvvm.datasource.CommitFactory;
-import com.hqumath.androidmvvm.datasource.CommitSource;
-import com.hqumath.androidmvvm.datasource.UserInfoFactory;
-import com.hqumath.androidmvvm.datasource.UserInfoSource;
+import com.hqumath.androidmvvm.data.paging.CommitFactory;
+import com.hqumath.androidmvvm.data.paging.CommitSource;
+import com.hqumath.androidmvvm.data.paging.UserInfoFactory;
+import com.hqumath.androidmvvm.data.paging.UserInfoSource;
 import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.NetworkState;
-import com.hqumath.androidmvvm.entity.UserInfoEntity;
 
 /**
  * ****************************************************************
@@ -48,6 +46,7 @@ public class PagingNetViewModel extends BaseViewModel<MyRepository> {
                 commitFactory,
                 new PagedList.Config.Builder()
                         .setPageSize(20)
+                        .setInitialLoadSizeHint(20)
                         .setEnablePlaceholders(false)//不明确item数目
                         .build())
                 .setFetchExecutor(appExecutors.networkIO())

@@ -1,11 +1,13 @@
 package com.hqumath.androidmvvm.ui.paging;
 
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.adapters.UserPagedListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentPagingDbBinding;
+import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 
 /**
@@ -41,8 +43,15 @@ public class PagingDBFragment extends BaseViewModelFragment<FragmentPagingDbBind
     @Override
     public void initData() {
         binding.setViewModel(viewModel);
-        adapter = new UserPagedListAdapter(data -> {
-            ToastUtil.toast(data.getLogin());
+        adapter = new UserPagedListAdapter(new UserPagedListAdapter.ClickCallback() {
+            @Override
+            public void onClick(@NonNull UserInfoEntity data) {
+                ToastUtil.toast(data.getLogin());
+            }
+
+            @Override
+            public void onRetry() {
+            }
         });
         binding.list.setAdapter(adapter);
         viewModel.getData();

@@ -1,4 +1,4 @@
-package com.hqumath.androidmvvm.datasource;
+package com.hqumath.androidmvvm.data.paging;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;

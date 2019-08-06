@@ -64,7 +64,7 @@ public class CommitPagedListAdapter extends PagedListAdapter<CommitEntity, Recyc
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof NetworkStateItemViewHolder) {
             ((NetworkStateItemViewHolder) holder).binding.setData(networkState);
-            ((NetworkStateItemViewHolder) holder).binding.setCallback(clickCallback);
+            ((NetworkStateItemViewHolder) holder).binding.btnRetry.setOnClickListener(v -> clickCallback.onRetry());
         } else {
             ((MyViewHolder) holder).binding.setData(getItem(position));
             ((MyViewHolder) holder).binding.setCallback(clickCallback);

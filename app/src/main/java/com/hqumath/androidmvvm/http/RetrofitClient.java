@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class RetrofitClient {
     //超时时间
-    private static final int DEFAULT_TIMEOUT = 6;
+    private static final int DEFAULT_TIMEOUT = 10;
 
     private volatile static RetrofitClient INSTANCE;
     private final Retrofit retrofit;
@@ -45,6 +45,7 @@ public class RetrofitClient {
     private RetrofitClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {

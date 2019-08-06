@@ -4,11 +4,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.adapters.CommitPagedListAdapter;
+import com.hqumath.androidmvvm.adapters.UserPagedListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentPagingNetBinding;
-import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.NetworkState;
+import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 
 /**
@@ -23,7 +23,7 @@ import com.hqumath.androidmvvm.utils.ToastUtil;
  */
 public class PagingNetAndDbFragment extends BaseViewModelFragment<FragmentPagingNetBinding, PagingNetAndDbViewModel> {
 
-    private CommitPagedListAdapter adapter;
+    private UserPagedListAdapter adapter;
 
     @Override
     public PagingNetAndDbViewModel getViewModel() {
@@ -44,10 +44,10 @@ public class PagingNetAndDbFragment extends BaseViewModelFragment<FragmentPaging
     @Override
     public void initData() {
         viewModel.init();
-        adapter = new CommitPagedListAdapter(new CommitPagedListAdapter.ClickCallback() {
+        adapter = new UserPagedListAdapter(new UserPagedListAdapter.ClickCallback() {
             @Override
-            public void onClick(@NonNull CommitEntity data) {
-                ToastUtil.toast(data.getSha());
+            public void onClick(@NonNull UserInfoEntity data) {
+                ToastUtil.toast(data.getLogin());
             }
 
             @Override
@@ -59,10 +59,10 @@ public class PagingNetAndDbFragment extends BaseViewModelFragment<FragmentPaging
     }
 
     public void initViewObservable() {
-        /*viewModel.list.observe(this, adapter::submitList);
+        viewModel.list.observe(this, adapter::submitList);
         viewModel.refreshState.observe(this, state ->
                 binding.swipeRefreshLayout.setRefreshing(state == NetworkState.LOADING));
-        viewModel.networkState.observe(this, adapter::setNetworkState);*/
+        viewModel.networkState.observe(this, adapter::setNetworkState);
     }
 
 

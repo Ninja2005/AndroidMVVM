@@ -44,6 +44,11 @@ public interface MyApiService {
     @GET("users/ninja2005/following")
     Observable<Response<List<UserInfoEntity>>> getFollowing1(@Query("per_page") int per_page, @Query("page") long page);
 
+    //获取被跟随
+    @GET("users/{userName}/followers")
+    Call<List<UserInfoEntity>> getFollowers(@Path("userName") String userName, @Query("per_page") int per_page,
+                                           @Query("page") long page);
+
     //获取仓库信息
     @GET("repos/{userName}/{reposName}")
     Observable<Response<ReposEntity>> getReposInfo(@Path("userName") String userName,
@@ -62,6 +67,6 @@ public interface MyApiService {
     //获取仓库提交记录 分页
     @GET("repos/{userName}/{reposName}/commits?sha=master")
     Call<List<CommitEntity>> getCommits2(@Path("userName") String userName,
-                                                   @Path("reposName") String reposName,
-                                                   @Query("per_page") int per_page, @Query("page") long page);
+                                         @Path("reposName") String reposName,
+                                         @Query("per_page") int per_page, @Query("page") long page);
 }
