@@ -29,11 +29,11 @@ public interface MyApiService {
     Observable<Response<UserInfoEntity>> getUserInfo(@Path("userName") String userName);
 
     //获取用户仓库
-    @GET("users/ninja2005/repos")
+    @GET("users/JakeWharton/repos")
     Call<List<ReposEntity>> getMyRepos(@Query("per_page") int per_page, @Query("page") long page);
 
     //获取星标仓库
-    @GET("users/ninja2005/starred")
+    @GET("users/JakeWharton/starred")
     Call<List<ReposEntity>> getStarred(@Query("per_page") int per_page, @Query("page") long page);
 
     //获取我追随的
