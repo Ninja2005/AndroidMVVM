@@ -11,11 +11,13 @@ import com.hqumath.androidmvvm.data.MyRepository;
 import com.hqumath.androidmvvm.data.paging.UserInfoBoundaryCallback;
 import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
+import com.hqumath.androidmvvm.http.BaseApi;
+import com.hqumath.androidmvvm.http.HandlerException;
+import com.hqumath.androidmvvm.http.HttpOnNextListener;
 import com.hqumath.androidmvvm.http.RetrofitClient;
 import com.hqumath.androidmvvm.http.service.MyApiService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Observable;
+import retrofit2.Retrofit;
 
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
     }
 
     public void init() {
-        boundaryCallback = new UserInfoBoundaryCallback(this::insertResultIntoDb, pageSize);
+        boundaryCallback = new UserInfoBoundaryCallback(this::insertResultIntoDb, pageSize, getLifecycleProvider());
 
         list = new LivePagedListBuilder<>(
                 model.loadAllUsers2(),
@@ -60,32 +62,35 @@ public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
     }
 
     public void refresh() {
-        refreshState.postValue(NetworkState.LOADING);
-        RetrofitClient.getInstance().getRetrofit().create(MyApiService.class)
-                .getFollowers("JakeWharton", pageSize, 1)
-                .enqueue(new Callback<List<UserInfoEntity>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<UserInfoEntity>> call,
-                                           @NonNull Response<List<UserInfoEntity>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            appExecutors.diskIO().execute(() -> {
-                                model.runInTransaction(() -> {
-                                    model.deleteAllUsers();
-                                    insertResultIntoDb(response.body());
-                                });
-                                refreshState.postValue(NetworkState.LOADED);
-                            });
-                        } else {
-                            refreshState.postValue(new NetworkState(NetworkState.Status.FAILED,
-                                    "error: " + response.code() + " " + response.message()));
-                        }
-                    }
+        RetrofitClient.getInstance().sendHttpRequestIO(new BaseApi(new HttpOnNextListener<List<UserInfoEntity>>() {
+            @Override
+            public void onSubscribe() {
+                refreshState.postValue(NetworkState.LOADING);
+            }
 
-                    @Override
-                    public void onFailure(@NonNull Call<List<UserInfoEntity>> call, @NonNull Throwable t) {
-                        refreshState.postValue(new NetworkState(NetworkState.Status.FAILED, t.getMessage()));
-                    }
+            @Override
+            public void onNext(List<UserInfoEntity> o) {
+                model.runInTransaction(() -> {
+                    model.deleteAllUsers();
+                    insertResultIntoDb(o);
                 });
+                refreshState.postValue(NetworkState.LOADED);
+            }
+
+            @Override
+            public void onError(HandlerException.ResponseThrowable e) {
+                refreshState.postValue(new NetworkState(NetworkState.Status.FAILED, e.getMessage()));
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        }, getLifecycleProvider()) {
+            @Override
+            public Observable getObservable(Retrofit retrofit) {
+                return retrofit.create(MyApiService.class).getFollowers1("JakeWharton", pageSize, 1);
+            }
+        });
     }
 
     public void retry() {

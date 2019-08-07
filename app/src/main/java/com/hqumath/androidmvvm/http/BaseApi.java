@@ -50,7 +50,8 @@ public abstract class BaseApi<T> implements Function<Response<T>, T>, Observer<T
         if (httpResult.isSuccessful() && httpResult.body() != null) {
             return httpResult.body();
         } else {
-            throw new HandlerException.ResponseThrowable(httpResult.message(), httpResult.code() + "");
+            throw new HandlerException.ResponseThrowable(httpResult.message(),
+                    "error: " + httpResult.code() + " " + httpResult.message());
         }
     }
 

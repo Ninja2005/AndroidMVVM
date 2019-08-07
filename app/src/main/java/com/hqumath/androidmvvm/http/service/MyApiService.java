@@ -54,6 +54,11 @@ public interface MyApiService {
     Call<List<UserInfoEntity>> getFollowers(@Path("userName") String userName, @Query("per_page") int per_page,
                                            @Query("page") long page);
 
+    //获取被跟随
+    @GET("users/{userName}/followers")
+    Observable<Response<List<UserInfoEntity>>> getFollowers1(@Path("userName") String userName, @Query("per_page") int per_page,
+                                            @Query("page") long page);
+
     //获取仓库信息
     @GET("repos/{userName}/{reposName}")
     Observable<Response<ReposEntity>> getReposInfo(@Path("userName") String userName,

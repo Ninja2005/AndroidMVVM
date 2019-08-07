@@ -8,14 +8,17 @@ import androidx.paging.PagedList;
 import com.hqumath.androidmvvm.app.AppExecutors;
 import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
+import com.hqumath.androidmvvm.http.BaseApi;
+import com.hqumath.androidmvvm.http.HandlerException;
+import com.hqumath.androidmvvm.http.HttpOnNextListener;
 import com.hqumath.androidmvvm.http.RetrofitClient;
 import com.hqumath.androidmvvm.http.service.MyApiService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.trello.rxlifecycle2.LifecycleProvider;
+import io.reactivex.Observable;
+import retrofit2.Retrofit;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 /**
  * ****************************************************************
@@ -29,19 +32,21 @@ import java.util.concurrent.Executor;
  */
 public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInfoEntity> {
 
-    private Executor ioExecutor = AppExecutors.getInstance().diskIO();
-    public PagingRequestHelper helper = new PagingRequestHelper(ioExecutor);
+    public PagingRequestHelper helper = new PagingRequestHelper(AppExecutors.getInstance().diskIO());
     public LiveData<NetworkState> networkState = createStatusLiveData(helper);
 
     private HandleResponseCallback handleResponseCallback;//处理结果
     private int pageSize;//分页大小
+    private WeakReference<LifecycleProvider> lifecycle;
 
-    public UserInfoBoundaryCallback(HandleResponseCallback callback, int pageSize) {
+    public UserInfoBoundaryCallback(HandleResponseCallback callback, int pageSize,
+                                    WeakReference<LifecycleProvider> lifecycle) {
         this.handleResponseCallback = callback;
         this.pageSize = pageSize;
+        this.lifecycle = lifecycle;
     }
 
-    public LiveData<NetworkState> createStatusLiveData(PagingRequestHelper helper) {
+    private LiveData<NetworkState> createStatusLiveData(PagingRequestHelper helper) {
         MutableLiveData<NetworkState> liveData = new MutableLiveData<>();
         helper.addListener(report -> {
             if (report.hasRunning()) {
@@ -70,27 +75,31 @@ public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInf
      */
     public void onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL, helperCallback -> {
-            RetrofitClient.getInstance().getRetrofit().create(MyApiService.class)
-                    .getFollowers("JakeWharton", pageSize, 1)
-                    .enqueue(new Callback<List<UserInfoEntity>>() {
-                        @Override
-                        public void onResponse(@NonNull Call<List<UserInfoEntity>> call,
-                                               @NonNull Response<List<UserInfoEntity>> response) {
-                            if (response.isSuccessful() && response.body() != null) {
-                                ioExecutor.execute(() -> {
-                                    handleResponseCallback.insertResultIntoDb(response.body());
-                                    helperCallback.recordSuccess();
-                                });
-                            } else {
-                                helperCallback.recordFailure(new Throwable("error: " + response.code() + " " + response.message()));
-                            }
-                        }
+            RetrofitClient.getInstance().sendHttpRequestIO(new BaseApi(new HttpOnNextListener<List<UserInfoEntity>>() {
+                @Override
+                public void onSubscribe() {
+                }
 
-                        @Override
-                        public void onFailure(@NonNull Call<List<UserInfoEntity>> call, @NonNull Throwable t) {
-                            helperCallback.recordFailure(t);
-                        }
-                    });
+                @Override
+                public void onNext(List<UserInfoEntity> o) {
+                    handleResponseCallback.insertResultIntoDb(o);
+                    helperCallback.recordSuccess();
+                }
+
+                @Override
+                public void onError(HandlerException.ResponseThrowable e) {
+                    helperCallback.recordFailure(new Throwable(e.getMessage()));
+                }
+
+                @Override
+                public void onComplete() {
+                }
+            }, lifecycle) {
+                @Override
+                public Observable getObservable(Retrofit retrofit) {
+                    return retrofit.create(MyApiService.class).getFollowers1("JakeWharton", pageSize, 1);
+                }
+            });
         });
     }
 
@@ -102,28 +111,33 @@ public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInf
      */
     public void onItemAtEndLoaded(@NonNull UserInfoEntity itemAtEnd) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER, helperCallback -> {
-            //请求下页数据
-            RetrofitClient.getInstance().getRetrofit().create(MyApiService.class)
-                    .getFollowers("JakeWharton", pageSize, itemAtEnd.getIndexInResponse() / pageSize + 2)
-                    .enqueue(new Callback<List<UserInfoEntity>>() {
-                        @Override
-                        public void onResponse(@NonNull Call<List<UserInfoEntity>> call,
-                                               @NonNull Response<List<UserInfoEntity>> response) {
-                            if (response.isSuccessful() && response.body() != null) {
-                                ioExecutor.execute(() -> {
-                                    handleResponseCallback.insertResultIntoDb(response.body());
-                                    helperCallback.recordSuccess();
-                                });
-                            } else {
-                                helperCallback.recordFailure(new Throwable("error: " + response.code() + " " + response.message()));
-                            }
-                        }
+            RetrofitClient.getInstance().sendHttpRequestIO(new BaseApi(new HttpOnNextListener<List<UserInfoEntity>>() {
+                @Override
+                public void onSubscribe() {
+                }
 
-                        @Override
-                        public void onFailure(@NonNull Call<List<UserInfoEntity>> call, @NonNull Throwable t) {
-                            helperCallback.recordFailure(t);
-                        }
-                    });
+                @Override
+                public void onNext(List<UserInfoEntity> o) {
+                    handleResponseCallback.insertResultIntoDb(o);
+                    helperCallback.recordSuccess();
+                }
+
+                @Override
+                public void onError(HandlerException.ResponseThrowable e) {
+                    helperCallback.recordFailure(new Throwable(e.getMessage()));
+                }
+
+                @Override
+                public void onComplete() {
+                }
+            }, lifecycle) {
+                @Override
+                public Observable getObservable(Retrofit retrofit) {
+                    ////请求下页数据 需要+2
+                    return retrofit.create(MyApiService.class).getFollowers1("JakeWharton", pageSize,
+                            itemAtEnd.getIndexInResponse() / pageSize + 2);
+                }
+            });
         });
     }
 
