@@ -44,9 +44,7 @@ public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
     }
 
     public void init() {
-        boundaryCallback = new UserInfoBoundaryCallback(response -> {
-            model.insertAllUsers(response);
-        }, pageSize);
+        boundaryCallback = new UserInfoBoundaryCallback(this::insertResultIntoDb, pageSize);
 
         list = new LivePagedListBuilder<>(
                 model.loadAllUsers2(),
@@ -73,7 +71,7 @@ public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
                             appExecutors.diskIO().execute(() -> {
                                 model.runInTransaction(() -> {
                                     model.deleteAllUsers();
-                                    model.insertAllUsers(response.body());
+                                    insertResultIntoDb(response.body());
                                 });
                                 refreshState.postValue(NetworkState.LOADED);
                             });
@@ -92,5 +90,19 @@ public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
 
     public void retry() {
         boundaryCallback.helper.retryAllFailed();
+    }
+
+    /**
+     * Inserts the response into the database while also assigning position indices to items.
+     * 插入数据库，并标注位置
+     */
+    private void insertResultIntoDb(List<UserInfoEntity> list) {
+        model.runInTransaction(() -> {
+            int start = model.getNextIndexInUsers();
+            for (int i = 0; i < list.size(); i++) {
+                list.get(i).setIndexInResponse(start + i);
+            }
+            model.insertAllUsers(list);
+        });
     }
 }

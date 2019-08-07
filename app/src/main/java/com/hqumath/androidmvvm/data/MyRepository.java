@@ -82,8 +82,11 @@ public class MyRepository {
         mDatabase.userInfoDao().insertAll(list);
     }
 
-
     public void deleteAllUsers() {
         mDatabase.userInfoDao().deleteAll();
+    }
+
+    public int getNextIndexInUsers(){
+        return mDatabase.userInfoDao().getNextIndex();
     }
 }

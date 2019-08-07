@@ -93,9 +93,9 @@ public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInf
      */
     public void onItemAtEndLoaded(@NonNull UserInfoEntity itemAtEnd) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER, helperCallback -> {
+            //请求下页数据
             RetrofitClient.getInstance().getRetrofit().create(MyApiService.class)
-                    //TODO 第几页
-                    .getFollowers("JakeWharton", pageSize, 2)
+                    .getFollowers("JakeWharton", pageSize, itemAtEnd.getIndexInResponse() / pageSize + 2)
                     .enqueue(new Callback<List<UserInfoEntity>>() {
                         @Override
                         public void onResponse(@NonNull Call<List<UserInfoEntity>> call,

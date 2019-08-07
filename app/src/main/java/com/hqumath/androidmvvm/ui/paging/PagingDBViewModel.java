@@ -61,6 +61,7 @@ public class PagingDBViewModel extends BaseViewModel<MyRepository> {
                 UserInfoEntity entity = new UserInfoEntity();
                 entity.setLogin("第" + i + "项");
                 entity.setAvatar_url("https://www.baidu.com/img/bd_logo1.png");
+                entity.setIndexInResponse(i);
                 list.add(entity);
             }
             model.insertAllUsers(list);

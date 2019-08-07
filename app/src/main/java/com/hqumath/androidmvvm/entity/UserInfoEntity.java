@@ -83,6 +83,9 @@ public class UserInfoEntity {
     private String created_at;
     private String updated_at;
 
+    // to be consistent w/ changing backend order, we need to keep a data like this
+    private int indexInResponse = -1;
+
     public String getLogin() {
         return login;
     }
@@ -329,5 +332,13 @@ public class UserInfoEntity {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public int getIndexInResponse() {
+        return indexInResponse;
+    }
+
+    public void setIndexInResponse(int indexInResponse) {
+        this.indexInResponse = indexInResponse;
     }
 }

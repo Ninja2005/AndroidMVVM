@@ -28,7 +28,7 @@ public interface UserInfoDao {
     @Query("select * from user_info")
     List<UserInfoEntity> loadAll1();
 
-    @Query("SELECT * FROM user_info")
+    @Query("SELECT * FROM user_info ORDER BY indexInResponse ASC")
     DataSource.Factory<Integer, UserInfoEntity> loadAll2();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -42,4 +42,7 @@ public interface UserInfoDao {
 
     @Query("delete from user_info")
     void deleteAll();
+
+    @Query("SELECT MAX(indexInResponse) + 1 FROM user_info")
+    int getNextIndex();
 }
