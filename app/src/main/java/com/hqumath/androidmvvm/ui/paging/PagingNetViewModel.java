@@ -10,8 +10,6 @@ import com.hqumath.androidmvvm.base.BaseViewModel;
 import com.hqumath.androidmvvm.data.MyRepository;
 import com.hqumath.androidmvvm.data.paging.CommitFactory;
 import com.hqumath.androidmvvm.data.paging.CommitSource;
-import com.hqumath.androidmvvm.data.paging.UserInfoFactory;
-import com.hqumath.androidmvvm.data.paging.UserInfoSource;
 import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.NetworkState;
 
@@ -32,44 +30,38 @@ public class PagingNetViewModel extends BaseViewModel<MyRepository> {
     public LiveData<PagedList<CommitEntity>> list;
     public LiveData<NetworkState> networkState;//网络状态
     public LiveData<NetworkState> refreshState;//初始化加载状态
+    private int pageSize = 10;//每页大小
+    private int initialLoadPage = 3;//预加载页数
 
     public PagingNetViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void init(){
-        commitFactory = new CommitFactory();
+    public void init() {
+        commitFactory = new CommitFactory(pageSize);
         networkState = Transformations.switchMap(commitFactory.getSourceLiveData(), source -> source.networkState);
         refreshState = Transformations.switchMap(commitFactory.getSourceLiveData(), source -> source.initialLoad);
 
         list = new LivePagedListBuilder<>(
                 commitFactory,
                 new PagedList.Config.Builder()
-                        .setPageSize(20)
-                        .setInitialLoadSizeHint(20)
+                        .setPageSize(pageSize)
+                        .setInitialLoadSizeHint(pageSize * initialLoadPage)
                         .setEnablePlaceholders(false)//不明确item数目
                         .build())
                 .setFetchExecutor(appExecutors.networkIO())
                 .build();
-
-        /*PagedList.Config config1 = new PagedList.Config.Builder()
-                .setPageSize(mPageSize)
-                .setPrefetchDistance(mPageSize)
-                .setEnablePlaceholders(false)
-                .setInitialLoadSizeHint(mPageSize * 3)
-                .setMaxSize(Integer.MAX_VALUE)
-                .build();*/
     }
 
     public void refresh() {
         CommitSource commitSource = commitFactory.getSourceLiveData().getValue();
-        if(commitSource != null)
+        if (commitSource != null)
             commitSource.invalidate();
     }
 
-    public void retry(){
+    public void retry() {
         CommitSource commitSource = commitFactory.getSourceLiveData().getValue();
-        if(commitSource != null)
+        if (commitSource != null)
             commitSource.retryAllFailed();
     }
 

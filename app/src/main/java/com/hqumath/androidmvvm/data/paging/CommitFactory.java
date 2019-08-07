@@ -18,11 +18,16 @@ import com.hqumath.androidmvvm.entity.CommitEntity;
 public class CommitFactory extends DataSource.Factory<Long, CommitEntity> {
 
     private MutableLiveData<CommitSource> sourceLiveData = new MutableLiveData<>();
+    private int pageSize;//分页大小
+
+    public CommitFactory(int pageSize){
+        this.pageSize = pageSize;
+    }
 
     @NonNull
     @Override
     public DataSource<Long, CommitEntity> create() {
-        CommitSource commitSource = new CommitSource();
+        CommitSource commitSource = new CommitSource(pageSize);
         sourceLiveData.postValue(commitSource);
         return commitSource;
     }

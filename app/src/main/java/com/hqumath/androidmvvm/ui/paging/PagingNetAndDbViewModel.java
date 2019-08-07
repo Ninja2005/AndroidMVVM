@@ -33,11 +33,13 @@ import java.util.List;
  */
 public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
 
+    private UserInfoBoundaryCallback boundaryCallback;
+
     public LiveData<PagedList<UserInfoEntity>> list;
     public LiveData<NetworkState> networkState;//网络状态
     public MutableLiveData<NetworkState> refreshState = new MutableLiveData<>();//初始化加载状态
-    private int pageSize = 10;
-    private UserInfoBoundaryCallback boundaryCallback;
+    private int pageSize = 10;//每页大小
+    private int initialLoadPage = 3;//预加载页数
 
 
     public PagingNetAndDbViewModel(@NonNull Application application) {
@@ -46,13 +48,14 @@ public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
     }
 
     public void init() {
-        boundaryCallback = new UserInfoBoundaryCallback(this::insertResultIntoDb, pageSize, getLifecycleProvider());
+        boundaryCallback = new UserInfoBoundaryCallback(this::insertResultIntoDb, pageSize, initialLoadPage,
+                getLifecycleProvider());
 
         list = new LivePagedListBuilder<>(
                 model.loadAllUsers2(),
                 new PagedList.Config.Builder()
                         .setPageSize(pageSize)
-                        .setInitialLoadSizeHint(pageSize)
+                        .setInitialLoadSizeHint(pageSize * initialLoadPage)
                         .build())
                 .setFetchExecutor(appExecutors.diskIO())
                 .setBoundaryCallback(boundaryCallback)
@@ -88,7 +91,7 @@ public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
         }, getLifecycleProvider()) {
             @Override
             public Observable getObservable(Retrofit retrofit) {
-                return retrofit.create(MyApiService.class).getFollowers1("JakeWharton", pageSize, 1);
+                return retrofit.create(MyApiService.class).getFollowers1("JakeWharton", pageSize * initialLoadPage, 1);
             }
         });
     }

@@ -37,12 +37,14 @@ public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInf
 
     private HandleResponseCallback handleResponseCallback;//处理结果
     private int pageSize;//分页大小
+    private int initialLoadPage;//预加载页数
     private WeakReference<LifecycleProvider> lifecycle;
 
-    public UserInfoBoundaryCallback(HandleResponseCallback callback, int pageSize,
+    public UserInfoBoundaryCallback(HandleResponseCallback callback, int pageSize, int initialLoadPage,
                                     WeakReference<LifecycleProvider> lifecycle) {
         this.handleResponseCallback = callback;
         this.pageSize = pageSize;
+        this.initialLoadPage = initialLoadPage;
         this.lifecycle = lifecycle;
     }
 
@@ -97,7 +99,8 @@ public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInf
             }, lifecycle) {
                 @Override
                 public Observable getObservable(Retrofit retrofit) {
-                    return retrofit.create(MyApiService.class).getFollowers1("JakeWharton", pageSize, 1);
+                    return retrofit.create(MyApiService.class).getFollowers1("JakeWharton",
+                            pageSize * initialLoadPage, 1);
                 }
             });
         });
@@ -133,7 +136,7 @@ public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInf
             }, lifecycle) {
                 @Override
                 public Observable getObservable(Retrofit retrofit) {
-                    ////请求下页数据 需要+2
+                    //请求下页位置 需要+2
                     return retrofit.create(MyApiService.class).getFollowers1("JakeWharton", pageSize,
                             itemAtEnd.getIndexInResponse() / pageSize + 2);
                 }

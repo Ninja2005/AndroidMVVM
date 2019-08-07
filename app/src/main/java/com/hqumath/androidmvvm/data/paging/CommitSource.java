@@ -30,6 +30,11 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
     public MutableLiveData<NetworkState> networkState = new MutableLiveData<>();//网络状态
     public MutableLiveData<NetworkState> initialLoad = new MutableLiveData<>();//初始化加载状态
     private Runnable retry = null;
+    private int pageSize;//分页大小
+
+    public CommitSource(int pageSize){
+        this.pageSize = pageSize;
+    }
 
     public void retryAllFailed() {
         if (retry != null) {
@@ -55,7 +60,8 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
                 retry = null;
                 networkState.postValue(NetworkState.LOADED);
                 initialLoad.postValue(NetworkState.LOADED);
-                callback.onResult(response.body(), null, 2L);
+                Long nextPageKey = params.requestedLoadSize / pageSize + 1L;//下一页位置
+                callback.onResult(response.body(), null, nextPageKey);
             } else {
                 retry = () -> loadInitial(params, callback);
                 NetworkState error = new NetworkState(NetworkState.Status.FAILED, "error: " + response.code() + " " + response.message());
