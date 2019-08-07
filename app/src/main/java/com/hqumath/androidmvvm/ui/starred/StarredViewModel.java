@@ -2,20 +2,16 @@ package com.hqumath.androidmvvm.ui.starred;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Transformations;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 import com.hqumath.androidmvvm.base.BaseViewModel;
 import com.hqumath.androidmvvm.data.MyRepository;
+import com.hqumath.androidmvvm.data.paging.StarredReposFactory;
+import com.hqumath.androidmvvm.data.paging.StarredReposSource;
+import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.entity.ReposEntity;
-import com.hqumath.androidmvvm.http.BaseApi;
-import com.hqumath.androidmvvm.http.HandlerException;
-import com.hqumath.androidmvvm.http.HttpOnNextListener;
-import com.hqumath.androidmvvm.http.RetrofitClient;
-import com.hqumath.androidmvvm.http.service.MyApiService;
-import com.hqumath.androidmvvm.utils.ToastUtil;
-import io.reactivex.Observable;
-import retrofit2.Retrofit;
-
-import java.util.List;
 
 /**
  * ****************************************************************
@@ -29,41 +25,43 @@ import java.util.List;
  */
 public class StarredViewModel extends BaseViewModel<MyRepository> {
 
-    public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
-    public MutableLiveData<List<ReposEntity>> list = new MutableLiveData<>();
+    private StarredReposFactory factory;
+
+    public LiveData<PagedList<ReposEntity>> list;
+    public LiveData<NetworkState> networkState;//网络状态
+    public LiveData<NetworkState> refreshState;//初始化加载状态
+    private int pageSize = 10;//每页大小
+    private int initialLoadPage = 3;//预加载页数
 
     public StarredViewModel(@NonNull Application application) {
         super(application);
-        model = MyRepository.getInstance();
     }
 
-    public void getData() {
-        RetrofitClient.getInstance().sendHttpRequestIO(new BaseApi(new HttpOnNextListener() {
-            @Override
-            public void onSubscribe() {
-                isLoading.postValue(true);
-            }
+    public void init() {
+        factory = new StarredReposFactory(pageSize);
+        networkState = Transformations.switchMap(factory.getSourceLiveData(), source -> source.networkState);
+        refreshState = Transformations.switchMap(factory.getSourceLiveData(), source -> source.initialLoad);
 
-            @Override
-            public void onNext(Object o) {
-                list.postValue((List<ReposEntity>) o);
-                isLoading.postValue(false);
-            }
+        list = new LivePagedListBuilder<>(
+                factory,
+                new PagedList.Config.Builder()
+                        .setPageSize(pageSize)
+                        .setInitialLoadSizeHint(pageSize * initialLoadPage)
+                        .setEnablePlaceholders(false)//不明确item数目
+                        .build())
+                .setFetchExecutor(appExecutors.networkIO())
+                .build();
+    }
 
-            @Override
-            public void onError(HandlerException.ResponseThrowable e) {
-                isLoading.postValue(false);
-                appExecutors.mainThread().execute(() -> ToastUtil.toast(e.getMessage()));
-            }
+    public void refresh() {
+        StarredReposSource source = factory.getSourceLiveData().getValue();
+        if (source != null)
+            source.invalidate();
+    }
 
-            @Override
-            public void onComplete() {
-            }
-        }, getLifecycleProvider()) {
-            @Override
-            public Observable getObservable(Retrofit retrofit) {
-                return retrofit.create(MyApiService.class).getStarred();
-            }
-        });
+    public void retry() {
+        StarredReposSource source = factory.getSourceLiveData().getValue();
+        if (source != null)
+            source.retryAllFailed();
     }
 }

@@ -38,15 +38,15 @@ public class FollowingViewModel extends BaseViewModel<MyRepository> {
     }
 
     public void getData() {
-        RetrofitClient.getInstance().sendHttpRequestIO(new BaseApi(new HttpOnNextListener() {
+        RetrofitClient.getInstance().sendHttpRequestIO(new BaseApi(new HttpOnNextListener<List<UserInfoEntity>>() {
             @Override
             public void onSubscribe() {
                 isLoading.postValue(true);
             }
 
             @Override
-            public void onNext(Object o) {
-                list.postValue((List<UserInfoEntity>) o);
+            public void onNext(List<UserInfoEntity> o) {
+                list.postValue(o);
                 isLoading.postValue(false);
             }
 
@@ -62,7 +62,7 @@ public class FollowingViewModel extends BaseViewModel<MyRepository> {
         }, getLifecycleProvider()) {
             @Override
             public Observable getObservable(Retrofit retrofit) {
-                return retrofit.create(MyApiService.class).getFollowing();
+                return retrofit.create(MyApiService.class).getFollowing("JakeWharton", 100, 1);
             }
         });
     }

@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 import com.hqumath.androidmvvm.app.AppExecutors;
-import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.NetworkState;
+import com.hqumath.androidmvvm.entity.ReposEntity;
 import com.hqumath.androidmvvm.http.RetrofitClient;
 import com.hqumath.androidmvvm.http.service.MyApiService;
 import retrofit2.Call;
@@ -17,26 +17,23 @@ import java.util.List;
 
 /**
  * ****************************************************************
- * 文件名称: CommitSource
+ * 文件名称: MyReposSource
  * 作    者: Created by gyd
- * 创建时间: 2019/7/31 16:05
+ * 创建时间: 2019/7/31 14:47
  * 文件描述:
  * 注意事项:
  * 版权声明:
  * ****************************************************************
  */
-public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
+public class MyReposSource extends PageKeyedDataSource<Long, ReposEntity> {
 
     public MutableLiveData<NetworkState> networkState = new MutableLiveData<>();//网络状态
     public MutableLiveData<NetworkState> initialLoad = new MutableLiveData<>();//初始化加载状态
     private Runnable retry = null;
     private int pageSize;//分页大小
-    private String userName, reposName;
 
-    public CommitSource(int pageSize, String userName, String reposName) {
+    public MyReposSource(int pageSize) {
         this.pageSize = pageSize;
-        this.userName = userName;
-        this.reposName = reposName;
     }
 
     public void retryAllFailed() {
@@ -49,16 +46,15 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<Long,
-            CommitEntity> callback) {
+            ReposEntity> callback) {
         networkState.postValue(NetworkState.LOADING);
         //initialLoad.postValue(NetworkState.LOADING);
 
         // triggered by a refresh, we better execute sync
         // 初始化请求不能异步
         try {
-            Response<List<CommitEntity>> response =
-                    RetrofitClient.getInstance().getRetrofit().create(MyApiService.class)
-                            .getCommits(userName, reposName, params.requestedLoadSize, 1).execute();
+            Response<List<ReposEntity>> response =
+                    RetrofitClient.getInstance().getRetrofit().create(MyApiService.class).getMyRepos(params.requestedLoadSize, 1).execute();
             if (response.isSuccessful() && response.body() != null) {
                 retry = null;
                 networkState.postValue(NetworkState.LOADED);
@@ -81,23 +77,23 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
     }
 
     @Override
-    public void loadBefore(@NonNull LoadParams<Long> params, @NonNull LoadCallback<Long, CommitEntity> callback) {
+    public void loadBefore(@NonNull LoadParams<Long> params, @NonNull LoadCallback<Long, ReposEntity> callback) {
 
     }
 
     @Override
-    public void loadAfter(@NonNull LoadParams<Long> params, @NonNull LoadCallback<Long, CommitEntity> callback) {
+    public void loadAfter(@NonNull LoadParams<Long> params, @NonNull LoadCallback<Long, ReposEntity> callback) {
         networkState.postValue(NetworkState.LOADING);
-        RetrofitClient.getInstance().getRetrofit().create(MyApiService.class)
-                .getCommits(userName, reposName, params.requestedLoadSize, params.key)
-                .enqueue(new Callback<List<CommitEntity>>() {
+        RetrofitClient.getInstance().getRetrofit().create(MyApiService.class).getMyRepos(params.requestedLoadSize,
+                params.key)
+                .enqueue(new Callback<List<ReposEntity>>() {
                     @Override
-                    public void onResponse(@NonNull Call<List<CommitEntity>> call,
-                                           @NonNull Response<List<CommitEntity>> response) {
+                    public void onResponse(@NonNull Call<List<ReposEntity>> call,
+                                           @NonNull Response<List<ReposEntity>> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             retry = null;
                             networkState.postValue(NetworkState.LOADED);
-                            List<CommitEntity> list = response.body();
+                            List<ReposEntity> list = response.body();
                             callback.onResult(list, (list.size() > 0) ? params.key + 1 : null);
                         } else {
                             retry = () -> loadAfter(params, callback);
@@ -107,7 +103,7 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<List<CommitEntity>> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<List<ReposEntity>> call, @NonNull Throwable t) {
                         retry = () -> loadAfter(params, callback);
                         networkState.postValue(new NetworkState(NetworkState.Status.FAILED, t.getMessage()));
                     }

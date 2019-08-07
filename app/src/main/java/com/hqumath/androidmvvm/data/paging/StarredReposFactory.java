@@ -3,7 +3,7 @@ package com.hqumath.androidmvvm.data.paging;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
-import com.hqumath.androidmvvm.entity.CommitEntity;
+import com.hqumath.androidmvvm.entity.ReposEntity;
 
 /**
  * ****************************************************************
@@ -15,27 +15,24 @@ import com.hqumath.androidmvvm.entity.CommitEntity;
  * 版权声明:
  * ****************************************************************
  */
-public class CommitFactory extends DataSource.Factory<Long, CommitEntity> {
+public class StarredReposFactory extends DataSource.Factory<Long, ReposEntity> {
 
-    private MutableLiveData<CommitSource> sourceLiveData = new MutableLiveData<>();
+    private MutableLiveData<StarredReposSource> sourceLiveData = new MutableLiveData<>();
     private int pageSize;//分页大小
-    private String userName, reposName;
 
-    public CommitFactory(int pageSize, String userName, String reposName) {
+    public StarredReposFactory(int pageSize) {
         this.pageSize = pageSize;
-        this.userName = userName;
-        this.reposName = reposName;
     }
 
     @NonNull
     @Override
-    public DataSource<Long, CommitEntity> create() {
-        CommitSource source = new CommitSource(pageSize, userName, reposName);
+    public DataSource<Long, ReposEntity> create() {
+        StarredReposSource source = new StarredReposSource(pageSize);
         sourceLiveData.postValue(source);
         return source;
     }
 
-    public MutableLiveData<CommitSource> getSourceLiveData() {
+    public MutableLiveData<StarredReposSource> getSourceLiveData() {
         return sourceLiveData;
     }
 }

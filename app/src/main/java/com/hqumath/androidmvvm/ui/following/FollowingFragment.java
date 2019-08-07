@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.adapters.UserListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
-import com.hqumath.androidmvvm.databinding.FragmentFollowingBinding;
+import com.hqumath.androidmvvm.databinding.FragmentSwipeListBinding;
 import com.hqumath.androidmvvm.ui.profile.ProfileActivity;
 
 /**
@@ -14,12 +14,12 @@ import com.hqumath.androidmvvm.ui.profile.ProfileActivity;
  * 文件名称: FollowingFragment
  * 作    者: Created by gyd
  * 创建时间: 2019/7/24 15:41
- * 文件描述:
+ * 文件描述: 我追随的 不分页
  * 注意事项:
  * 版权声明:
  * ****************************************************************
  */
-public class FollowingFragment extends BaseViewModelFragment<FragmentFollowingBinding, FollowingViewModel> {
+public class FollowingFragment extends BaseViewModelFragment<FragmentSwipeListBinding, FollowingViewModel> {
 
     private UserListAdapter adapter;
 
@@ -30,18 +30,17 @@ public class FollowingFragment extends BaseViewModelFragment<FragmentFollowingBi
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
-        return R.layout.fragment_following;
+        return R.layout.fragment_swipe_list;
     }
 
     @Override
     public void initView() {
         binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData());
+        binding.swipeRefreshLayout.setOnRefreshListener(viewModel::getData);
     }
 
     @Override
     public void initData() {
-        binding.setViewModel(viewModel);
         adapter = new UserListAdapter(data -> {
             Intent intent = new Intent(mContext, ProfileActivity.class);
             intent.putExtra("UserName", data.getLogin());
@@ -53,13 +52,7 @@ public class FollowingFragment extends BaseViewModelFragment<FragmentFollowingBi
     }
 
     public void initViewObservable() {
-        viewModel.isLoading.observe(this, b -> {
-            if (!b) {
-                binding.swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-        viewModel.list.observe(this, list -> {
-            adapter.setData(list);
-        });
+        viewModel.isLoading.observe(this, binding.swipeRefreshLayout::setRefreshing);
+        viewModel.list.observe(this, adapter::setData);
     }
 }

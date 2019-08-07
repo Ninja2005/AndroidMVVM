@@ -24,37 +24,25 @@
             android:id="@+id/myrepos_fragment"
             android:name="com.hqumath.androidmvvm.ui.myrepos.MyReposFragment"
             android:label="@string/my_repos"
-            tools:layout="@layout/fragment_myrepos"/>
+            tools:layout="@layout/fragment_swipe_list"/>
 
     <fragment
             android:id="@+id/starred_fragment"
             android:name="com.hqumath.androidmvvm.ui.starred.StarredFragment"
             android:label="@string/starred_repos"
-            tools:layout="@layout/fragment_starred"/>
+            tools:layout="@layout/fragment_swipe_list"/>
+
+    <fragment
+            android:id="@+id/followers_fragment"
+            android:name="com.hqumath.androidmvvm.ui.followers.FollowersFragment"
+            android:label="@string/followers"
+            tools:layout="@layout/fragment_swipe_list"/>
 
     <fragment
             android:id="@+id/following_fragment"
             android:name="com.hqumath.androidmvvm.ui.following.FollowingFragment"
             android:label="@string/following"
-            tools:layout="@layout/fragment_following"/>
-
-    <fragment
-            android:id="@+id/paging_db_fragment"
-            android:name="com.hqumath.androidmvvm.ui.paging.PagingDBFragment"
-            android:label="pagingDB"
-            tools:layout="@layout/fragment_paging_db"/>
-
-    <fragment
-            android:id="@+id/paging_net_fragment"
-            android:name="com.hqumath.androidmvvm.ui.paging.PagingNetFragment"
-            android:label="pagingNet"
-            tools:layout="@layout/fragment_paging_net"/>
-
-    <fragment
-            android:id="@+id/paging_net_db_fragment"
-            android:name="com.hqumath.androidmvvm.ui.paging.PagingNetAndDbFragment"
-            android:label="pagingNetAndDb"
-            tools:layout="@layout/fragment_paging_net"/>
+            tools:layout="@layout/fragment_swipe_list"/>
 
     <fragment
             android:id="@+id/settings_fragment"

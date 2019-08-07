@@ -8,7 +8,7 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.databinding.ItemCommitPagingBinding;
+import com.hqumath.androidmvvm.databinding.ItemCommitBinding;
 import com.hqumath.androidmvvm.databinding.ItemNetworkStateBinding;
 import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.NetworkState;
@@ -56,7 +56,7 @@ public class CommitPagedListAdapter extends PagedListAdapter<CommitEntity, Recyc
                     R.layout.item_network_state, parent, false));
         } else {
             return new MyViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                    R.layout.item_commit_paging, parent, false));
+                    R.layout.item_commit, parent, false));
         }
     }
 
@@ -86,7 +86,7 @@ public class CommitPagedListAdapter extends PagedListAdapter<CommitEntity, Recyc
         if (hasExtraRow() && position == getItemCount() - 1) {
             return R.layout.item_network_state;
         } else {
-            return R.layout.item_commit_paging;
+            return R.layout.item_commit;
         }
     }
 
@@ -121,9 +121,9 @@ public class CommitPagedListAdapter extends PagedListAdapter<CommitEntity, Recyc
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        private ItemCommitPagingBinding binding;
+        private ItemCommitBinding binding;
 
-        private MyViewHolder(ItemCommitPagingBinding binding) {
+        private MyViewHolder(ItemCommitBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

@@ -99,7 +99,7 @@ public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInf
             }, lifecycle) {
                 @Override
                 public Observable getObservable(Retrofit retrofit) {
-                    return retrofit.create(MyApiService.class).getFollowers1("JakeWharton",
+                    return retrofit.create(MyApiService.class).getFollowers("JakeWharton",
                             pageSize * initialLoadPage, 1);
                 }
             });
@@ -137,7 +137,7 @@ public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInf
                 @Override
                 public Observable getObservable(Retrofit retrofit) {
                     //请求下页位置 需要+2
-                    return retrofit.create(MyApiService.class).getFollowers1("JakeWharton", pageSize,
+                    return retrofit.create(MyApiService.class).getFollowers("JakeWharton", pageSize,
                             itemAtEnd.getIndexInResponse() / pageSize + 2);
                 }
             });

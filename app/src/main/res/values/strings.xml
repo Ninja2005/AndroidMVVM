@@ -9,10 +9,10 @@
 
     <!-- menu -->
     <string name="profile">Profile</string>
-    <string name="my_repos">My repos</string>
-    <string name="starred_repos">Starred repos</string>
-    <string name="following">Following</string>
-    <string name="followers">Followers</string>
+    <string name="my_repos">My repos(Paging NetOnly)</string>
+    <string name="starred_repos">Starred repos(Paging NetOnly)</string>
+    <string name="followers">Followers(Paging DB+Net)</string>
+    <string name="following">Following(NoPaging)</string>
 
     <string name="settings">Settings</string>
     <string name="about">About</string>

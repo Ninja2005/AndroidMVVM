@@ -1,4 +1,4 @@
-package com.hqumath.androidmvvm.ui.paging;
+package com.hqumath.androidmvvm.ui.followers;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -23,15 +23,15 @@ import java.util.List;
 
 /**
  * ****************************************************************
- * 文件名称: PagingNetAndDbViewModel
+ * 文件名称: FollowingViewModel
  * 作    者: Created by gyd
- * 创建时间: 2019/8/5 14:30
+ * 创建时间: 2019/7/24 15:41
  * 文件描述:
  * 注意事项:
  * 版权声明:
  * ****************************************************************
  */
-public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
+public class FollowersViewModel extends BaseViewModel<MyRepository> {
 
     private UserInfoBoundaryCallback boundaryCallback;
 
@@ -41,8 +41,7 @@ public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
     private int pageSize = 10;//每页大小
     private int initialLoadPage = 3;//预加载页数
 
-
-    public PagingNetAndDbViewModel(@NonNull Application application) {
+    public FollowersViewModel(@NonNull Application application) {
         super(application);
         model = MyRepository.getInstance();
     }
@@ -91,7 +90,7 @@ public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
         }, getLifecycleProvider()) {
             @Override
             public Observable getObservable(Retrofit retrofit) {
-                return retrofit.create(MyApiService.class).getFollowers1("JakeWharton", pageSize * initialLoadPage, 1);
+                return retrofit.create(MyApiService.class).getFollowers("JakeWharton", pageSize * initialLoadPage, 1);
             }
         });
     }

@@ -2,11 +2,14 @@ package com.hqumath.androidmvvm.ui.starred;
 
 import android.content.Intent;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.adapters.MyReposListAdapter;
+import com.hqumath.androidmvvm.adapters.MyReposPagedListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
-import com.hqumath.androidmvvm.databinding.FragmentStarredBinding;
+import com.hqumath.androidmvvm.databinding.FragmentSwipeListBinding;
+import com.hqumath.androidmvvm.entity.NetworkState;
+import com.hqumath.androidmvvm.entity.ReposEntity;
 import com.hqumath.androidmvvm.ui.myrepos.ReposActivity;
 
 /**
@@ -19,9 +22,9 @@ import com.hqumath.androidmvvm.ui.myrepos.ReposActivity;
  * 版权声明:
  * ****************************************************************
  */
-public class StarredFragment extends BaseViewModelFragment<FragmentStarredBinding, StarredViewModel> {
+public class StarredFragment extends BaseViewModelFragment<FragmentSwipeListBinding, StarredViewModel> {
 
-    private MyReposListAdapter adapter;
+    private MyReposPagedListAdapter adapter;
 
     @Override
     public StarredViewModel getViewModel() {
@@ -30,38 +33,39 @@ public class StarredFragment extends BaseViewModelFragment<FragmentStarredBindin
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
-        return R.layout.fragment_starred;
+        return R.layout.fragment_swipe_list;
     }
 
     @Override
     public void initView() {
         binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData());
-
+        binding.swipeRefreshLayout.setOnRefreshListener(viewModel::refresh);
     }
 
     @Override
     public void initData() {
-        binding.setViewModel(viewModel);
-        adapter = new MyReposListAdapter(data -> {
-            Intent intent = new Intent(mContext, ReposActivity.class);
-            intent.putExtra("name", data.getName());
-            intent.putExtra("login", data.getOwner().getLogin());
-            startActivity(intent);
+        viewModel.init();
+        adapter = new MyReposPagedListAdapter(new MyReposPagedListAdapter.ClickCallback() {
+            @Override
+            public void onClick(@NonNull ReposEntity data) {
+                Intent intent = new Intent(mContext, ReposActivity.class);
+                intent.putExtra("name", data.getName());
+                intent.putExtra("login", data.getOwner().getLogin());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onRetry() {
+                viewModel.retry();
+            }
         });
         binding.list.setAdapter(adapter);
-        viewModel.getData();
-        binding.swipeRefreshLayout.setRefreshing(true);
     }
 
     public void initViewObservable() {
-        viewModel.isLoading.observe(this, b -> {
-            if (!b) {
-                binding.swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-        viewModel.list.observe(this, list -> {
-            adapter.setData(list);
-        });
+        viewModel.list.observe(this, adapter::submitList);
+        viewModel.refreshState.observe(this, state ->
+                binding.swipeRefreshLayout.setRefreshing(state == NetworkState.LOADING));
+        viewModel.networkState.observe(this, adapter::setNetworkState);
     }
 }

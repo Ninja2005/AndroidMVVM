@@ -1,29 +1,24 @@
 package com.hqumath.androidmvvm.ui.myrepos;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.bumptech.glide.Glide;
 import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.adapters.CommitListAdapter;
+import com.hqumath.androidmvvm.adapters.CommitPagedListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelActivity;
 import com.hqumath.androidmvvm.databinding.ActivityReposBinding;
-import com.hqumath.androidmvvm.entity.ReposEntity;
-import com.hqumath.androidmvvm.ui.profile.ProfileActivity;
-import com.hqumath.androidmvvm.utils.StringUtils;
-
-import java.util.Locale;
+import com.hqumath.androidmvvm.entity.CommitEntity;
+import com.hqumath.androidmvvm.entity.NetworkState;
 
 public class ReposActivity extends BaseViewModelActivity<ActivityReposBinding, ReposViewModel> {
 
-    private CommitListAdapter adapter;
+    private CommitPagedListAdapter adapter;
     private String userName, reposName;
-    
+
     @Override
     public ReposViewModel getViewModel() {
         return ViewModelProviders.of(this).get(ReposViewModel.class);
@@ -40,7 +35,7 @@ public class ReposActivity extends BaseViewModelActivity<ActivityReposBinding, R
 
         binding.toolbar.setNavigationOnClickListener(v -> finish());
         binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> viewModel.getData(userName, reposName));
+        binding.swipeRefreshLayout.setOnRefreshListener(viewModel::refresh);
 
         //状态栏透明
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -52,28 +47,33 @@ public class ReposActivity extends BaseViewModelActivity<ActivityReposBinding, R
     @Override
     public void initData() {
         //data
-        reposName = getIntent().getStringExtra("name");
         userName = getIntent().getStringExtra("login");
+        reposName = getIntent().getStringExtra("name");
         //ui
         setTitle(reposName);
         binding.setViewModel(viewModel);
-        adapter = new CommitListAdapter(data -> {});
+        viewModel.init(userName, reposName);
+        adapter = new CommitPagedListAdapter(new CommitPagedListAdapter.ClickCallback() {
+            @Override
+            public void onClick(@NonNull CommitEntity data) {
+            }
+
+            @Override
+            public void onRetry() {
+                viewModel.retry();
+            }
+        });
         binding.list.setAdapter(adapter);
-        viewModel.getData(userName, reposName);
-        binding.swipeRefreshLayout.setRefreshing(true);
     }
 
     public void initViewObservable() {
-        viewModel.isLoading.observe(this, b -> {
-            if (!b) {
-                binding.swipeRefreshLayout.setRefreshing(false);
-            }
-        });
+        //viewModel.isLoading.observe(this, binding.swipeRefreshLayout::setRefreshing);
         viewModel.avatar_url.observe(this, str -> {
             Glide.with(mContext).load(str).into(binding.ivAvatarBg);
         });
-        viewModel.list.observe(this, list -> {
-            adapter.setData(list);
-        });
+        viewModel.list.observe(this, adapter::submitList);
+        viewModel.refreshState.observe(this, state ->
+                binding.swipeRefreshLayout.setRefreshing(state == NetworkState.LOADING));
+        viewModel.networkState.observe(this, adapter::setNetworkState);
     }
 }
