@@ -1,9 +1,8 @@
 # AndroidMVVM
-Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+ViewModel为基础，整合Retrofit+Okhttp+RxJava+Glide等主流模块的快速开发框架。
+Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+ViewModel为基础，整合Retrofit+RxJava网络模块的快速开发框架。
 
 ## 框架流程
 ![](./img/fc.png)
-![](./img/paging.png)
 
 ## 框架特点
 - **Jetpack组件**
@@ -33,6 +32,13 @@ Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+Vie
 	1. 全局的Activity堆栈式管理
 	2. LoggingInterceptor全局拦截网络请求日志
    	3. 全局的异常捕获，程序发生异常时不会崩溃，返回上个界面。
+   	4. 使用androidx
+   	5. 不使用kotlin
+
+- **Paging组件**
+
+    1. 实现了Network only 和 Network & database 两种模式
+    ![](./img/paging.png)
 
 ## 界面
 
