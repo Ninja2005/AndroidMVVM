@@ -1,5 +1,6 @@
 package com.hqumath.androidmvvm.data.paging;
 
+import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -46,9 +47,17 @@ public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInf
             if (report.hasRunning()) {
                 liveData.postValue(NetworkState.LOADING);
             } else if (report.hasError()) {
-                //错误信息
+                Throwable throwable;
+                if (report.initial == PagingRequestHelper.Status.FAILED) {
+                    throwable = report.getErrorFor(PagingRequestHelper.RequestType.INITIAL);
+                } else if (report.before == PagingRequestHelper.Status.FAILED) {
+                    throwable = report.getErrorFor(PagingRequestHelper.RequestType.BEFORE);
+                } else {
+                    throwable = report.getErrorFor(PagingRequestHelper.RequestType.AFTER);
+                }
                 liveData.postValue(new NetworkState(NetworkState.Status.FAILED,
-                        report.getErrorFor(PagingRequestHelper.RequestType.INITIAL).getMessage()));
+                        (throwable != null && !TextUtils.isEmpty(throwable.getMessage())) ? throwable.getMessage() :
+                                "网络错误"));
             } else {
                 liveData.postValue(NetworkState.LOADED);
             }
@@ -73,7 +82,7 @@ public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInf
                                     helperCallback.recordSuccess();
                                 });
                             } else {
-                                helperCallback.recordFailure(new Throwable("error code" + response.code()));
+                                helperCallback.recordFailure(new Throwable("error: " + response.code() + " " + response.message()));
                             }
                         }
 
@@ -106,7 +115,7 @@ public class UserInfoBoundaryCallback extends PagedList.BoundaryCallback<UserInf
                                     helperCallback.recordSuccess();
                                 });
                             } else {
-                                helperCallback.recordFailure(new Throwable("error code" + response.code()));
+                                helperCallback.recordFailure(new Throwable("error: " + response.code() + " " + response.message()));
                             }
                         }
 

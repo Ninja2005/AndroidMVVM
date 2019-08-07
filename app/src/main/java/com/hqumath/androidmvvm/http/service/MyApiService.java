@@ -45,6 +45,11 @@ public interface MyApiService {
     Observable<Response<List<UserInfoEntity>>> getFollowing1(@Query("per_page") int per_page, @Query("page") long page);
 
     //获取被跟随
+    @GET("users/{userName}/following")
+    Call<List<UserInfoEntity>> getFollowing2(@Path("userName") String userName, @Query("per_page") int per_page,
+                                            @Query("page") long page);
+
+    //获取被跟随
     @GET("users/{userName}/followers")
     Call<List<UserInfoEntity>> getFollowers(@Path("userName") String userName, @Query("per_page") int per_page,
                                            @Query("page") long page);

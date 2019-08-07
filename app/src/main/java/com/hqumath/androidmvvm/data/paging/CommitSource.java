@@ -58,7 +58,7 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
                 callback.onResult(response.body(), null, 2L);
             } else {
                 retry = () -> loadInitial(params, callback);
-                NetworkState error = new NetworkState(NetworkState.Status.FAILED, "error code" + response.code());
+                NetworkState error = new NetworkState(NetworkState.Status.FAILED, "error: " + response.code() + " " + response.message());
                 networkState.postValue(error);
                 initialLoad.postValue(error);
             }
@@ -92,7 +92,7 @@ public class CommitSource extends PageKeyedDataSource<Long, CommitEntity> {
                         } else {
                             retry = () -> loadAfter(params, callback);
                             networkState.postValue(new NetworkState(NetworkState.Status.FAILED,
-                                    "error code" + response.code()));
+                                    "error: " + response.code() + " " + response.message()));
                         }
                     }
 

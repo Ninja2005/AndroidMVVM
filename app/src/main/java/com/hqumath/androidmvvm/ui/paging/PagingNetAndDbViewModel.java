@@ -34,7 +34,7 @@ public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
     public LiveData<PagedList<UserInfoEntity>> list;
     public LiveData<NetworkState> networkState;//网络状态
     public MutableLiveData<NetworkState> refreshState = new MutableLiveData<>();//初始化加载状态
-    private int pageSize = 20;
+    private int pageSize = 10;
     private UserInfoBoundaryCallback boundaryCallback;
 
 
@@ -77,7 +77,7 @@ public class PagingNetAndDbViewModel extends BaseViewModel<MyRepository> {
                             });
                         } else {
                             refreshState.postValue(new NetworkState(NetworkState.Status.FAILED,
-                                    "error code" + response.code()));
+                                    "error: " + response.code() + " " + response.message()));
                         }
                     }
 
