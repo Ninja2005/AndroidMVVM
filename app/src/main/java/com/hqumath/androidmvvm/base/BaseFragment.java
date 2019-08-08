@@ -1,6 +1,7 @@
 package com.hqumath.androidmvvm.base;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.trello.rxlifecycle2.components.support.RxFragment;
 public abstract class BaseFragment<V extends ViewDataBinding> extends RxFragment {
     protected V binding;
     protected Activity mContext;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,5 +63,24 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends RxFragment
     public abstract void initData();
 
     public void initViewObservable() {
+    }
+
+    public void showProgressDialog() {
+        showProgressDialog("loading...");
+    }
+
+    public void showProgressDialog(String content) {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(mContext);
+            mProgressDialog.setCancelable(false);
+        }
+        mProgressDialog.setMessage(content);
+        mProgressDialog.show();
+    }
+
+    public void dismissProgressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
     }
 }

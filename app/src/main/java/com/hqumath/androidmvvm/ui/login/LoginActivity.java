@@ -8,7 +8,6 @@ import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseViewModelActivity;
 import com.hqumath.androidmvvm.databinding.ActivityLoginBinding;
 import com.hqumath.androidmvvm.ui.main.MainActivity;
-import com.hqumath.androidmvvm.utils.ToastUtil;
 
 /**
  * ****************************************************************
@@ -48,12 +47,12 @@ public class LoginActivity extends BaseViewModelActivity<ActivityLoginBinding, L
             } else {
                 binding.passwordLayout.setErrorEnabled(false);
             }
-            if (valid)
+            if (valid) {
+                binding.btnLogin.setEnabled(false);
                 viewModel.login();
+            }
         });
-
     }
-
 
     public void initData() {
         binding.setViewModel(viewModel);
@@ -64,6 +63,16 @@ public class LoginActivity extends BaseViewModelActivity<ActivityLoginBinding, L
             if (b) {
                 startActivity(new Intent(mContext, MainActivity.class));
                 finish();
+            } else {
+                binding.btnLogin.setEnabled(true);
+            }
+        });
+
+        viewModel.isLoading.observe(this, b -> {
+            if(b){
+                showProgressDialog();
+            } else {
+                dismissProgressDialog();
             }
         });
     }
