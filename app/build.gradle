@@ -24,6 +24,12 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -48,7 +54,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'//数据解析器
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'//网络请求适配器
     //lifecycle
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha02"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha03"
     //room
     implementation "androidx.room:room-runtime:2.1.0"
     annotationProcessor "androidx.room:room-compiler:2.1.0"
@@ -60,7 +66,17 @@ dependencies {
     //picture
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
+    //junit
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //androidTestImplementation 'androidx.test:runner:1.2.0'
+    //androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //Robolectric environment
+    //testImplementation 'androidx.test:core:1.2.0'
+    //Mockito framework
+    testImplementation 'org.mockito:mockito-core:2.25.0'
+    //robolectric
+    //testImplementation 'org.robolectric:robolectric:4.3'
+
+
 }
