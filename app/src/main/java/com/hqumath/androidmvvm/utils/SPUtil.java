@@ -13,17 +13,17 @@ import java.util.Set;
  * Created by goldze on 2017/5/14.
  * SharedPreferences工具类
  */
-public final class SPUtils {
+public final class SPUtil {
 
-    private static Map<String, SPUtils> sSPMap = new HashMap<>();
+    private static Map<String, SPUtil> sSPMap = new HashMap<>();
     private SharedPreferences sp;
 
     /**
      * 获取SP实例
      *
-     * @return {@link SPUtils}
+     * @return {@link SPUtil}
      */
-    public static SPUtils getInstance() {
+    public static SPUtil getInstance() {
         return getInstance("");
     }
 
@@ -31,20 +31,20 @@ public final class SPUtils {
      * 获取SP实例
      *
      * @param spName sp名
-     * @return {@link SPUtils}
+     * @return {@link SPUtil}
      */
-    public static SPUtils getInstance(String spName) {
+    public static SPUtil getInstance(String spName) {
         if (isSpace(spName)) spName = "spUtils";
-        SPUtils sp = sSPMap.get(spName);
+        SPUtil sp = sSPMap.get(spName);
         if (sp == null) {
-            sp = new SPUtils(spName);
+            sp = new SPUtil(spName);
             sSPMap.put(spName, sp);
         }
         return sp;
     }
 
-    private SPUtils(final String spName) {
-        sp = Utils.getContext().getSharedPreferences(spName, Context.MODE_PRIVATE);
+    private SPUtil(final String spName) {
+        sp = Util.getContext().getSharedPreferences(spName, Context.MODE_PRIVATE);
     }
 
     /**

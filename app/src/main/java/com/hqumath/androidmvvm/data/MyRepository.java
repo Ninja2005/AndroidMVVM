@@ -3,8 +3,8 @@ package com.hqumath.androidmvvm.data;
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
-import com.hqumath.androidmvvm.utils.SPUtils;
-import com.hqumath.androidmvvm.utils.Utils;
+import com.hqumath.androidmvvm.utils.SPUtil;
+import com.hqumath.androidmvvm.utils.Util;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class MyRepository {
     private AppDatabase mDatabase;
 
     private MyRepository() {
-        mDatabase = AppDatabase.getInstance(Utils.getContext());
+        mDatabase = AppDatabase.getInstance(Util.getContext());
     }
 
     public static MyRepository getInstance() {
@@ -42,27 +42,27 @@ public class MyRepository {
     }
 
     public void saveUserName(String userName) {
-        SPUtils.getInstance().put("UserName", userName);
+        SPUtil.getInstance().put("UserName", userName);
     }
 
     public String getUserName() {
-        return SPUtils.getInstance().getString("UserName");
+        return SPUtil.getInstance().getString("UserName");
     }
 
     public void savePassword(String password) {
-        SPUtils.getInstance().put("password", password);
+        SPUtil.getInstance().put("password", password);
     }
 
     public String getPassword() {
-        return SPUtils.getInstance().getString("password");
+        return SPUtil.getInstance().getString("password");
     }
 
     public void saveToken(String token) {
-        SPUtils.getInstance().put("token", token);
+        SPUtil.getInstance().put("token", token);
     }
 
     public String getToken() {
-        return SPUtils.getInstance().getString("token");
+        return SPUtil.getInstance().getString("token");
     }
 
     //用户信息表操作

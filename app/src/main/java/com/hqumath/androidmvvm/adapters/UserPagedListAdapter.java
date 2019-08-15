@@ -16,8 +16,8 @@ import com.hqumath.androidmvvm.databinding.ItemNetworkStateBinding;
 import com.hqumath.androidmvvm.databinding.ItemUserPagingBinding;
 import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
-import com.hqumath.androidmvvm.utils.StringUtils;
-import com.hqumath.androidmvvm.utils.Utils;
+import com.hqumath.androidmvvm.utils.StringUtil;
+import com.hqumath.androidmvvm.utils.Util;
 
 /**
  * ****************************************************************
@@ -45,8 +45,8 @@ public class UserPagedListAdapter extends PagedListAdapter<UserInfoEntity, Recyc
             //这个是用来判断相同对象的内容是否相同 和UI展示的相同
             @Override
             public boolean areContentsTheSame(@NonNull UserInfoEntity oldItem, @NonNull UserInfoEntity newItem) {
-                return StringUtils.equals(oldItem.getLogin(), newItem.getLogin())
-                        && StringUtils.equals(oldItem.getAvatar_url(), newItem.getAvatar_url());
+                return StringUtil.equals(oldItem.getLogin(), newItem.getLogin())
+                        && StringUtil.equals(oldItem.getAvatar_url(), newItem.getAvatar_url());
             }
         });
         this.clickCallback = clickCallback;
@@ -74,7 +74,7 @@ public class UserPagedListAdapter extends PagedListAdapter<UserInfoEntity, Recyc
             ((MyViewHolder) holder).binding.setData(data);
             ((MyViewHolder) holder).binding.setCallback(clickCallback);
             if (data != null && !TextUtils.isEmpty(data.getAvatar_url())) {
-                Glide.with(Utils.getContext())
+                Glide.with(Util.getContext())
                         .load(data.getAvatar_url())
                         .apply(RequestOptions.bitmapTransform(new CircleCrop()))//圆形
                         .into(((MyViewHolder) holder).binding.ivHead);

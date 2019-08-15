@@ -15,8 +15,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.databinding.ItemUserBinding;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
-import com.hqumath.androidmvvm.utils.StringUtils;
-import com.hqumath.androidmvvm.utils.Utils;
+import com.hqumath.androidmvvm.utils.StringUtil;
+import com.hqumath.androidmvvm.utils.Util;
 
 import java.util.List;
 
@@ -66,8 +66,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     UserInfoEntity oldItem = mList.get(oldItemPosition);
                     UserInfoEntity newItem = list.get(newItemPosition);
-                    return StringUtils.equals(oldItem.getLogin(), newItem.getLogin())
-                            && StringUtils.equals(oldItem.getAvatar_url(), newItem.getAvatar_url());
+                    return StringUtil.equals(oldItem.getLogin(), newItem.getLogin())
+                            && StringUtil.equals(oldItem.getAvatar_url(), newItem.getAvatar_url());
                 }
             });
             mList = list;
@@ -89,7 +89,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         UserInfoEntity data = mList.get(position);
         holder.binding.setData(data);
         if (!TextUtils.isEmpty(data.getAvatar_url())) {
-            Glide.with(Utils.getContext())
+            Glide.with(Util.getContext())
                     .load(data.getAvatar_url())
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))//圆形
                     .into(holder.binding.ivHead);

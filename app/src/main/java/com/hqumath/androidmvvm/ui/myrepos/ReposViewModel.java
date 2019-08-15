@@ -19,7 +19,7 @@ import com.hqumath.androidmvvm.http.HandlerException;
 import com.hqumath.androidmvvm.http.HttpOnNextListener;
 import com.hqumath.androidmvvm.http.RetrofitClient;
 import com.hqumath.androidmvvm.http.service.MyApiService;
-import com.hqumath.androidmvvm.utils.StringUtils;
+import com.hqumath.androidmvvm.utils.StringUtil;
 import com.hqumath.androidmvvm.utils.ToastUtil;
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
@@ -87,7 +87,7 @@ public class ReposViewModel extends BaseViewModel<MyRepository> {
                 created_at.postValue(data.getCreated_at().replace("T", " ")
                         .replace("Z", ""));
                 String info = String.format(Locale.getDefault(), "Language %s, size %s",
-                        data.getLanguage(), StringUtils.getSizeString(data.getSize() * 1024));
+                        data.getLanguage(), StringUtil.getSizeString(data.getSize() * 1024));
                 languageAndSize.postValue(info);
                 //isLoading.postValue(false);
             }

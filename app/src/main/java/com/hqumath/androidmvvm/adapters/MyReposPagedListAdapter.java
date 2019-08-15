@@ -12,7 +12,7 @@ import com.hqumath.androidmvvm.databinding.ItemMyreposBinding;
 import com.hqumath.androidmvvm.databinding.ItemNetworkStateBinding;
 import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.entity.ReposEntity;
-import com.hqumath.androidmvvm.utils.StringUtils;
+import com.hqumath.androidmvvm.utils.StringUtil;
 
 /**
  * ****************************************************************
@@ -40,9 +40,9 @@ public class MyReposPagedListAdapter extends PagedListAdapter<ReposEntity, Recyc
             //这个是用来判断相同对象的内容是否相同 和UI展示的相同
             @Override
             public boolean areContentsTheSame(@NonNull ReposEntity oldItem, @NonNull ReposEntity newItem) {
-                return StringUtils.equals(oldItem.getName(), newItem.getName())
-                        && StringUtils.equals(oldItem.getDescription(), newItem.getDescription())
-                        && StringUtils.equals(oldItem.getOwner().getLogin(), newItem.getOwner().getLogin());
+                return StringUtil.equals(oldItem.getName(), newItem.getName())
+                        && StringUtil.equals(oldItem.getDescription(), newItem.getDescription())
+                        && StringUtil.equals(oldItem.getOwner().getLogin(), newItem.getOwner().getLogin());
             }
         });
         this.clickCallback = clickCallback;

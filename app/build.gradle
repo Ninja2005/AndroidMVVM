@@ -24,12 +24,6 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
-
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
-    }
 }
 
 dependencies {
@@ -66,17 +60,7 @@ dependencies {
     //picture
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
-    //junit
     testImplementation 'junit:junit:4.12'
-    //androidTestImplementation 'androidx.test:runner:1.2.0'
-    //androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-    //Robolectric environment
-    //testImplementation 'androidx.test:core:1.2.0'
-    //Mockito framework
-    testImplementation 'org.mockito:mockito-core:2.25.0'
-    //robolectric
-    //testImplementation 'org.robolectric:robolectric:4.3'
-
-
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

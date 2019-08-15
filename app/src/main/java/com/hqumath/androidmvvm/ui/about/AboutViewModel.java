@@ -1,14 +1,12 @@
 package com.hqumath.androidmvvm.ui.about;
 
 import android.app.Application;
-import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import com.hqumath.androidmvvm.base.BaseViewModel;
 import com.hqumath.androidmvvm.data.MyRepository;
-import com.hqumath.androidmvvm.ui.profile.ProfileActivity;
-import com.hqumath.androidmvvm.utils.Utils;
+import com.hqumath.androidmvvm.utils.Util;
 
 /**
  * ****************************************************************
@@ -26,6 +24,6 @@ public class AboutViewModel extends BaseViewModel<MyRepository> {
 
     public AboutViewModel(@NonNull Application application) {
         super(application);
-        version.setValue(Utils.getVersion());
+        version.setValue(Util.getVersion());
     }
 }

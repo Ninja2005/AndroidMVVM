@@ -2,7 +2,7 @@ package com.hqumath.androidmvvm.utils;
 
 import java.util.Locale;
 
-public class StringUtils {
+public class StringUtil {
 
     public static String getSizeString(long size){
         if(size < 1024){

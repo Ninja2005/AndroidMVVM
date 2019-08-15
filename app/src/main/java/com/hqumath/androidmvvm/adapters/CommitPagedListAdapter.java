@@ -12,7 +12,7 @@ import com.hqumath.androidmvvm.databinding.ItemCommitBinding;
 import com.hqumath.androidmvvm.databinding.ItemNetworkStateBinding;
 import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.NetworkState;
-import com.hqumath.androidmvvm.utils.StringUtils;
+import com.hqumath.androidmvvm.utils.StringUtil;
 
 /**
  * ****************************************************************
@@ -40,9 +40,9 @@ public class CommitPagedListAdapter extends PagedListAdapter<CommitEntity, Recyc
             //这个是用来判断相同对象的内容是否相同 和UI展示的相同
             @Override
             public boolean areContentsTheSame(@NonNull CommitEntity oldItem, @NonNull CommitEntity newItem) {
-                return StringUtils.equals(oldItem.getCommit().getCommitter().getName(),
+                return StringUtil.equals(oldItem.getCommit().getCommitter().getName(),
                         newItem.getCommit().getCommitter().getName())
-                        && StringUtils.equals(oldItem.getCommit().getMessage(), newItem.getCommit().getMessage());
+                        && StringUtil.equals(oldItem.getCommit().getMessage(), newItem.getCommit().getMessage());
             }
         });
         this.clickCallback = clickCallback;
