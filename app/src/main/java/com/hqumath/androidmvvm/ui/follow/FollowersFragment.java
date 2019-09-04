@@ -1,34 +1,39 @@
-package com.hqumath.androidmvvm.ui.starred;
+package com.hqumath.androidmvvm.ui.follow;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.adapters.MyReposPagedListAdapter;
+import com.hqumath.androidmvvm.adapters.UserPagedListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentSwipeListBinding;
 import com.hqumath.androidmvvm.entity.NetworkState;
-import com.hqumath.androidmvvm.entity.ReposEntity;
-import com.hqumath.androidmvvm.ui.myrepos.ReposActivity;
+import com.hqumath.androidmvvm.entity.UserInfoEntity;
+import com.hqumath.androidmvvm.ui.profile.ProfileActivity;
+import com.hqumath.androidmvvm.utils.LogUtil;
 
 /**
  * ****************************************************************
- * 文件名称: StarredFragment
+ * 文件名称: FollowingFragment
  * 作    者: Created by gyd
  * 创建时间: 2019/7/24 15:41
- * 文件描述:
+ * 文件描述: 我的追随者 paging分页 db+net
  * 注意事项:
  * 版权声明:
  * ****************************************************************
  */
-public class StarredFragment extends BaseViewModelFragment<FragmentSwipeListBinding, StarredViewModel> {
+public class FollowersFragment extends BaseViewModelFragment<FragmentSwipeListBinding, FollowersViewModel> {
 
-    private MyReposPagedListAdapter adapter;
+    private UserPagedListAdapter adapter;
 
     @Override
-    public StarredViewModel getViewModel() {
-        return ViewModelProviders.of(this).get(StarredViewModel.class);
+    public FollowersViewModel getViewModel() {
+        return ViewModelProviders.of(this).get(FollowersViewModel.class);
     }
 
     @Override
@@ -45,12 +50,11 @@ public class StarredFragment extends BaseViewModelFragment<FragmentSwipeListBind
     @Override
     public void initData() {
         viewModel.init();
-        adapter = new MyReposPagedListAdapter(new MyReposPagedListAdapter.ClickCallback() {
+        adapter = new UserPagedListAdapter(new UserPagedListAdapter.ClickCallback() {
             @Override
-            public void onClick(@NonNull ReposEntity data) {
-                Intent intent = new Intent(mContext, ReposActivity.class);
-                intent.putExtra("name", data.getName());
-                intent.putExtra("login", data.getOwner().getLogin());
+            public void onClick(@NonNull UserInfoEntity data) {
+                Intent intent = new Intent(mContext, ProfileActivity.class);
+                intent.putExtra("UserName", data.getLogin());
                 startActivity(intent);
             }
 

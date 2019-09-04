@@ -1,4 +1,4 @@
-package com.hqumath.androidmvvm.ui.myrepos;
+package com.hqumath.androidmvvm.ui.repos;
 
 import android.app.Application;
 import androidx.annotation.NonNull;

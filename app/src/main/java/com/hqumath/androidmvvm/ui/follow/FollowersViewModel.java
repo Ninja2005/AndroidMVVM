@@ -1,4 +1,4 @@
-package com.hqumath.androidmvvm.ui.followers;
+package com.hqumath.androidmvvm.ui.follow;
 
 import android.app.Application;
 import androidx.annotation.NonNull;

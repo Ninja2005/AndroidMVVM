@@ -1,13 +1,19 @@
-package com.hqumath.androidmvvm.ui.following;
+package com.hqumath.androidmvvm.ui.follow;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.adapters.UserListAdapter;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentSwipeListBinding;
 import com.hqumath.androidmvvm.ui.profile.ProfileActivity;
+import com.hqumath.androidmvvm.utils.LogUtil;
 
 /**
  * ****************************************************************

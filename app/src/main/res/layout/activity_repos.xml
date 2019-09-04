@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.hqumath.androidmvvm.ui.myrepos.ReposViewModel" />
+            type="com.hqumath.androidmvvm.ui.repos.ReposDetailViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

@@ -1,4 +1,4 @@
-package com.hqumath.androidmvvm.ui.myrepos;
+package com.hqumath.androidmvvm.ui.repos;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -14,14 +14,14 @@ import com.hqumath.androidmvvm.databinding.ActivityReposBinding;
 import com.hqumath.androidmvvm.entity.CommitEntity;
 import com.hqumath.androidmvvm.entity.NetworkState;
 
-public class ReposActivity extends BaseViewModelActivity<ActivityReposBinding, ReposViewModel> {
+public class ReposDetailActivity extends BaseViewModelActivity<ActivityReposBinding, ReposDetailViewModel> {
 
     private CommitPagedListAdapter adapter;
     private String userName, reposName;
 
     @Override
-    public ReposViewModel getViewModel() {
-        return ViewModelProviders.of(this).get(ReposViewModel.class);
+    public ReposDetailViewModel getViewModel() {
+        return ViewModelProviders.of(this).get(ReposDetailViewModel.class);
     }
 
     @Override

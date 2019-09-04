@@ -1,7 +1,6 @@
 package com.hqumath.androidmvvm.ui.main;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -11,6 +10,9 @@ import com.hqumath.androidmvvm.base.BaseActivity;
 import com.hqumath.androidmvvm.base.BaseFragment;
 import com.hqumath.androidmvvm.databinding.ActivityMainBinding;
 import com.hqumath.androidmvvm.ui.about.AboutFragment;
+import com.hqumath.androidmvvm.ui.follow.FollowFragment;
+import com.hqumath.androidmvvm.ui.repos.ReposFragment;
+import com.hqumath.androidmvvm.ui.repos.StarredFragment;
 import com.hqumath.androidmvvm.ui.settings.SettingsFragment;
 
 import java.util.ArrayList;
@@ -41,8 +43,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     @Override
     public void initData() {
         List<BaseFragment> fragmentList = new ArrayList<>();
-        fragmentList.add(new SettingsFragment());
-        fragmentList.add(new AboutFragment());
+        fragmentList.add(new ReposFragment());
+        fragmentList.add(new FollowFragment());
         fragmentList.add(new SettingsFragment());
         fragmentList.add(new AboutFragment());
 

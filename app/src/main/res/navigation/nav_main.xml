@@ -22,25 +22,25 @@
 
     <fragment
             android:id="@+id/myrepos_fragment"
-            android:name="com.hqumath.androidmvvm.ui.myrepos.MyReposFragment"
+            android:name="com.hqumath.androidmvvm.ui.repos.MyReposFragment"
             android:label="@string/my_repos"
             tools:layout="@layout/fragment_swipe_list"/>
 
     <fragment
             android:id="@+id/starred_fragment"
-            android:name="com.hqumath.androidmvvm.ui.starred.StarredFragment"
+            android:name="com.hqumath.androidmvvm.ui.repos.StarredFragment"
             android:label="@string/starred_repos"
             tools:layout="@layout/fragment_swipe_list"/>
 
     <fragment
             android:id="@+id/followers_fragment"
-            android:name="com.hqumath.androidmvvm.ui.followers.FollowersFragment"
+            android:name="com.hqumath.androidmvvm.ui.follow.FollowersFragment"
             android:label="@string/followers"
             tools:layout="@layout/fragment_swipe_list"/>
 
     <fragment
             android:id="@+id/following_fragment"
-            android:name="com.hqumath.androidmvvm.ui.following.FollowingFragment"
+            android:name="com.hqumath.androidmvvm.ui.follow.FollowingFragment"
             android:label="@string/following"
             tools:layout="@layout/fragment_swipe_list"/>
 

@@ -2,14 +2,19 @@ package com.hqumath.androidmvvm.ui.about;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentAboutBinding;
-import com.hqumath.androidmvvm.ui.myrepos.ReposActivity;
+import com.hqumath.androidmvvm.ui.repos.ReposDetailActivity;
 import com.hqumath.androidmvvm.ui.profile.ProfileActivity;
+import com.hqumath.androidmvvm.utils.LogUtil;
 
 /**
  * ****************************************************************
@@ -35,7 +40,7 @@ public class AboutFragment extends BaseViewModelFragment<FragmentAboutBinding, A
     @Override
     public void initView() {
         binding.llSourcecode.setOnClickListener(v -> {
-            Intent intent = new Intent(mContext, ReposActivity.class);
+            Intent intent = new Intent(mContext, ReposDetailActivity.class);
             intent.putExtra("name", "AndroidMVVM");
             intent.putExtra("login", "ninja2005");
             startActivity(intent);

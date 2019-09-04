@@ -2,11 +2,17 @@ package com.hqumath.androidmvvm.ui.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentSettingsBinding;
 import com.hqumath.androidmvvm.ui.login.LoginActivity;
+import com.hqumath.androidmvvm.utils.LogUtil;
 
 /**
  * ****************************************************************

@@ -1,4 +1,4 @@
-package com.hqumath.androidmvvm.ui.myrepos;
+package com.hqumath.androidmvvm.ui.repos;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -26,7 +26,7 @@ import retrofit2.Retrofit;
 
 import java.util.Locale;
 
-public class ReposViewModel extends BaseViewModel<MyRepository> {
+public class ReposDetailViewModel extends BaseViewModel<MyRepository> {
 
     private CommitFactory factory;
 
@@ -44,7 +44,7 @@ public class ReposViewModel extends BaseViewModel<MyRepository> {
     private int pageSize = 10;//每页大小
     private int initialLoadPage = 3;//预加载页数
 
-    public ReposViewModel(@NonNull Application application) {
+    public ReposDetailViewModel(@NonNull Application application) {
         super(application);
     }
 
