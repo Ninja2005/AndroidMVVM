@@ -22,4 +22,5 @@
     <color name="line">#E3E3E3</color>
     <color name="background">#eeeeee</color>
 
+    <color name="bottom_navigation_normal">#ADADAD</color>
 </resources>
