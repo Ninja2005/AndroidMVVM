@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
                 name="viewModel"
-                type="com.hqumath.androidmvvm.ui.settings.SettingsViewModel"/>
+                type="com.hqumath.androidmvvm.ui.settings.SettingsViewModel" />
     </data>
 
     <LinearLayout
@@ -16,33 +16,46 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:background="@color/colorAccent" >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Settings"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"/>
+        </LinearLayout>
+
         <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                app:cardUseCompatPadding="true"
-                android:onClick="@{() -> viewModel.logout()}">
+                android:onClick="@{() -> viewModel.logout()}"
+                app:cardUseCompatPadding="true">
 
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="10dp">
 
                 <ImageView
                         android:id="@+id/iv_head"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:src="@drawable/ic_logout"/>
+                        android:src="@drawable/ic_logout" />
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:textSize="14sp"
+                        android:text="Logout"
                         android:textColor="@color/black"
-                        android:text="Logout"/>
+                        android:textSize="14sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

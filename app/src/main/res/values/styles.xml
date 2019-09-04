@@ -12,8 +12,19 @@
         <!--控件的颜色-->
         <!--<item name="colorControlNormal">#E3E3E3</item>-->
 
+        <!--TabLayout样式-->
+        <item name="tabBackground">@color/colorAccent</item>
+        <item name="tabTextColor">#80ffffff</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+
+        <!--自定义-->
         <item name="icon_color">@color/light_teal_icon_color</item>
 
     </style>
 
+    <!--TabLayout文本样式-->
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

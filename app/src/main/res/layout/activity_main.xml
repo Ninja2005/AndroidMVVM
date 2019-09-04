@@ -17,6 +17,7 @@
                 android:id="@+id/navigation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 app:labelVisibilityMode="labeled"
                 app:itemIconTint="@drawable/bottom_navigation_item_selector"
                 app:itemTextColor="@drawable/bottom_navigation_item_selector"
