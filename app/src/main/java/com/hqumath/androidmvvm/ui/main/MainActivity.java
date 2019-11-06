@@ -12,7 +12,6 @@ import com.hqumath.androidmvvm.databinding.ActivityMainBinding;
 import com.hqumath.androidmvvm.ui.about.AboutFragment;
 import com.hqumath.androidmvvm.ui.follow.FollowFragment;
 import com.hqumath.androidmvvm.ui.repos.ReposFragment;
-import com.hqumath.androidmvvm.ui.repos.StarredFragment;
 import com.hqumath.androidmvvm.ui.settings.SettingsFragment;
 
 import java.util.ArrayList;
@@ -48,15 +47,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         fragmentList.add(new SettingsFragment());
         fragmentList.add(new AboutFragment());
 
-        MyFragmentPagerAdapter pagerAdapter =
-                new MyFragmentPagerAdapter(getSupportFragmentManager());
+        MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         pagerAdapter.setData(fragmentList, null);
         binding.viewpager.setAdapter(pagerAdapter);
-        binding.viewpager.setOffscreenPageLimit(fragmentList.size());
+        //binding.viewpager.setOffscreenPageLimit(fragmentList.size());
         binding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override

@@ -29,7 +29,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //support
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
@@ -48,15 +48,15 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'//数据解析器
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'//网络请求适配器
     //lifecycle
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-rc01"
     //room
-    implementation "androidx.room:room-runtime:2.1.0"
-    annotationProcessor "androidx.room:room-compiler:2.1.0"
+    implementation "androidx.room:room-runtime:2.2.1"
+    annotationProcessor "androidx.room:room-compiler:2.2.1"
     //paging
     implementation "androidx.paging:paging-runtime:2.1.0"
     //navigation
-    implementation "androidx.navigation:navigation-fragment:2.0.0"
-    implementation "androidx.navigation:navigation-ui:2.0.0"
+    implementation "androidx.navigation:navigation-fragment:2.1.0"
+    implementation "androidx.navigation:navigation-ui:2.1.0"
     //picture
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
