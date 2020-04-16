@@ -34,6 +34,12 @@ public class LoginViewModel extends BaseViewModel<MyRepository> {
         if (!TextUtils.isEmpty(model.getToken())) {
             isLogin.setValue(true);
         }
+
+        //测试
+        if(TextUtils.isEmpty(userName.getValue())){
+            userName.setValue("test");
+            password.setValue("test");
+        }
     }
 
     public void login() {
