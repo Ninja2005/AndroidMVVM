@@ -17,7 +17,7 @@ import com.hqumath.androidmvvm.databinding.ActivityMain1Binding;
  * 文件名称: MainActivity
  * 作    者: Created by gyd
  * 创建时间: 2019/7/17 11:16
- * 文件描述:
+ * 文件描述: 主界面风格2
  * 注意事项:
  * 版权声明:
  * ****************************************************************

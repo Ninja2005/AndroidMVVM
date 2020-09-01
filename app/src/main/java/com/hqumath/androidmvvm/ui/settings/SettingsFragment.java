@@ -12,6 +12,8 @@ import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseViewModelFragment;
 import com.hqumath.androidmvvm.databinding.FragmentSettingsBinding;
 import com.hqumath.androidmvvm.ui.login.LoginActivity;
+import com.hqumath.androidmvvm.ui.main.MainActivity1;
+import com.hqumath.androidmvvm.ui.profile.ProfileActivity;
 import com.hqumath.androidmvvm.utils.LogUtil;
 
 /**
@@ -37,6 +39,10 @@ public class SettingsFragment extends BaseViewModelFragment<FragmentSettingsBind
 
     @Override
     public void initView() {
+        binding.llNewStyle.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, MainActivity1.class);
+            startActivity(intent);
+        });
     }
 
     @Override

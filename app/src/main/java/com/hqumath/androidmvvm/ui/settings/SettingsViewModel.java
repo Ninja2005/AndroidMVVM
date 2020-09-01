@@ -30,13 +30,11 @@ public class SettingsViewModel extends BaseViewModel<MyRepository> {
     public void logout() {
         appExecutors.diskIO().execute(() -> {
             //清空数据库
-            //TODO
             //清空账户
             model.savePassword("");
             model.saveToken("");
             isLogout.postValue(true);
         });
-
     }
 
 }

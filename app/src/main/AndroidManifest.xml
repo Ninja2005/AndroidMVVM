@@ -28,6 +28,8 @@
         <activity android:name=".ui.login.LoginActivity"/>
         <activity android:name=".ui.profile.ProfileActivity"/>
         <activity android:name=".ui.repos.ReposDetailActivity"/>
+        <activity android:name=".ui.main.MainActivity1"/>
+
     </application>
 
 </manifest>
