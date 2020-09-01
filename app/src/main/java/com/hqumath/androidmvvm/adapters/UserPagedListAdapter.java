@@ -17,7 +17,7 @@ import com.hqumath.androidmvvm.databinding.ItemUserPagingBinding;
 import com.hqumath.androidmvvm.entity.NetworkState;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import com.hqumath.androidmvvm.utils.StringUtil;
-import com.hqumath.androidmvvm.utils.Util;
+import com.hqumath.androidmvvm.utils.CommonUtil;
 
 /**
  * ****************************************************************
@@ -74,7 +74,7 @@ public class UserPagedListAdapter extends PagedListAdapter<UserInfoEntity, Recyc
             ((MyViewHolder) holder).binding.setData(data);
             ((MyViewHolder) holder).binding.setCallback(clickCallback);
             if (data != null && !TextUtils.isEmpty(data.getAvatar_url())) {
-                Glide.with(Util.getContext())
+                Glide.with(CommonUtil.getContext())
                         .load(data.getAvatar_url())
                         .apply(RequestOptions.bitmapTransform(new CircleCrop()))//圆形
                         .into(((MyViewHolder) holder).binding.ivHead);

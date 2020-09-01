@@ -16,7 +16,7 @@ import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.databinding.ItemUserBinding;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import com.hqumath.androidmvvm.utils.StringUtil;
-import com.hqumath.androidmvvm.utils.Util;
+import com.hqumath.androidmvvm.utils.CommonUtil;
 
 import java.util.List;
 
@@ -89,7 +89,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         UserInfoEntity data = mList.get(position);
         holder.binding.setData(data);
         if (!TextUtils.isEmpty(data.getAvatar_url())) {
-            Glide.with(Util.getContext())
+            Glide.with(CommonUtil.getContext())
                     .load(data.getAvatar_url())
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))//圆形
                     .into(holder.binding.ivHead);

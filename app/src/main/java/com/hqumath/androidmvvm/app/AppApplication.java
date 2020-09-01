@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import com.hqumath.androidmvvm.BuildConfig;
 import com.hqumath.androidmvvm.utils.Density;
 import com.hqumath.androidmvvm.utils.LogUtil;
-import com.hqumath.androidmvvm.utils.Util;
+import com.hqumath.androidmvvm.utils.CommonUtil;
 
 /**
  * ****************************************************************
@@ -27,7 +27,7 @@ public class AppApplication extends Application {
         super.onCreate();
         setApplication(this);
         //初始化工具类
-        Util.init(this);
+        CommonUtil.init(this);
         //是否开启打印日志
         LogUtil.init(BuildConfig.DEBUG);
         //异常捕获

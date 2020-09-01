@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseViewModelActivity;
 import com.hqumath.androidmvvm.databinding.ActivityProfileBinding;
-import com.hqumath.androidmvvm.utils.Util;
+import com.hqumath.androidmvvm.utils.CommonUtil;
 
 /**
  * ****************************************************************
@@ -70,7 +70,7 @@ public class ProfileActivity extends BaseViewModelActivity<ActivityProfileBindin
         });
         viewModel.avatarUrl.observe(this, url -> {
             Glide.with(mContext).load(url).into(binding.ivAvatarBg);
-            Glide.with(Util.getContext())
+            Glide.with(CommonUtil.getContext())
                     .load(url)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))//圆形
                     .into(binding.ivAvatar);

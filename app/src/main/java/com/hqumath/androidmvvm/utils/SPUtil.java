@@ -44,7 +44,7 @@ public final class SPUtil {
     }
 
     private SPUtil(final String spName) {
-        sp = Util.getContext().getSharedPreferences(spName, Context.MODE_PRIVATE);
+        sp = CommonUtil.getContext().getSharedPreferences(spName, Context.MODE_PRIVATE);
     }
 
     /**

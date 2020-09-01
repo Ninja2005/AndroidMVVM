@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import com.hqumath.androidmvvm.base.BaseViewModel;
 import com.hqumath.androidmvvm.data.MyRepository;
-import com.hqumath.androidmvvm.utils.Util;
+import com.hqumath.androidmvvm.utils.CommonUtil;
 
 /**
  * ****************************************************************
@@ -24,6 +24,6 @@ public class AboutViewModel extends BaseViewModel<MyRepository> {
 
     public AboutViewModel(@NonNull Application application) {
         super(application);
-        version.setValue(Util.getVersion());
+        version.setValue(CommonUtil.getVersion());
     }
 }

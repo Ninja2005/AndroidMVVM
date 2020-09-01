@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
 import com.hqumath.androidmvvm.entity.UserInfoEntity;
 import com.hqumath.androidmvvm.utils.SPUtil;
-import com.hqumath.androidmvvm.utils.Util;
+import com.hqumath.androidmvvm.utils.CommonUtil;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class MyRepository {
     private AppDatabase mDatabase;
 
     private MyRepository() {
-        mDatabase = AppDatabase.getInstance(Util.getContext());
+        mDatabase = AppDatabase.getInstance(CommonUtil.getContext());
     }
 
     public static MyRepository getInstance() {
