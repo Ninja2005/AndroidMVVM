@@ -5,10 +5,9 @@
     <!--状态栏-->
     <color name="colorPrimaryDark">#3F51B5</color>
     <!--主题-->
-    <!--<color name="colorAccent">#3896F9</color>-->
     <color name="colorAccent">#3F51B5</color>
-    <!--背景色-->
-    <color name="windowBackground">#FFFFFF</color>
+    <!--主题背景色-->
+    <color name="windowBackground">#F5F5F5</color>
 
     <color name="light_teal_icon_color">#000000</color>
 

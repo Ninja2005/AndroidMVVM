@@ -1,25 +1,27 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <!--<item name="android:windowBackground">@color/windowBackground</item>-->
-        <!--控件的颜色-->
-        <!--<item name="colorControlNormal">#E3E3E3</item>-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item><!--导航栏-->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item><!--状态栏-->
+        <item name="colorAccent">@color/colorAccent</item><!--控件选中后颜色-->
+        <item name="android:windowBackground">@color/windowBackground</item>
+
+        <item name="android:windowAnimationStyle">@style/TranAnimation</item><!--切换动画-->
+        <item name="icon_color">@color/light_teal_icon_color</item><!--自定义图标颜色-->
 
         <!--TabLayout样式-->
         <item name="tabBackground">@color/colorAccent</item>
         <item name="tabTextColor">#80ffffff</item>
         <item name="tabSelectedTextColor">@color/white</item>
+    </style>
 
-        <!--自定义-->
-        <item name="icon_color">@color/light_teal_icon_color</item>
-
+    <!--切换动画-->
+    <style name="TranAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/in_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/out_to_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/in_from_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/out_to_right</item>
     </style>
 
     <!--TabLayout文本样式-->
