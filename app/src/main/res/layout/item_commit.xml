@@ -45,9 +45,9 @@
                     tools:text="Name" />
 
                 <TextView
-                    android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{data.getCommit().getCommitter().getDate()}"
                     android:layout_marginStart="20dp"
                     android:textColor="@color/gray1"
                     android:textSize="14sp"

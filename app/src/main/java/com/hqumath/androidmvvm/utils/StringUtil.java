@@ -21,7 +21,7 @@ public class StringUtil {
     }
 
     /**
-     * 参数可以为空
+     * 判断相等，参数可以为空
      * @param a
      * @param b
      * @return
