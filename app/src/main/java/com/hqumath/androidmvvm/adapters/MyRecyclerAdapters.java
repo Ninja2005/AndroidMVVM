@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseRecyclerAdapter;
 import com.hqumath.androidmvvm.base.BaseRecyclerViewHolder;
+import com.hqumath.androidmvvm.bean.ReposEntity;
 import com.hqumath.androidmvvm.bean.UserInfoEntity;
 import com.hqumath.androidmvvm.utils.CommonUtil;
 
@@ -32,6 +33,21 @@ public class MyRecyclerAdapters {
                         .circleCrop()
                         .into(ivHead);
             }
+        }
+    }
+
+    //我的仓库
+    public static class ReposRecyclerAdapter extends BaseRecyclerAdapter<ReposEntity> {
+        public ReposRecyclerAdapter(Context context, List<ReposEntity> mData) {
+            super(context, mData, R.layout.recycler_item_repos);
+        }
+
+        @Override
+        public void convert(BaseRecyclerViewHolder holder, int position) {
+            ReposEntity data = mData.get(position);
+            holder.setText(R.id.tv_name, data.getName());
+            holder.setText(R.id.tv_description, data.getDescription());
+            holder.setText(R.id.tv_author, data.getOwner().getLogin());
         }
     }
 }

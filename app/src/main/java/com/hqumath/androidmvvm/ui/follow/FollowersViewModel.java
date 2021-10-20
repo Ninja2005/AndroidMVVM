@@ -66,7 +66,7 @@ public class FollowersViewModel extends BaseViewModel {
             public void onError(String errorMsg, String code) {
                 followersResultMsg = errorMsg;
                 followersRefresh = isRefresh;
-                followersResultCode.setValue("code");
+                followersResultCode.setValue(code);
             }
         });
     }

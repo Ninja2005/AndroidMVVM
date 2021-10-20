@@ -10,6 +10,7 @@ import com.hqumath.androidmvvm.base.BaseActivity;
 import com.hqumath.androidmvvm.base.BaseFragment;
 import com.hqumath.androidmvvm.databinding.ActivityMainBinding;
 import com.hqumath.androidmvvm.ui.follow.FollowersFragment;
+import com.hqumath.androidmvvm.ui.repos.ReposFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
         List<BaseFragment> fragmentList = new ArrayList<>();
-        //fragmentList.add(new ReposFragment()); TODO
+        fragmentList.add(new ReposFragment());
         fragmentList.add(new FollowersFragment());
         fragmentList.add(new SettingsFragment());
         fragmentList.add(new AboutFragment());
