@@ -6,8 +6,8 @@ android {
         applicationId "com.hqumath.androidmvvm"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 20211020
+        versionName "2.0"
     }
     buildFeatures {
         viewBinding true
@@ -39,14 +39,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //support
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.2.0'
-    //lifecycle
     def lifecycle_version = "2.4.0-rc01"
-    def arch_version = "2.1.0"
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     // LiveData
@@ -57,11 +54,6 @@ dependencies {
     //rxjava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    //rx系列与View生命周期同步
-    //implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.2'
-    //implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
-    //rxbinding以响应式的方式来处理UI的响应问题
-    //implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha2'
     //network
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
@@ -70,15 +62,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'//网络请求适配器
     // MultiDex的依赖
     //implementation 'org.robolectric:shadows-multidex:3.4-rc2'
-
-//    //room
-//    implementation "androidx.room:room-runtime:2.2.1"
-//    annotationProcessor "androidx.room:room-compiler:2.2.1"
-//    //paging
-//    implementation "androidx.paging:paging-runtime:2.1.0"
-//    //navigation
-//    implementation "androidx.navigation:navigation-fragment:2.1.0"
-//    implementation "androidx.navigation:navigation-ui:2.1.0"
     //下拉刷新
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
@@ -90,4 +73,9 @@ dependencies {
     //内存泄漏
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
+//    //room
+//    implementation "androidx.room:room-runtime:2.2.1"
+//    annotationProcessor "androidx.room:room-compiler:2.2.1"
+//    //paging
+//    implementation "androidx.paging:paging-runtime:2.1.0"
 }
