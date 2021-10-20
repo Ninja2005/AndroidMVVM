@@ -1,24 +1,54 @@
 <resources>
     <string name="app_name">MVVMDemo</string>
 
-    <string name="user_name">Username</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="user_name_warning">Invalid username!</string>
-    <string name="password_warning">Invalid password!</string>
+    <!--登录界面-->
+    <string name="user_name">用户名</string>
+    <string name="password">密码(不校验)</string>
+    <string name="login">登录</string>
+    <string name="user_name_warning">用户名不正确!</string>
+    <string name="password_warning">密码不正确!</string>
+
+    <!--navigation-->
+    <string name="repos">Repos</string>
+    <string name="follow">Follow</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+
+    <!--权限获取-->
+    <string name="permission_title">提示</string>
+    <string name="permission_failed_title">权限申请失败</string>
+    <string name="permission_failed_setting">去设置</string>
+    <string name="permission_failed_cancel">取消</string>
+    <string name="permission_always_failed_message">我们需要的一些权限被您拒绝，请您到设置页面手动授权，否则功能无法正常使用！\n\n%1$s</string>
+    <string name="permission_install_failed_message">请您授予安装未知应用权限，否则无法安装app</string>
+
+    <!--环形进度条-->
+    <declare-styleable name="DownloadingProgressBar">
+        <attr name="bga_pb_mode" format="enum">
+            <enum name="system" value="0" />
+            <enum name="horizontal" value="1" />
+            <enum name="circle" value="2" />
+            <enum name="comet" value="3" />
+            <enum name="wave" value="4" />
+        </attr>
+        <attr name="bga_pb_textColor" format="reference|color" />
+        <attr name="bga_pb_textSize" format="dimension" />
+        <attr name="bga_pb_textMargin" format="dimension" />
+        <attr name="bga_pb_reachedColor" format="reference|color" />
+        <attr name="bga_pb_reachedHeight" format="dimension" />
+        <attr name="bga_pb_unReachedColor" format="reference|color" />
+        <attr name="bga_pb_unReachedHeight" format="dimension" />
+        <attr name="bga_pb_isCapRounded" format="boolean" />
+        <attr name="bga_pb_isHiddenText" format="boolean" />
+        <attr name="bga_pb_radius" format="dimension" />
+    </declare-styleable>
 
     <!-- menu -->
-
     <string name="profile">Profile</string>
     <string name="my_repos">My repos(Paging NetOnly)</string>
     <string name="starred_repos">Starred repos(Paging NetOnly)</string>
     <string name="followers">Followers(Paging DB+Net)</string>
     <string name="following">Following(NoPaging)</string>
-
-    <string name="repos">Repos</string>
-    <string name="follow">Follow</string>
-    <string name="settings">Settings</string>
-    <string name="about">About</string>
     <string name="logout">Logout</string>
     <string name="retry">重试</string>
 

@@ -1,75 +1,104 @@
 package com.hqumath.androidmvvm.ui.follow;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
-import com.hqumath.androidmvvm.R;
-import com.hqumath.androidmvvm.adapters.UserPagedListAdapter;
-import com.hqumath.androidmvvm.base.BaseViewModelFragment;
-import com.hqumath.androidmvvm.databinding.FragmentSwipeListBinding;
-import com.hqumath.androidmvvm.entity.NetworkState;
-import com.hqumath.androidmvvm.entity.UserInfoEntity;
-import com.hqumath.androidmvvm.ui.profile.ProfileActivity;
-import com.hqumath.androidmvvm.utils.LogUtil;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.hqumath.androidmvvm.adapters.MyRecyclerAdapters;
+import com.hqumath.androidmvvm.base.BaseFragment;
+import com.hqumath.androidmvvm.bean.UserInfoEntity;
+import com.hqumath.androidmvvm.databinding.FragmentFollowersBinding;
+import com.hqumath.androidmvvm.utils.CommonUtil;
 
 /**
  * ****************************************************************
- * 文件名称: FollowingFragment
+ * 文件名称: FollowersFragment
  * 作    者: Created by gyd
- * 创建时间: 2019/7/24 15:41
- * 文件描述: 我的追随者 paging分页 db+net
- * 注意事项:
+ * 创建时间: 2019/11/5 10:06
+ * 文件描述:
+ * 注意事项: 使用DiffUtil比对更新，减少刷新量
  * 版权声明:
  * ****************************************************************
  */
-public class FollowersFragment extends BaseViewModelFragment<FragmentSwipeListBinding, FollowersViewModel> {
+public class FollowersFragment extends BaseFragment {
 
-    private UserPagedListAdapter adapter;
+    private FragmentFollowersBinding binding;
+    private FollowersViewModel viewModel;
+    private MyRecyclerAdapters.FollowRecyclerAdapter recyclerAdapter;
+    protected boolean hasRequested;//在onResume中判断是否已经请求过数据。用于懒加载
 
     @Override
-    public FollowersViewModel getViewModel() {
-        return ViewModelProviders.of(this).get(FollowersViewModel.class);
+    public View initContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentFollowersBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public int initContentView(Bundle savedInstanceState) {
-        return R.layout.fragment_swipe_list;
+    protected void initListener() {
+        binding.refreshLayout.setOnRefreshListener(v -> viewModel.getFollowers(true));
+        binding.refreshLayout.setOnLoadMoreListener(v -> viewModel.getFollowers(false));
     }
 
     @Override
-    public void initView() {
-        binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        binding.swipeRefreshLayout.setOnRefreshListener(viewModel::refresh);
-    }
+    protected void initData() {
+        viewModel = new ViewModelProvider(requireActivity()).get(FollowersViewModel.class);
 
-    @Override
-    public void initData() {
-        viewModel.init();
-        adapter = new UserPagedListAdapter(new UserPagedListAdapter.ClickCallback() {
-            @Override
-            public void onClick(@NonNull UserInfoEntity data) {
-                Intent intent = new Intent(mContext, ProfileActivity.class);
-                intent.putExtra("UserName", data.getLogin());
-                startActivity(intent);
-            }
-
-            @Override
-            public void onRetry() {
-                viewModel.retry();
-            }
+        recyclerAdapter = new MyRecyclerAdapters.FollowRecyclerAdapter(mContext, viewModel.mData);
+        recyclerAdapter.setOnItemClickListener((v, position) -> {
+            UserInfoEntity data = viewModel.mData.get(position);
+            // startActivity(ProfileDetailActivity.getStartIntent(mContext, data.getLogin())); TODO
         });
-        binding.list.setAdapter(adapter);
+        binding.recyclerView.setAdapter(recyclerAdapter);
     }
 
-    public void initViewObservable() {
-        viewModel.list.observe(this, adapter::submitList);
-        viewModel.refreshState.observe(this, state ->
-                binding.swipeRefreshLayout.setRefreshing(state == NetworkState.LOADING));
-        viewModel.networkState.observe(this, adapter::setNetworkState);
+    @Override
+    protected void initViewObservable() {
+        viewModel.followersResultCode.observe(this, code -> {
+            if (code.equals("0")) {
+                recyclerAdapter.notifyDataSetChanged();
+                if (viewModel.followersRefresh) {
+                    if (viewModel.followersNewEmpty) {
+                        binding.refreshLayout.finishRefreshWithNoMoreData();//上拉加载功能将显示没有更多数据
+                    } else {
+                        binding.refreshLayout.finishRefresh();
+                    }
+                } else {
+                    if (viewModel.followersNewEmpty) {
+                        binding.refreshLayout.finishLoadMoreWithNoMoreData();//上拉加载功能将显示没有更多数据
+                    } else {
+                        binding.refreshLayout.finishLoadMore();
+                    }
+                }
+            } else {
+                CommonUtil.toast(viewModel.followersResultMsg);
+                if (viewModel.followersRefresh) {
+                    binding.refreshLayout.finishRefresh(false);//刷新失败，会影响到上次的更新时间
+                } else {
+                    binding.refreshLayout.finishLoadMore(false);
+                }
+            }
+            binding.emptyLayout.llEmpty.setVisibility(viewModel.mData.isEmpty() ? View.VISIBLE : View.GONE);
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!hasRequested) {
+            hasRequested = true;
+            binding.refreshLayout.autoRefresh();//触发自动刷新
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (viewModel != null) {
+            viewModel.dispose();
+            viewModel = null;
+        }
+        super.onDestroy();
     }
 }

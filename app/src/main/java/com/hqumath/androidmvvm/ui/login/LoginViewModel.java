@@ -1,12 +1,15 @@
 package com.hqumath.androidmvvm.ui.login;
 
-import android.app.Application;
 import android.text.TextUtils;
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
+
 import androidx.lifecycle.MutableLiveData;
+
+import com.hqumath.androidmvvm.app.Constant;
 import com.hqumath.androidmvvm.base.BaseViewModel;
-import com.hqumath.androidmvvm.data.MyRepository;
+import com.hqumath.androidmvvm.bean.UserInfoEntity;
+import com.hqumath.androidmvvm.net.HttpListener;
+import com.hqumath.androidmvvm.repository.MyModel;
+import com.hqumath.androidmvvm.utils.SPUtil;
 
 /**
  * ****************************************************************
@@ -18,41 +21,46 @@ import com.hqumath.androidmvvm.data.MyRepository;
  * 版权声明:
  * ****************************************************************
  */
-public class LoginViewModel extends BaseViewModel<MyRepository> {
+public class LoginViewModel extends BaseViewModel {
 
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     public MutableLiveData<String> userName = new MutableLiveData<>();
     public MutableLiveData<String> password = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isLogin = new MutableLiveData<>();
 
-    public LoginViewModel(@NonNull Application application) {
-        super(application);
-        model = MyRepository.getInstance();
-        //从本地取得数据绑定到View层
-        userName.setValue(model.getUserName());
-        password.setValue(model.getPassword());
-        if (!TextUtils.isEmpty(model.getToken())) {
-            isLogin.setValue(true);
+    public MutableLiveData<String> loginResultCode = new MutableLiveData<>();//登录请求 0成功；other失败
+    public String loginResultMsg;
+    public UserInfoEntity loginResultData;
+
+    public LoginViewModel() {
+        mModel = new MyModel();
+        //自动登录
+        String name = SPUtil.getInstance().getString(Constant.USER_NAME);
+        if (!TextUtils.isEmpty(name)) {
+            loginResultCode.setValue("0");
+        } else {
+            //测试数据
+            userName.setValue("JakeWharton");
+            password.setValue("1234");
         }
     }
 
     public void login() {
-        appExecutors.diskIO().execute(() -> {
-            isLoading.postValue(true);
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
+        //模拟登陆接口
+        isLoading.setValue(true);
+        ((MyModel) mModel).login(userName.getValue(), password.getValue(), new HttpListener() {
+            @Override
+            public void onSuccess(Object object) {
+                loginResultData = (UserInfoEntity) object;
+                isLoading.setValue(false);
+                loginResultCode.setValue("0");
             }
-            model.saveUserName(userName.getValue());
-            model.savePassword(password.getValue());
-            model.saveToken("1234");
-            isLoading.postValue(false);
-            isLogin.postValue(true);
-        });
-    }
 
-    public LiveData<Boolean> isLogin() {
-        return isLogin;
+            @Override
+            public void onError(String errorMsg, String code) {
+                loginResultMsg = errorMsg;
+                isLoading.setValue(false);
+                loginResultCode.setValue(code);
+            }
+        });
     }
 }

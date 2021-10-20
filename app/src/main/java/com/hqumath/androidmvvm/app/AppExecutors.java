@@ -21,66 +21,73 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
+ * 全局线程池
  * Global executor pools for the whole application.
- * <p>
- * Grouping tasks like this avoids the effects of task starvation (e.g. disk reads don't wait behind
- * webservice requests).
+ * 对任务进行分组，io操作和网络请求可同时执行
+ * 用法：AppExecutors.getInstance().driveWorkThread().execute(() -> {});
  */
 public class AppExecutors {
 
-    private static AppExecutors sInstance;
+    private static class AppExecutorsHolder {
+        private static final AppExecutors instance = new AppExecutors();
+    }
 
     public static AppExecutors getInstance() {
-        if (sInstance == null) {
-            synchronized (AppExecutors.class) {
-                if (sInstance == null) {
-                    sInstance = new AppExecutors();
-                }
-            }
+        return AppExecutorsHolder.instance;
+    }
+
+    private MainThreadExecutor mainThread;//ui线程操作
+    private ExecutorService workThread;//工作线程池，执行普通任务。例如：网络通讯和多媒体操作
+    private ScheduledExecutorService scheduledWork;//循环线程池，执行普通循环任务。
+
+    public MainThreadExecutor mainThread() {
+        if (mainThread == null) {
+            mainThread = new MainThreadExecutor();
         }
-        return sInstance;
-    }
-
-    private static final int THREAD_COUNT = 3;
-
-    private final Executor diskIO;
-
-    private final Executor networkIO;
-
-    private final Executor mainThread;
-
-    private AppExecutors(Executor diskIO, Executor networkIO, Executor mainThread) {
-        this.diskIO = diskIO;
-        this.networkIO = networkIO;
-        this.mainThread = mainThread;
-    }
-
-    public AppExecutors() {
-        this(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(THREAD_COUNT),
-                new MainThreadExecutor());
-    }
-
-    public Executor diskIO() {
-        return diskIO;
-    }
-
-    public Executor networkIO() {
-        return networkIO;
-    }
-
-    public Executor mainThread() {
         return mainThread;
     }
 
-    private static class MainThreadExecutor implements Executor {
+    public static class MainThreadExecutor implements Executor {
         private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
 
         @Override
         public void execute(@NonNull Runnable command) {
             mainThreadHandler.post(command);
+        }
+
+        public void postDelayed(Runnable command, int delayMillis) {
+            mainThreadHandler.postDelayed(command, delayMillis);
+        }
+    }
+
+    public ExecutorService workThread() {
+        if (workThread == null || workThread.isShutdown())
+            workThread = Executors.newFixedThreadPool(8);//骁龙888八个CPU核心
+        return workThread;
+    }
+
+    public ScheduledExecutorService scheduledWork() {
+        if (scheduledWork == null || scheduledWork.isShutdown())
+            scheduledWork = Executors.newScheduledThreadPool(4);
+        return scheduledWork;
+    }
+
+    public void shutdownWorkThread() {
+        if (workThread != null) {
+            workThread.shutdown();
+            workThread = null;
+        }
+    }
+
+    public void shutdownScheduledWork() {
+        if (scheduledWork != null) {
+            scheduledWork.shutdown();
+            scheduledWork = null;
         }
     }
 }

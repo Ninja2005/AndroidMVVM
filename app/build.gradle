@@ -1,14 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.hqumath.androidmvvm"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
     }
     buildTypes {
         release {
@@ -16,13 +19,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled true
-    }
-
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    //配置自定义打包名称
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def fileName
+            if (variant.buildType.name.equals('release')) {
+                fileName = "MVVMDemo_${variant.mergedFlavor.versionName}_${variant.mergedFlavor.versionCode}.apk"
+            } else if (variant.buildType.name.equals('debug')) {
+                fileName = "MVVMDemo_${variant.mergedFlavor.versionName}_debug_${variant.mergedFlavor.versionCode}.apk"
+            }
+            outputFileName = fileName
+        }
     }
 }
 
@@ -30,16 +41,25 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //support
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    //implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.2.0'
+    //lifecycle
+    def lifecycle_version = "2.4.0-rc01"
+    def arch_version = "2.1.0"
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+
     //rxjava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     //rx系列与View生命周期同步
-    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.2'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
+    //implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.2'
+    //implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
     //rxbinding以响应式的方式来处理UI的响应问题
     //implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha2'
     //network
@@ -48,23 +68,26 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'//数据解析器
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'//网络请求适配器
-    //lifecycle
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-rc01"
-    //room
-    implementation "androidx.room:room-runtime:2.2.1"
-    annotationProcessor "androidx.room:room-compiler:2.2.1"
-    //paging
-    implementation "androidx.paging:paging-runtime:2.1.0"
-    //navigation
-    implementation "androidx.navigation:navigation-fragment:2.1.0"
-    implementation "androidx.navigation:navigation-ui:2.1.0"
+    // MultiDex的依赖
+    //implementation 'org.robolectric:shadows-multidex:3.4-rc2'
+
+//    //room
+//    implementation "androidx.room:room-runtime:2.2.1"
+//    annotationProcessor "androidx.room:room-compiler:2.2.1"
+//    //paging
+//    implementation "androidx.paging:paging-runtime:2.1.0"
+//    //navigation
+//    implementation "androidx.navigation:navigation-fragment:2.1.0"
+//    implementation "androidx.navigation:navigation-ui:2.1.0"
+    //下拉刷新
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
+    //权限获取
+    implementation 'com.yanzhenjie:permission:2.0.3'
     //picture
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
+    //内存泄漏
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
 }

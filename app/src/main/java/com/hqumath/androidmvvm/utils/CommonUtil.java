@@ -1,16 +1,24 @@
 package com.hqumath.androidmvvm.utils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 /**
- * Created by goldze on 2017/5/14.
  * 常用工具类
  */
-public final class CommonUtil {
+public class CommonUtil {
 
     @SuppressLint("StaticFieldLeak")
     private static Context context;
@@ -40,11 +48,33 @@ public final class CommonUtil {
         throw new NullPointerException("should be initialized in application");
     }
 
+    public static void toast(String s){
+        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showKeyboard(Activity activity, EditText editText) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(editText, 0);
+    }
+
+    public static void closeKeyboard(Activity activity) {
+        View view = activity.getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     /**
-     * 获取版本号
-     *
-     * @return
+     * 检查是否有网络
      */
+    public static boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        return info != null && info.isAvailable();
+    }
+
+    //获取软件版本号
     public static String getVersion() {
         try {
             PackageInfo pi = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -53,5 +83,10 @@ public final class CommonUtil {
             e.printStackTrace();
             return "";
         }
+    }
+
+    public static int dp2px(float dpValue) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue,
+                context.getResources().getDisplayMetrics());
     }
 }

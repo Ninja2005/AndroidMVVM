@@ -1,228 +1,377 @@
+/*
+ * Copyright (c) 1992-2015, ZheJiang Dahua Technology Stock CO.LTD.
+ * All Rights Reserved.
+ */
+
 package com.hqumath.androidmvvm.utils;
 
-import android.text.TextUtils;
 import android.util.Log;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import com.hqumath.androidmvvm.BuildConfig;
 
+/**
+ * Log统一管理类
+ */
 public class LogUtil {
 
-    private static boolean IS_SHOW_LOG = false;
+    private static boolean isDebug = BuildConfig.DEBUG;//是否需要打印bug，buildTypes.debug中配置
 
-    private static final String DEFAULT_MESSAGE = "execute";
-    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-    private static final int JSON_INDENT = 4;
-
-    private static final int V = 0x1;
-    private static final int D = 0x2;
-    private static final int I = 0x3;
-    private static final int W = 0x4;
-    private static final int E = 0x5;
-    private static final int A = 0x6;
-    private static final int JSON = 0x7;
-
-    public static void init(boolean isShowLog) {
-        IS_SHOW_LOG = isShowLog;
+    public static boolean isDebug() {
+        return isDebug;
     }
 
-    public static void v() {
-        printLog(V, null, DEFAULT_MESSAGE);
+    public static void setDebug(boolean b) {
+        LogUtil.isDebug = b;
     }
 
-    public static void v(Object msg) {
-        printLog(V, null, msg);
+    private static final String TAG = "DEBUG";
+
+    // *********************************下面四个是默认tag的函数**********************************//
+    public static void i(String msg) {
+        if (isDebug) {
+            Log.i(TAG, msg);
+        }
+    }
+
+    public static void d(String msg) {
+        if (isDebug) {
+            Log.d(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+        }
+    }
+
+    public static void e(String msg) {
+        if (isDebug) {
+            Log.e(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+        }
+    }
+
+    public static void v(String msg) {
+        if (isDebug) {
+            Log.v(TAG, msg);
+        }
+    }
+
+    public static void w(String msg) {
+        if (isDebug) {
+            Log.w(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+        }
+    }
+
+    // *********************************下面四个是默认tag的函数**********************************//
+    public static void i(String msg, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.i(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+            } else {
+                Log.i(TAG, msg);
+            }
+        }
+    }
+
+    public static void d(String msg, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.d(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+            } else {
+                Log.d(TAG, msg);
+            }
+        }
+    }
+
+    public static void e(String msg, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.e(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+            } else {
+                Log.e(TAG, msg);
+            }
+        }
+    }
+
+    public static void v(String msg, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.v(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+            } else {
+                Log.v(TAG, msg);
+            }
+        }
+    }
+
+    public static void w(String msg, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.w(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+            } else {
+                Log.w(TAG, msg);
+            }
+        }
+    }
+
+    // *********************************下面是传入异常的函数*************************************//
+    public static void i(String msg, Throwable tr) {
+        if (isDebug) {
+            Log.i(TAG, msg, tr);
+        }
+    }
+
+    public static void d(String msg, Throwable tr) {
+        if (isDebug) {
+            Log.d(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+        }
+    }
+
+    public static void e(String msg, Throwable tr) {
+        if (isDebug) {
+            Log.e(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+        }
+    }
+
+    public static void v(String msg, Throwable tr) {
+        if (isDebug) {
+            Log.v(TAG, msg, tr);
+        }
+    }
+
+    public static void w(String msg, Throwable tr) {
+        if (isDebug) {
+            Log.w(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+        }
+    }
+
+    // *********************************下面是传入异常的函数*************************************//
+    public static void i(String msg, Throwable tr, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.i(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+            } else {
+                Log.i(TAG, msg, tr);
+            }
+        }
+    }
+
+    public static void d(String msg, Throwable tr, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.d(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+            } else {
+                Log.d(TAG, msg, tr);
+            }
+        }
+    }
+
+    public static void e(String msg, Throwable tr, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.e(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+            } else {
+                Log.e(TAG, msg, tr);
+            }
+        }
+    }
+
+    public static void v(String msg, Throwable tr, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.v(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+            } else {
+                Log.v(TAG, msg, tr);
+            }
+        }
+    }
+
+    public static void w(String msg, Throwable tr, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.w(TAG, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+            } else {
+                Log.w(TAG, msg, tr);
+            }
+        }
+    }
+
+    // *********************************下面是传入自定义tag的函数********************************//
+    public static void i(String tag, String msg) {
+        if (isDebug) {
+            Log.i(tag, msg);
+        }
+    }
+
+    public static void d(String tag, String msg) {
+        if (isDebug) {
+            Log.d(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+        }
+    }
+
+    public static void e(String tag, String msg) {
+        if (isDebug) {
+            Log.e(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+        }
     }
 
     public static void v(String tag, String msg) {
-        printLog(V, tag, msg);
-    }
-
-    public static void d() {
-        printLog(D, null, DEFAULT_MESSAGE);
-    }
-
-    public static void d(Object msg) {
-        printLog(D, null, msg);
-    }
-
-    public static void d(String tag, Object msg) {
-        printLog(D, tag, msg);
-    }
-
-    public static void i() {
-        printLog(I, null, DEFAULT_MESSAGE);
-    }
-
-    public static void i(Object msg) {
-        printLog(I, null, msg);
-    }
-
-    public static void i(String tag, Object msg) {
-        printLog(I, tag, msg);
-    }
-
-    public static void w() {
-        printLog(W, null, DEFAULT_MESSAGE);
-    }
-
-    public static void w(Object msg) {
-        printLog(W, null, msg);
-    }
-
-    public static void w(String tag, Object msg) {
-        printLog(W, tag, msg);
-    }
-
-    public static void e() {
-        printLog(E, null, DEFAULT_MESSAGE);
-    }
-
-    public static void e(Object msg) {
-        printLog(E, null, msg);
-    }
-
-    public static void e(String tag, Object msg) {
-        printLog(E, tag, msg);
-    }
-
-    public static void a() {
-        printLog(A, null, DEFAULT_MESSAGE);
-    }
-
-    public static void a(Object msg) {
-        printLog(A, null, msg);
-    }
-
-    public static void a(String tag, Object msg) {
-        printLog(A, tag, msg);
-    }
-
-
-    public static void json(String jsonFormat) {
-        printLog(JSON, null, jsonFormat);
-    }
-
-    public static void json(String tag, String jsonFormat) {
-        printLog(JSON, tag, jsonFormat);
-    }
-
-
-    private static void printLog(int type, String tagStr, Object objectMsg) {
-        String msg;
-        if (!IS_SHOW_LOG) {
-            return;
+        if (isDebug) {
+            Log.v(tag, msg);
         }
+    }
 
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-
-        int index = 4;
-        String className = stackTrace[index].getFileName();
-        String methodName = stackTrace[index].getMethodName();
-        int lineNumber = stackTrace[index].getLineNumber();
-
-        String tag = (tagStr == null ? className : tagStr);
-        methodName = methodName.substring(0, 1).toUpperCase() + methodName.substring(1);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[ (").append(className).append(":").append(lineNumber).append(")#").append(methodName).append(" ] ");
-
-        if (objectMsg == null) {
-            msg = "Log with null Object";
-        } else {
-            msg = objectMsg.toString();
+    public static void w(String tag, String msg) {
+        if (isDebug) {
+            Log.w(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
         }
-        if (msg != null && type != JSON) {
-            stringBuilder.append(msg);
-        }
+    }
 
-        String logStr = stringBuilder.toString();
-
-        switch (type) {
-            case V:
-                Log.v(tag, logStr);
-                break;
-            case D:
-                Log.d(tag, logStr);
-                break;
-            case I:
-                Log.i(tag, logStr);
-                break;
-            case W:
-                Log.w(tag, logStr);
-                break;
-            case E:
-                Log.e(tag, logStr);
-                break;
-            case A:
-                Log.wtf(tag, logStr);
-                break;
-            case JSON: {
-
-                if (TextUtils.isEmpty(msg)) {
-                    Log.d(tag, "Empty or Null json content");
-                    return;
-                }
-
-                String message = null;
-
-                try {
-                    if (msg.startsWith("{")) {
-                        JSONObject jsonObject = new JSONObject(msg);
-                        message = jsonObject.toString(JSON_INDENT);
-                    } else if (msg.startsWith("[")) {
-                        JSONArray jsonArray = new JSONArray(msg);
-                        message = jsonArray.toString(JSON_INDENT);
-                    }
-                } catch (JSONException e) {
-                    e(tag, e.getCause().getMessage() + "\n" + msg);
-                    return;
-                }
-
-                printLine(tag, true);
-                message = logStr + LINE_SEPARATOR + message;
-                String[] lines = message.split(LINE_SEPARATOR);
-                StringBuilder jsonContent = new StringBuilder();
-                for (String line : lines) {
-                    jsonContent.append("║ ").append(line).append(LINE_SEPARATOR);
-                }
-                //Log.i(tag, jsonContent.toString());
-
-                if (jsonContent.toString().length() > 3200) {
-                    Log.w(tag, "jsonContent.length = " + jsonContent.toString().length());
-                    int chunkCount = jsonContent.toString().length() / 3200;
-                    for (int i = 0; i <= chunkCount; i++) {
-                        int max = 3200 * (i + 1);
-                        if (max >= jsonContent.toString().length()) {
-
-                            Log.w(tag, jsonContent.toString().substring(3200 * i));
-
-                        } else {
-
-                            Log.w(tag, jsonContent.toString().substring(3200 * i, max));
-
-                        }
-
-                    }
-
-                } else {
-                    Log.w(tag, jsonContent.toString());
-
-                }
-                printLine(tag, false);
+    // *********************************下面是传入自定义tag的函数********************************//
+    public static void i(String tag, String msg, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.i(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+            } else {
+                Log.i(tag, msg);
             }
-            break;
         }
-
     }
 
-    private static void printLine(String tag, boolean isTop) {
-        if (isTop) {
-            Log.w(tag, "╔═══════════════════════════════════════════════════════════════════════════════════════");
-        } else {
-            Log.w(tag, "╚═══════════════════════════════════════════════════════════════════════════════════════");
+    public static void d(String tag, String msg, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.d(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+            } else {
+                Log.d(tag, msg);
+            }
         }
+    }
+
+    public static void e(String tag, String msg, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.e(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+            } else {
+                Log.e(tag, msg);
+            }
+        }
+    }
+
+    public static void v(String tag, String msg, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.v(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+            } else {
+                Log.v(tag, msg);
+            }
+        }
+    }
+
+    public static void w(String tag, String msg, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.w(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()));
+            } else {
+                Log.w(tag, msg);
+            }
+        }
+    }
+
+    // ****************************下面是传入自定义tag及异常的函数*******************************//
+    public static void i(String tag, String msg, Throwable tr) {
+        if (isDebug) {
+            Log.i(tag, msg, tr);
+        }
+    }
+
+    public static void d(String tag, String msg, Throwable tr) {
+        if (isDebug) {
+            Log.d(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+        }
+    }
+
+    public static void e(String tag, String msg, Throwable tr) {
+        if (isDebug) {
+            Log.e(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+        }
+    }
+
+    public static void v(String tag, String msg, Throwable tr) {
+        if (isDebug) {
+            Log.v(tag, msg, tr);
+        }
+    }
+
+    public static void w(String tag, String msg, Throwable tr) {
+        if (isDebug) {
+            Log.w(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+        }
+    }
+
+    // ****************************下面是传入自定义tag及异常的函数*******************************//
+    public static void i(String tag, String msg, Throwable tr, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.i(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+            } else {
+                Log.i(tag, msg, tr);
+            }
+        }
+    }
+
+    public static void d(String tag, String msg, Throwable tr, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.d(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+            } else {
+                Log.d(tag, msg, tr);
+            }
+        }
+    }
+
+    public static void e(String tag, String msg, Throwable tr, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.e(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+            } else {
+                Log.e(tag, msg, tr);
+            }
+        }
+    }
+
+    public static void v(String tag, String msg, Throwable tr, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.v(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+            } else {
+                Log.v(tag, msg, tr);
+            }
+        }
+    }
+
+    public static void w(String tag, String msg, Throwable tr, boolean isShowLineNo) {
+        if (isDebug) {
+            if (isShowLineNo) {
+                Log.w(tag, msg + buildStackTraceElements(Thread.currentThread().getStackTrace()), tr);
+            } else {
+                Log.w(tag, msg, tr);
+            }
+        }
+    }
+
+    // ******************************************************************************************//
+
+    /**
+     * 获取当前代码所在类、方法、行数
+     *
+     * @return 返回当前线程栈信息
+     */
+    private static String buildStackTraceElements(StackTraceElement[] elements) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("  \t===> ");
+        if (elements.length < 4) {
+            Log.e(TAG, "Stack to shallow");
+        } else {
+            String fullClassName = elements[3].getClassName();
+            sb.append(fullClassName.substring(fullClassName.lastIndexOf(".") + 1)).append(".").append(elements[3]
+                    .getMethodName()).append("(...)").append(" [").append(elements[3].getLineNumber()).append("行]");
+        }
+        return sb.toString();
     }
 
 }

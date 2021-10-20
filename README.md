@@ -7,7 +7,7 @@ Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+Vie
 ## 框架特点
 - **Jetpack组件**
 
-	1. DataBinding
+	1. ViewBinding & DataBinding
 	2. Lifecycles
 	3. LiveData
 	4. Navigation

@@ -1,57 +1,46 @@
 package com.hqumath.androidmvvm.ui.main;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.viewpager.widget.ViewPager;
 
-import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.adapters.MyFragmentPagerAdapter;
 import com.hqumath.androidmvvm.base.BaseActivity;
 import com.hqumath.androidmvvm.base.BaseFragment;
 import com.hqumath.androidmvvm.databinding.ActivityMainBinding;
-import com.hqumath.androidmvvm.ui.about.AboutFragment;
-import com.hqumath.androidmvvm.ui.follow.FollowFragment;
-import com.hqumath.androidmvvm.ui.repos.ReposFragment;
-import com.hqumath.androidmvvm.ui.settings.SettingsFragment;
+import com.hqumath.androidmvvm.ui.follow.FollowersFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ****************************************************************
- * 文件名称: MainActivity
- * 作    者: Created by gyd
- * 创建时间: 2019/7/17 11:16
- * 文件描述: 主界面风格1
- * 注意事项:
- * 版权声明:
- * ****************************************************************
- */
-public class MainActivity extends BaseActivity<ActivityMainBinding> {
+public class MainActivity extends BaseActivity {
 
+    private ActivityMainBinding binding;
 
     @Override
-    public int initContentView(Bundle savedInstanceState) {
-        return R.layout.activity_main;
+    public View initContentView(Bundle savedInstanceState) {
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        return binding.getRoot();
     }
 
     @Override
-    public void initView() {
+    protected void initListener() {
     }
 
     @Override
-    public void initData() {
+    protected void initData() {
         List<BaseFragment> fragmentList = new ArrayList<>();
-        fragmentList.add(new ReposFragment());
-        fragmentList.add(new FollowFragment());
+        //fragmentList.add(new ReposFragment()); TODO
+        fragmentList.add(new FollowersFragment());
         fragmentList.add(new SettingsFragment());
         fragmentList.add(new AboutFragment());
 
         MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         pagerAdapter.setData(fragmentList, null);
-        binding.viewpager.setAdapter(pagerAdapter);
-        //binding.viewpager.setOffscreenPageLimit(fragmentList.size());
-        binding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        binding.viewPager.setAdapter(pagerAdapter);
+        binding.viewPager.setOffscreenPageLimit(3);//缓存当前界面每一侧的界面数
+        binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
@@ -66,9 +55,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             }
         });
         binding.navigation.setOnNavigationItemSelectedListener(item -> {
-            binding.viewpager.setCurrentItem(item.getOrder());
+            binding.viewPager.setCurrentItem(item.getOrder());
             return true;
         });
     }
-
 }

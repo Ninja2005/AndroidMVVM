@@ -6,6 +6,7 @@ import android.content.ComponentCallbacks;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -16,7 +17,6 @@ import androidx.annotation.Nullable;
  * 创建时间: 2018/10/31 21:28
  * 文件描述: 今日头条屏幕适配方案  https://blog.csdn.net/u013000152/article/details/80855315
  * 注意事项: 根据ui图，设置屏幕最小宽度
- * 版权声明: Copyright (C) 2016-2026 浙商国际金融资产交易中心
  * ****************************************************************
  */
 public class Density {
@@ -55,42 +55,33 @@ public class Density {
         }
     }
 
-
-    private static void setDefault(Activity activity) {
-        setAppOrientation(activity);
-    }
-
     private static void setAppOrientation(@Nullable Activity activity) {
-
         float targetDensity = 0;
         try {
-            targetDensity = appDisplayMetrics.widthPixels / WIDTH;
+            //使用宽高中的最小值计算最小宽度
+            if (appDisplayMetrics.heightPixels > appDisplayMetrics.widthPixels) {
+                targetDensity = appDisplayMetrics.widthPixels / WIDTH;
+            } else {
+                targetDensity = appDisplayMetrics.heightPixels / WIDTH;
+            }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
 
         float targetScaledDensity = targetDensity * (appScaledDensity / appDensity);
         int targetDensityDpi = (int) (160 * targetDensity);
-
-        /**
-         *
-         * 最后在这里将修改过后的值赋给系统参数
-         *
-         * 只修改Activity的density值
-         */
-
+        //最后在这里将修改过后的值赋给系统参数,只修改Activity的density值
         DisplayMetrics activityDisplayMetrics = activity.getResources().getDisplayMetrics();
         activityDisplayMetrics.density = targetDensity;
         activityDisplayMetrics.scaledDensity = targetScaledDensity;
         activityDisplayMetrics.densityDpi = targetDensityDpi;
     }
 
-
     private static void registerActivityLifecycleCallbacks(Application application) {
         application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                setDefault(activity);
+                setAppOrientation(activity);
             }
 
             @Override

@@ -2,6 +2,7 @@ package com.hqumath.androidmvvm.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 
 import java.util.Collections;
@@ -10,10 +11,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by goldze on 2017/5/14.
  * SharedPreferences工具类
  */
-public final class SPUtil {
+public class SPUtil {
 
     private static Map<String, SPUtil> sSPMap = new HashMap<>();
     private SharedPreferences sp;
