@@ -63,6 +63,7 @@ public class ReposDetailActivity extends BaseActivity {
     @Override
     protected void initData() {
         viewModel = new ViewModelProvider(this).get(ReposDetailViewModel.class);
+        binding.setViewModel(viewModel);
 
         //data
         viewModel.userName = getIntent().getStringExtra("UserName");
