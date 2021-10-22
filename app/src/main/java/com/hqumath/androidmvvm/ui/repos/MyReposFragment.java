@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.hqumath.androidmvvm.adapters.MyRecyclerAdapters;
+import com.hqumath.androidmvvm.adapter.MyRecyclerAdapters;
 import com.hqumath.androidmvvm.base.BaseFragment;
 import com.hqumath.androidmvvm.bean.ReposEntity;
 import com.hqumath.androidmvvm.databinding.FragmentSwipeListBinding;
@@ -49,7 +49,7 @@ public class MyReposFragment extends BaseFragment {
         recyclerAdapter = new MyRecyclerAdapters.ReposRecyclerAdapter(mContext, viewModel.myReposData);
         recyclerAdapter.setOnItemClickListener((v, position) -> {
             ReposEntity data = viewModel.myReposData.get(position);
-            //startActivity(ReposDetailActivity.getStartIntent(mContext, data.getName(), data.getOwner().getLogin()));//TODO
+            startActivity(ReposDetailActivity.getStartIntent(mContext, data.getName(), data.getOwner().getLogin()));
         });
         binding.recyclerView.setAdapter(recyclerAdapter);
     }

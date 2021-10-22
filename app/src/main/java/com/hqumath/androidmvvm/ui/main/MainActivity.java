@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.viewpager.widget.ViewPager;
 
-import com.hqumath.androidmvvm.adapters.MyFragmentPagerAdapter;
+import com.hqumath.androidmvvm.adapter.MyFragmentPagerAdapter;
 import com.hqumath.androidmvvm.base.BaseActivity;
 import com.hqumath.androidmvvm.base.BaseFragment;
 import com.hqumath.androidmvvm.databinding.ActivityMainBinding;

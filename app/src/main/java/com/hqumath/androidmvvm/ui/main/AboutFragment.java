@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.hqumath.androidmvvm.base.BaseFragment;
 import com.hqumath.androidmvvm.databinding.FragmentAboutBinding;
+import com.hqumath.androidmvvm.ui.repos.ReposDetailActivity;
 import com.hqumath.androidmvvm.utils.CommonUtil;
 
 /**
@@ -31,10 +32,10 @@ public class AboutFragment extends BaseFragment {
     @Override
     protected void initListener() {
         //TODO
-        /*binding.llSourcecode.setOnClickListener(v -> {
+        binding.llSourcecode.setOnClickListener(v -> {
             startActivity(ReposDetailActivity.getStartIntent(mContext, "androidmvvm", "ninja2005"));
         });
-        binding.llProfile.setOnClickListener(v -> {
+        /*binding.llProfile.setOnClickListener(v -> {
             startActivity(ProfileDetailActivity.getStartIntent(mContext, "ninja2005"));
         });*/
     }

@@ -1,4 +1,4 @@
-package com.hqumath.androidmvvm.adapters;
+package com.hqumath.androidmvvm.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -8,10 +8,14 @@ import com.bumptech.glide.Glide;
 import com.hqumath.androidmvvm.R;
 import com.hqumath.androidmvvm.base.BaseRecyclerAdapter;
 import com.hqumath.androidmvvm.base.BaseRecyclerViewHolder;
+import com.hqumath.androidmvvm.bean.CommitEntity;
 import com.hqumath.androidmvvm.bean.ReposEntity;
 import com.hqumath.androidmvvm.bean.UserInfoEntity;
 import com.hqumath.androidmvvm.utils.CommonUtil;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MyRecyclerAdapters {
@@ -48,6 +52,33 @@ public class MyRecyclerAdapters {
             holder.setText(R.id.tv_name, data.getName());
             holder.setText(R.id.tv_description, data.getDescription());
             holder.setText(R.id.tv_author, data.getOwner().getLogin());
+        }
+    }
+
+    //提交记录
+    public static class CommitsRecyclerAdapter extends BaseRecyclerAdapter<CommitEntity> {
+        public CommitsRecyclerAdapter(Context context, List<CommitEntity> mData) {
+            super(context, mData, R.layout.recycler_item_commits);
+        }
+
+        @Override
+        public void convert(BaseRecyclerViewHolder holder, int position) {
+            CommitEntity data = mData.get(position);
+            holder.setText(R.id.tv_name, data.getCommit().getCommitter().getName());
+            holder.setText(R.id.tv_message, data.getCommit().getMessage());
+            holder.setText(R.id.tv_sha, data.getSha());
+            //时间格式化
+            String date = data.getCommit().getCommitter().getDate();//2011-12-29T04:45:11Z
+            date = date.replace("Z", " UTC");//UTC是世界标准时间
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss Z");
+            SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                Date date1 = format1.parse(date);
+                String date2 = format2.format(date1);
+                holder.setText(R.id.tv_time, date2);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -1,15 +1,24 @@
 package com.hqumath.androidmvvm.net;
 
 
+import com.hqumath.androidmvvm.bean.BaseResultEntity;
+import com.hqumath.androidmvvm.bean.CommitEntity;
 import com.hqumath.androidmvvm.bean.ReposEntity;
 import com.hqumath.androidmvvm.bean.UserInfoEntity;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 /**
  * ****************************************************************
@@ -39,5 +48,25 @@ public interface ApiService {
     @GET("users/{userName}/followers")
     Observable<List<UserInfoEntity>> getFollowers(@Path("userName") String userName, @Query("per_page") int per_page, @Query("page") long page);
 
+    //获取仓库信息
+    @GET("repos/{userName}/{reposName}")
+    Observable<ReposEntity> getReposInfo(@Path("userName") String userName,
+                                         @Path("reposName") String reposName);
+
+    //获取仓库提交记录 分页
+    @GET("repos/{userName}/{reposName}/commits?sha=master")
+    Observable<List<CommitEntity>> getCommits(@Path("userName") String userName,
+                                              @Path("reposName") String reposName,
+                                              @Query("per_page") int per_page, @Query("page") long page);
+
+    //文件下载
+    @Streaming/*大文件需要加入这个判断，防止下载过程中写入到内存中*/
+    @GET
+    Observable<ResponseBody> download(@Url String url);
+
+    //文件上传 模拟
+    @Multipart
+    @POST("api/user/update")
+    Observable<BaseResultEntity> upload(@Part MultipartBody.Part part);
 
 }

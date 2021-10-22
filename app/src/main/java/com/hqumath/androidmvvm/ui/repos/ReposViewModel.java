@@ -26,17 +26,16 @@ import java.util.List;
 public class ReposViewModel extends BaseViewModel {
 
     private final int pageSize = 10;//分页
-    
     //MyRepos
     private long myReposPageIndex;//索引
-    public MutableLiveData<String> myReposResultCode = new MutableLiveData<>();//列表请求 0成功；other失败
+    public MutableLiveData<String> myReposResultCode = new MutableLiveData<>();//0成功；other失败
     public String myReposResultMsg;
     public boolean myReposRefresh;//true 下拉刷新；false 上拉加载
     public boolean myReposNewEmpty;//true 增量为空；false 增量不为空
     public List<ReposEntity> myReposData = new ArrayList<>();//列表数据
     //Starred
     private long starredPageIndex;//索引
-    public MutableLiveData<String> starredResultCode = new MutableLiveData<>();//列表请求 0成功；other失败
+    public MutableLiveData<String> starredResultCode = new MutableLiveData<>();//0成功；other失败
     public String starredResultMsg;
     public boolean starredRefresh;//true 下拉刷新；false 上拉加载
     public boolean starredNewEmpty;//true 增量为空；false 增量不为空

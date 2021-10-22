@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.hqumath.androidmvvm.adapters.MyRecyclerAdapters;
+import com.hqumath.androidmvvm.adapter.MyRecyclerAdapters;
 import com.hqumath.androidmvvm.base.BaseFragment;
 import com.hqumath.androidmvvm.bean.UserInfoEntity;
 import com.hqumath.androidmvvm.databinding.FragmentFollowersBinding;

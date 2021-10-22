@@ -1,4 +1,4 @@
-package com.hqumath.androidmvvm.adapters;
+package com.hqumath.androidmvvm.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

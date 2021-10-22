@@ -26,8 +26,8 @@ public class LoginViewModel extends BaseViewModel {
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     public MutableLiveData<String> userName = new MutableLiveData<>();
     public MutableLiveData<String> password = new MutableLiveData<>();
-
-    public MutableLiveData<String> loginResultCode = new MutableLiveData<>();//登录请求 0成功；other失败
+    //登录
+    public MutableLiveData<String> loginResultCode = new MutableLiveData<>();//0成功；other失败
     public String loginResultMsg;
     public UserInfoEntity loginResultData;
 
