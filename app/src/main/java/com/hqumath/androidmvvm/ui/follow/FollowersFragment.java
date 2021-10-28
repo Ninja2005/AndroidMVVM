@@ -49,7 +49,7 @@ public class FollowersFragment extends BaseFragment {
         recyclerAdapter = new MyRecyclerAdapters.FollowRecyclerAdapter(mContext, viewModel.mData);
         recyclerAdapter.setOnItemClickListener((v, position) -> {
             UserInfoEntity data = viewModel.mData.get(position);
-            // startActivity(ProfileDetailActivity.getStartIntent(mContext, data.getLogin())); TODO
+             startActivity(ProfileDetailActivity.getStartIntent(mContext, data.getLogin()));
         });
         binding.recyclerView.setAdapter(recyclerAdapter);
     }

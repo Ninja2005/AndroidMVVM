@@ -80,7 +80,7 @@ public class ReposDetailActivity extends BaseActivity {
 
     @Override
     protected void initViewObservable() {
-        viewModel.commitResultCode.observe(this, code -> {
+        viewModel.reposResultCode.observe(this, code -> {
             if (code.equals("0")) {
                 if (!TextUtils.isEmpty(viewModel.avatar_url))
                     Glide.with(mContext).load(viewModel.avatar_url).into(binding.ivAvatarBg);
@@ -123,32 +123,4 @@ public class ReposDetailActivity extends BaseActivity {
         }
         super.onDestroy();
     }
-
-    /*@Override
-    public void onGetReposInfoSuccess(Object object) {
-        ReposEntity data = (ReposEntity) object;
-        Glide.with(mContext).load(data.getOwner().getAvatar_url()).into(binding.ivAvatarBg);
-        binding.tvDescription.setText(data.getDescription());
-        binding.tvFullName.setText(data.getFull_name());
-        //时间格式化
-        String date = data.getCreated_at();//2011-12-29T04:45:11Z
-        date = date.replace("Z", " UTC");//UTC是世界标准时间
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss Z");
-        SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            Date date1 = format1.parse(date);
-            String date2 = format2.format(date1);
-            binding.tvCreatedAt.setText(date2);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String info = String.format(Locale.getDefault(), "Language %s, size %s",
-                data.getLanguage(), StringUtil.getSizeString(data.getSize() * 1024));
-        binding.tvLanguageSize.setText(info);
-    }
-
-    @Override
-    public void onGetReposInfoError(String errorMsg, String code) {
-        CommonUtil.toast(errorMsg);
-    }*/
 }
