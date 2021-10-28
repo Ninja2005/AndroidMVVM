@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="About"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
@@ -58,14 +58,14 @@
                         android:layout_height="wrap_content"
                         android:text="MVVMDemo"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="18dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="© 2019 Ninja2005"
                         android:textColor="@color/gray1"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -95,14 +95,14 @@
                         android:layout_height="wrap_content"
                         android:text="Version"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
 
                     <TextView
                         android:id="@+id/tv_version"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/gray1"
-                        android:textSize="14sp"
+                        android:textSize="14dp"
                         tools:text="1.0.0" />
                 </LinearLayout>
 
@@ -134,14 +134,14 @@
                         android:layout_height="wrap_content"
                         android:text="Source Code"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Go to MVVMDemo"
                         android:textColor="@color/gray1"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -171,10 +171,11 @@
                 android:padding="10dp"
                 android:text="Author"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/ll_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -199,19 +200,19 @@
                         android:layout_height="wrap_content"
                         android:text="Ninja2005"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Jinan,China"
+                        android:text="Go to Profile"
                         android:textColor="@color/gray1"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
                 </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/ll_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -231,9 +232,9 @@
                     android:layout_marginStart="20dp"
                     android:text="Go to Profile"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
-            </LinearLayout>
+            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -260,14 +261,14 @@
                         android:layout_height="wrap_content"
                         android:text="Email"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="ninja20050@163.com"
                         android:textColor="@color/gray1"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
                 </LinearLayout>
 
             </LinearLayout>

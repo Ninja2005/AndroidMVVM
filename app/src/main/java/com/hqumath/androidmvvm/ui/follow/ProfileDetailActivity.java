@@ -73,7 +73,7 @@ public class ProfileDetailActivity extends BaseActivity {
     public void initViewObservable() {
         viewModel.userInfoResultCode.observe(this, code -> {
             if (code.equals("0")) {
-                if (!TextUtils.isEmpty(viewModel.avatar_url)){
+                if (!TextUtils.isEmpty(viewModel.avatar_url)) {
                     Glide.with(mContext).load(viewModel.avatar_url).into(binding.ivAvatarBg);
                     Glide.with(mContext).load(viewModel.avatar_url)
                             .apply(RequestOptions.bitmapTransform(new CircleCrop()))//圆形
@@ -85,13 +85,9 @@ public class ProfileDetailActivity extends BaseActivity {
                 }
             }
         });
-
-        /*viewModel.company.observe(this, value -> binding.company.setVisibility(TextUtils.isEmpty(value) ? View.GONE :
-                View.VISIBLE));
-        viewModel.email.observe(this, value -> binding.email.setVisibility(TextUtils.isEmpty(value) ? View.GONE :
-                View.VISIBLE));
-        viewModel.blog.observe(this, value -> binding.link.setVisibility(TextUtils.isEmpty(value) ? View.GONE :
-                View.VISIBLE));*/
+        viewModel.company.observe(this, value -> binding.tvCompany.setVisibility(TextUtils.isEmpty(value) ? View.GONE : View.VISIBLE));
+        viewModel.email.observe(this, value -> binding.tvEmail.setVisibility(TextUtils.isEmpty(value) ? View.GONE : View.VISIBLE));
+        viewModel.blog.observe(this, value -> binding.tvBlog.setVisibility(TextUtils.isEmpty(value) ? View.GONE : View.VISIBLE));
     }
 
     @Override

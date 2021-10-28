@@ -32,7 +32,6 @@ public class AboutFragment extends BaseFragment {
 
     @Override
     protected void initListener() {
-        //TODO
         binding.llSourcecode.setOnClickListener(v -> {
             startActivity(ReposDetailActivity.getStartIntent(mContext, "androidmvvm", "ninja2005"));
         });

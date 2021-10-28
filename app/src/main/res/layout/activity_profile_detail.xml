@@ -138,8 +138,10 @@
                             tools:text="Name" />
 
                         <TextView
+                            android:id="@+id/tvCompany"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:autoLink="all"
                             android:drawableStart="@drawable/ic_group_secondary"
                             android:drawablePadding="16dp"
                             android:padding="8dp"
@@ -150,8 +152,10 @@
                             tools:visibility="visible" />
 
                         <TextView
+                            android:id="@+id/tvEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:autoLink="all"
                             android:background="?android:selectableItemBackground"
                             android:drawableStart="@drawable/ic_mail_secondary"
                             android:drawablePadding="16dp"
@@ -163,8 +167,10 @@
                             tools:visibility="visible" />
 
                         <TextView
+                            android:id="@+id/tvBlog"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:autoLink="all"
                             android:background="?android:selectableItemBackground"
                             android:drawableStart="@drawable/ic_link_secondary"
                             android:drawablePadding="16dp"
