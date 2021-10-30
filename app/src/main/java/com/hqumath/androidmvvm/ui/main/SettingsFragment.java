@@ -1,12 +1,23 @@
 package com.hqumath.androidmvvm.ui.main;
 
+import static com.hqumath.androidmvvm.utils.CommonUtil.toast;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hqumath.androidmvvm.app.Constant;
 import com.hqumath.androidmvvm.base.BaseFragment;
 import com.hqumath.androidmvvm.databinding.FragmentSettingsBinding;
+import com.hqumath.androidmvvm.service.UpdateService;
+import com.hqumath.androidmvvm.ui.fileupdown.FileUpDownActivity;
+import com.hqumath.androidmvvm.ui.login.LoginActivity;
+import com.hqumath.androidmvvm.utils.DialogUtil;
+import com.hqumath.androidmvvm.utils.SPUtil;
+
+import java.util.Random;
 
 public class SettingsFragment extends BaseFragment {
 
@@ -20,17 +31,17 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     protected void initListener() {
-        /*binding.fileUpDown.setOnClickListener(v -> {
+        binding.fileUpDown.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, FileUpDownActivity.class);
             startActivity(intent);
         });
         binding.vCheckUpdate.setOnClickListener(v -> {
             //检查升级
-            *//*boolean needUpdate = new Random().nextBoolean();
+            boolean needUpdate = new Random().nextBoolean();
             if (!needUpdate) {
                 toast("已是最新版本");
                 return;
-            }*//*
+            }
             SPUtil.getInstance().put(Constant.APK_URL, FileUpDownActivity.url);
             SPUtil.getInstance().put(Constant.APK_NAME, "AndroidMVP V2.0");
             DialogUtil alterDialogUtils = new DialogUtil(mContext);
@@ -49,7 +60,7 @@ public class SettingsFragment extends BaseFragment {
             SPUtil.getInstance().clear();
             startActivity(new Intent(mContext, LoginActivity.class));
             mContext.finish();
-        });*/
+        });
     }
 
     @Override

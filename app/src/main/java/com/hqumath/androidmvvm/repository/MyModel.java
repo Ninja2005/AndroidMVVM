@@ -2,9 +2,15 @@ package com.hqumath.androidmvvm.repository;
 
 import com.hqumath.androidmvvm.app.Constant;
 import com.hqumath.androidmvvm.base.BaseModel;
+import com.hqumath.androidmvvm.net.CreateRequestBodyUtil;
 import com.hqumath.androidmvvm.net.HttpListener;
 import com.hqumath.androidmvvm.net.RetrofitClient;
+import com.hqumath.androidmvvm.net.download.DownloadListener;
 import com.hqumath.androidmvvm.utils.SPUtil;
+
+import java.io.File;
+
+import okhttp3.MultipartBody;
 
 /**
  * ****************************************************************
@@ -108,6 +114,42 @@ public class MyModel extends BaseModel {
 
     public void getCommits(String userName, String reposName, int pageSize, long pageIndex, HttpListener listener) {
         sendRequest(RetrofitClient.getInstance().getApiService().getCommits(userName, reposName, pageSize, pageIndex), new HttpListener() {
+            @Override
+            public void onSuccess(Object object) {
+                listener.onSuccess(object);
+            }
+
+            @Override
+            public void onError(String errorMsg, String code) {
+                listener.onError(errorMsg, code);
+            }
+        });
+    }
+
+    /**
+     * 下载文件
+     * @param url 地址
+     * @param file 位置
+     * @param listener
+     */
+    public void download(String url, File file, DownloadListener listener) {
+        sendDownloadRequest(RetrofitClient.getInstance().getDownloadService(listener).download(url), new HttpListener() {
+            @Override
+            public void onSuccess(Object object) {
+                listener.onSuccess(object);
+            }
+
+            @Override
+            public void onError(String errorMsg, String code) {
+                listener.onError(errorMsg, code);
+            }
+        }, file);
+    }
+
+    //文件上传
+    public void upload(String key, File file, HttpListener listener) {
+        MultipartBody.Part part = CreateRequestBodyUtil.createRequestBody(key, file);
+        sendRequest(RetrofitClient.getInstance().getApiService().upload(part), new HttpListener() {
             @Override
             public void onSuccess(Object object) {
                 listener.onSuccess(object);
