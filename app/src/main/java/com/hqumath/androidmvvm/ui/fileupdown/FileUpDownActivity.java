@@ -33,7 +33,11 @@ public class FileUpDownActivity extends BaseActivity {
         });
         binding.btnUpload.setOnClickListener(v -> {
             File file = FileUtil.getFileFromUrl(url);
-            viewModel.upload("testFile", file);
+            if(file.exists()) {
+                viewModel.upload("testFile", file);
+            } else {
+                CommonUtil.toast("文件不存在，请先下载");
+            }
         });
     }
 

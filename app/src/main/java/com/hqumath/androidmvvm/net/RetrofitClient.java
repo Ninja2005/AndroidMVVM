@@ -54,6 +54,7 @@ public class RetrofitClient {
             builder.connectTimeout(connectTimeout, TimeUnit.SECONDS);
             builder.readTimeout(readTimeout, TimeUnit.SECONDS);
             builder.writeTimeout(writeTimeout, TimeUnit.SECONDS);
+            builder.retryOnConnectionFailure(false);//出现错误时会重新发送请求
             builder.addInterceptor(new LogInterceptor());//自定义拦截器（token过期后刷新token，打印日志）
             Retrofit retrofit = new Retrofit.Builder()
                     .client(builder.build())
@@ -73,6 +74,7 @@ public class RetrofitClient {
             builder.connectTimeout(connectTimeout, TimeUnit.SECONDS);
             builder.readTimeout(readTimeout, TimeUnit.SECONDS);
             builder.writeTimeout(writeTimeout, TimeUnit.SECONDS);
+            builder.retryOnConnectionFailure(false);//出现错误时会重新发送请求
             if (listener != null)
                 builder.addInterceptor(new DownloadInterceptor(listener));//下载拦截器（显示进度）
             Retrofit retrofit = new Retrofit.Builder()

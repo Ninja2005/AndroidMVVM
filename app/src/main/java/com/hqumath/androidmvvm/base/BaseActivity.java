@@ -45,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void showProgressDialog(String content) {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(mContext);
-            mProgressDialog.setCancelable(false);
+            mProgressDialog.setCancelable(true);
         }
         mProgressDialog.setMessage(content);
         mProgressDialog.show();

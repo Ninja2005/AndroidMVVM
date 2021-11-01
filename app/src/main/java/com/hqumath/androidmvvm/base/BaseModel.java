@@ -28,7 +28,7 @@ import okhttp3.ResponseBody;
  * ****************************************************************
  */
 public class BaseModel {
-    protected CompositeDisposable compositeDisposable = new CompositeDisposable();//rxjava订阅者
+    protected CompositeDisposable compositeDisposable = new CompositeDisposable();//管理订阅事件，用于主动取消网络请求
 
     //网络请求
     protected void sendRequest(Observable observable, HttpListener listener) {
@@ -37,7 +37,8 @@ public class BaseModel {
                 .subscribe(new Observer<Object>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        compositeDisposable.add(d);
+                        if(compositeDisposable != null)
+                            compositeDisposable.add(d);
                     }
 
                     @Override
@@ -69,7 +70,8 @@ public class BaseModel {
                 .subscribe(new Observer<Object>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        compositeDisposable.add(d);
+                        if(compositeDisposable != null)
+                            compositeDisposable.add(d);
                     }
 
                     @Override
@@ -90,8 +92,11 @@ public class BaseModel {
                 });
     }
 
-    //解除所有订阅者
+    //主动解除所有订阅者
     protected void dispose() {
-        compositeDisposable.clear();
+        if(compositeDisposable != null) {
+            compositeDisposable.dispose();
+            compositeDisposable = null;
+        }
     }
 }

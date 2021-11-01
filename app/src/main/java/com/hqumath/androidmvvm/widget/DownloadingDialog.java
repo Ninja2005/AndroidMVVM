@@ -16,7 +16,7 @@ public class DownloadingDialog extends AppCompatDialog {
         super(context, R.style.AppDialogTheme);
         setContentView(R.layout.dialog_downloading);
         mProgressBar = findViewById(R.id.pb_downloading_content);
-        setCancelable(false);
+        setCancelable(true);
     }
 
     //20M以上的文件下载都会出现负数，已经下载的长度*100/总长度
