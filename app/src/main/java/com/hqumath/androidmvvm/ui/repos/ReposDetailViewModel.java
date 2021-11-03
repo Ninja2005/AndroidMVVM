@@ -24,6 +24,7 @@ public class ReposDetailViewModel extends BaseViewModel {
     public String reposName;
     //仓库详情
     public MutableLiveData<String> reposResultCode = new MutableLiveData<>();//0成功；other失败
+    public String reposResultMsg;
     public String avatar_url;
     public MutableLiveData<String> description = new MutableLiveData<>();
     public MutableLiveData<String> fullName = new MutableLiveData<>();
@@ -69,7 +70,8 @@ public class ReposDetailViewModel extends BaseViewModel {
 
             @Override
             public void onError(String errorMsg, String code) {
-                CommonUtil.toast(errorMsg);
+                reposResultMsg = errorMsg;
+                reposResultCode.setValue(code);
             }
         });
     }

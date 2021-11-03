@@ -79,10 +79,10 @@ public class ProfileDetailActivity extends BaseActivity {
                             .apply(RequestOptions.bitmapTransform(new CircleCrop()))//圆形
                             .into(binding.ivAvatar);
                     binding.refreshLayout.finishRefresh();
-                } else {
-                    CommonUtil.toast(viewModel.userInfoResultMsg);
-                    binding.refreshLayout.finishRefresh(false);
                 }
+            }  else {
+                CommonUtil.toast(viewModel.userInfoResultMsg);
+                binding.refreshLayout.finishRefresh(false);
             }
         });
         viewModel.company.observe(this, value -> binding.tvCompany.setVisibility(TextUtils.isEmpty(value) ? View.GONE : View.VISIBLE));

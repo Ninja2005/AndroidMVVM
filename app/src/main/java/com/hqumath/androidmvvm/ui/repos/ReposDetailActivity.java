@@ -84,6 +84,8 @@ public class ReposDetailActivity extends BaseActivity {
             if (code.equals("0")) {
                 if (!TextUtils.isEmpty(viewModel.avatar_url))
                     Glide.with(mContext).load(viewModel.avatar_url).into(binding.ivAvatarBg);
+            } else {
+                CommonUtil.toast(viewModel.reposResultMsg);
             }
         });
 
