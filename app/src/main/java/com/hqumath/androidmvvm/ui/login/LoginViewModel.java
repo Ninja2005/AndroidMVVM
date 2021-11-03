@@ -50,16 +50,16 @@ public class LoginViewModel extends BaseViewModel {
         ((MyModel) mModel).login(userName.getValue(), password.getValue(), new HttpListener() {
             @Override
             public void onSuccess(Object object) {
-                isLoading.setValue(false);
+                isLoading.postValue(false);
                 loginResultData = (UserInfoEntity) object;
-                loginResultCode.setValue("0");
+                loginResultCode.postValue("0");
             }
 
             @Override
             public void onError(String errorMsg, String code) {
-                isLoading.setValue(false);
+                isLoading.postValue(false);
                 loginResultMsg = errorMsg;
-                loginResultCode.setValue(code);
+                loginResultCode.postValue(code);
             }
         });
     }

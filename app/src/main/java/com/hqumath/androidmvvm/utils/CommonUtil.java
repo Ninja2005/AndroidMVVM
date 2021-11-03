@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Looper;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -48,7 +49,7 @@ public class CommonUtil {
         throw new NullPointerException("should be initialized in application");
     }
 
-    public static void toast(String s){
+    public static void toast(String s) {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
 
@@ -88,5 +89,9 @@ public class CommonUtil {
     public static int dp2px(float dpValue) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue,
                 context.getResources().getDisplayMetrics());
+    }
+
+    public static void logCurThread(String tag) {
+        LogUtil.d("当前线程", tag + (Looper.myLooper() == Looper.getMainLooper() ? "主线程" : "工作线程"));
     }
 }

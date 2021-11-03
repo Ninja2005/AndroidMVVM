@@ -10,7 +10,6 @@ import java.io.File;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
@@ -33,11 +32,11 @@ public class BaseModel {
     //网络请求
     protected void sendRequest(Observable observable, HttpListener listener) {
         observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                //.observeOn(AndroidSchedulers.mainThread()) 在工作线程处理
                 .subscribe(new Observer<Object>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        if(compositeDisposable != null)
+                        if (compositeDisposable != null)
                             compositeDisposable.add(d);
                     }
 
@@ -54,7 +53,6 @@ public class BaseModel {
 
                     @Override
                     public void onComplete() {
-
                     }
                 });
     }
@@ -66,11 +64,11 @@ public class BaseModel {
                     FileUtil.writeFile(responseBody, file);
                     return file;
                 })
-                .observeOn(AndroidSchedulers.mainThread())
+                //.observeOn(AndroidSchedulers.mainThread()) 在工作线程处理
                 .subscribe(new Observer<Object>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        if(compositeDisposable != null)
+                        if (compositeDisposable != null)
                             compositeDisposable.add(d);
                     }
 
@@ -94,7 +92,7 @@ public class BaseModel {
 
     //主动解除所有订阅者
     protected void dispose() {
-        if(compositeDisposable != null) {
+        if (compositeDisposable != null) {
             compositeDisposable.dispose();
             compositeDisposable = null;
         }
