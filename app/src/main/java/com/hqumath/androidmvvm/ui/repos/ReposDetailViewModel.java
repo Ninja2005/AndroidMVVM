@@ -48,8 +48,8 @@ public class ReposDetailViewModel extends BaseViewModel {
             public void onSuccess(Object object) {
                 ReposEntity data = (ReposEntity) object;
                 avatar_url = data.getOwner().getAvatar_url();
-                description.setValue(data.getDescription());
-                fullName.setValue(data.getFull_name());
+                description.postValue(data.getDescription());
+                fullName.postValue(data.getFull_name());
                 //时间格式化
                 String date = data.getCreated_at();//2011-12-29T04:45:11Z
                 date = date.replace("Z", " UTC");//UTC是世界标准时间
@@ -58,20 +58,20 @@ public class ReposDetailViewModel extends BaseViewModel {
                 try {
                     Date date1 = format1.parse(date);
                     String date2 = format2.format(date1);
-                    createdAt.setValue(date2);
+                    createdAt.postValue(date2);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 String info = String.format(Locale.getDefault(), "Language %s, size %s",
                         data.getLanguage(), StringUtil.getSizeString(data.getSize() * 1024));
-                languageSize.setValue(info);
-                reposResultCode.setValue("0");
+                languageSize.postValue(info);
+                reposResultCode.postValue("0");
             }
 
             @Override
             public void onError(String errorMsg, String code) {
                 reposResultMsg = errorMsg;
-                reposResultCode.setValue(code);
+                reposResultCode.postValue(code);
             }
         });
     }
@@ -96,14 +96,14 @@ public class ReposDetailViewModel extends BaseViewModel {
                     commitData.addAll(list);
                 commitRefresh = isRefresh;
                 commitNewEmpty = list.isEmpty();
-                commitResultCode.setValue("0");
+                commitResultCode.postValue("0");
             }
 
             @Override
             public void onError(String errorMsg, String code) {
                 commitResultMsg = errorMsg;
                 commitRefresh = isRefresh;
-                commitResultCode.setValue(code);
+                commitResultCode.postValue(code);
             }
         });
     }

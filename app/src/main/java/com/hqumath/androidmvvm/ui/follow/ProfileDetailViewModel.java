@@ -48,7 +48,7 @@ public class ProfileDetailViewModel extends BaseViewModel {
             public void onSuccess(Object object) {
                 UserInfoEntity data = (UserInfoEntity) object;
                 avatar_url = data.getAvatar_url();
-                location.setValue(data.getLocation());
+                location.postValue(data.getLocation());
                 //时间格式化
                 String date = data.getCreated_at();//2011-12-29T04:45:11Z
                 date = date.replace("Z", " UTC");//UTC是世界标准时间
@@ -57,21 +57,21 @@ public class ProfileDetailViewModel extends BaseViewModel {
                 try {
                     Date date1 = format1.parse(date);
                     String date2 = format2.format(date1);
-                    created_at.setValue(date2);
+                    created_at.postValue(date2);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                name.setValue(data.getName());
-                company.setValue(data.getCompany());
-                email.setValue(data.getEmail());
-                blog.setValue(data.getBlog());
-                userInfoResultCode.setValue("0");
+                name.postValue(data.getName());
+                company.postValue(data.getCompany());
+                email.postValue(data.getEmail());
+                blog.postValue(data.getBlog());
+                userInfoResultCode.postValue("0");
             }
 
             @Override
             public void onError(String errorMsg, String code) {
                 userInfoResultMsg = errorMsg;
-                userInfoResultCode.setValue(code);
+                userInfoResultCode.postValue(code);
             }
         });
     }

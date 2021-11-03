@@ -66,14 +66,14 @@ public class ReposViewModel extends BaseViewModel {
                     myReposData.addAll(list);
                 myReposRefresh = isRefresh;
                 myReposNewEmpty = list.isEmpty();
-                myReposResultCode.setValue("0");
+                myReposResultCode.postValue("0");
             }
 
             @Override
             public void onError(String errorMsg, String code) {
                 myReposResultMsg = errorMsg;
                 myReposRefresh = isRefresh;
-                myReposResultCode.setValue(code);
+                myReposResultCode.postValue(code);
             }
         });
     }
@@ -99,14 +99,14 @@ public class ReposViewModel extends BaseViewModel {
                     starredData.addAll(list);
                 starredRefresh = isRefresh;
                 starredNewEmpty = list.isEmpty();
-                starredResultCode.setValue("0");
+                starredResultCode.postValue("0");
             }
 
             @Override
             public void onError(String errorMsg, String code) {
                 starredResultMsg = errorMsg;
                 starredRefresh = isRefresh;
-                starredResultCode.setValue(code);
+                starredResultCode.postValue(code);
             }
         });
     }

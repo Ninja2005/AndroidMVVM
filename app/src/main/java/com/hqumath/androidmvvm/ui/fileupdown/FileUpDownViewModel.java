@@ -36,16 +36,16 @@ public class FileUpDownViewModel extends BaseViewModel {
         ((MyModel) mModel).download(url, file, new DownloadListener() {
             @Override
             public void onSuccess(Object object) {
-                isDownloading.setValue(false);
+                isDownloading.postValue(false);
                 downloadResultData = (File) object;
-                downloadResultCode.setValue("0");
+                downloadResultCode.postValue("0");
             }
 
             @Override
             public void onError(String errorMsg, String code) {
-                isDownloading.setValue(false);
+                isDownloading.postValue(false);
                 downloadResultMsg = errorMsg;
-                downloadResultCode.setValue(code);
+                downloadResultCode.postValue(code);
             }
 
             @Override
@@ -61,16 +61,16 @@ public class FileUpDownViewModel extends BaseViewModel {
         ((MyModel) mModel).upload(key, file, new HttpListener() {
             @Override
             public void onSuccess(Object object) {
-                isLoading.setValue(false);
+                isLoading.postValue(false);
                 uploadResultData = object;
-                uploadResultCode.setValue("0");
+                uploadResultCode.postValue("0");
             }
 
             @Override
             public void onError(String errorMsg, String code) {
-                isLoading.setValue(false);
+                isLoading.postValue(false);
                 uploadResultMsg = errorMsg;
-                uploadResultCode.setValue(code);
+                uploadResultCode.postValue(code);
             }
         });
     }

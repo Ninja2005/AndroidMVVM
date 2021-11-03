@@ -59,14 +59,14 @@ public class FollowersViewModel extends BaseViewModel {
                     mData.addAll(list);
                 followersRefresh = isRefresh;
                 followersNewEmpty = list.isEmpty();
-                followersResultCode.setValue("0");
+                followersResultCode.postValue("0");
             }
 
             @Override
             public void onError(String errorMsg, String code) {
                 followersResultMsg = errorMsg;
                 followersRefresh = isRefresh;
-                followersResultCode.setValue(code);
+                followersResultCode.postValue(code);
             }
         });
     }
