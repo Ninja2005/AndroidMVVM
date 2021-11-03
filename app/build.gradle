@@ -43,13 +43,16 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.2.0'
+    //lifecycle
     def lifecycle_version = "2.4.0-rc01"
-    // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
-    // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
-    // Lifecycles only (without ViewModel or LiveData)
     implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+    //room
+    def room_version = "2.3.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    //implementation "androidx.room:room-paging:2.4.0-beta01"
 
     //rxjava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
@@ -73,9 +76,5 @@ dependencies {
     //内存泄漏
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
-//    //room
-//    implementation "androidx.room:room-runtime:2.2.1"
-//    annotationProcessor "androidx.room:room-compiler:2.2.1"
-//    //paging
-//    implementation "androidx.paging:paging-runtime:2.1.0"
+
 }

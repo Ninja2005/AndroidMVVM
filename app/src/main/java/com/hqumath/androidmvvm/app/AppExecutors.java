@@ -33,6 +33,21 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 public class AppExecutors {
 
+    //双重校验锁
+    /*private volatile static AppExecutors sInstance;
+
+    public static AppExecutors getInstance() {
+        if (sInstance == null) {
+            synchronized (AppExecutors.class) {
+                if (sInstance == null) {
+                    sInstance = new AppExecutors();
+                }
+            }
+        }
+        return sInstance;
+    }*/
+
+    //静态内部类
     private static class AppExecutorsHolder {
         private static final AppExecutors instance = new AppExecutors();
     }

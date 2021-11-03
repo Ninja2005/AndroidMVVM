@@ -1,5 +1,8 @@
 package com.hqumath.androidmvvm.bean;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * ****************************************************************
  * 文件名称: UserInfoEntity
@@ -10,8 +13,10 @@ package com.hqumath.androidmvvm.bean;
  * 版权声明:
  * ****************************************************************
  */
+//@Entity(primaryKeys = {"firstName", "lastName"}) 复合主键
+//@Entity(ignoredColumns = "picture") 忽略父类字段，不持久化
+@Entity(tableName = "user_info")
 public class UserInfoEntity {
-
     /**
      * login : Ninja2005
      * id : 13248087
@@ -45,9 +50,12 @@ public class UserInfoEntity {
      * created_at : 2015-07-09T03:14:55Z
      * updated_at : 2019-07-16T07:36:40Z
      */
-
     private String login;
+    //@PrimaryKey(autoGenerate = true) 自动ID分配
+    @PrimaryKey
     private int id;
+    //@ColumnInfo(name = "login_name") 改名
+    //@Ignore 忽略字段，不持久化
     private String node_id;
     private String avatar_url;
     private String gravatar_id;
