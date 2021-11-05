@@ -53,6 +53,10 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     //implementation "androidx.room:room-paging:2.4.0-beta01"
+    //paging 2=>3 升级，大刀阔斧很多API改变了，稳定后再用吧，暂不处理显示大数据集（本地数据库和网络）的问题
+    //def paging_version = "3.0.1"
+    //implementation "androidx.paging:paging-runtime:$paging_version"
+    //implementation "androidx.paging:paging-compose:1.0.0-alpha14"
 
     //rxjava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
