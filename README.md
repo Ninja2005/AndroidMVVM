@@ -35,7 +35,7 @@ Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+Vie
    	4. 使用androidx
    	5. 不使用kotlin
 
-- **Paging组件**
+- **Room组件**
 
     1. 实现了Network only 和 Network & database 两种模式
 
