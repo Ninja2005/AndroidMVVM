@@ -13,6 +13,9 @@ import com.hqumath.androidmvvm.bean.UserInfoEntity;
 import com.hqumath.androidmvvm.databinding.FragmentFollowersBinding;
 import com.hqumath.androidmvvm.utils.CommonUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * ****************************************************************
  * 文件名称: FollowersFragment
@@ -46,19 +49,22 @@ public class FollowersFragment extends BaseFragment {
     protected void initData() {
         viewModel = new ViewModelProvider(requireActivity()).get(FollowersViewModel.class);
 
-        recyclerAdapter = new MyRecyclerAdapters.FollowRecyclerAdapter(mContext, viewModel.mData);
+        recyclerAdapter = new MyRecyclerAdapters.FollowRecyclerAdapter(mContext, new ArrayList<>());
         recyclerAdapter.setOnItemClickListener((v, position) -> {
-            UserInfoEntity data = viewModel.mData.get(position);
-             startActivity(ProfileDetailActivity.getStartIntent(mContext, data.getLogin()));
+            List<UserInfoEntity> list = viewModel.mData.getValue();
+            if (list != null && list.size() > position) {
+                UserInfoEntity data = list.get(position);
+                startActivity(ProfileDetailActivity.getStartIntent(mContext, data.getLogin()));
+            }
         });
         binding.recyclerView.setAdapter(recyclerAdapter);
     }
 
     @Override
     protected void initViewObservable() {
+        //根据请求调整UI
         viewModel.followersResultCode.observe(this, code -> {
             if (code.equals("0")) {
-                recyclerAdapter.notifyDataSetChanged();
                 if (viewModel.followersRefresh) {
                     if (viewModel.followersNewEmpty) {
                         binding.refreshLayout.finishRefreshWithNoMoreData();//上拉加载功能将显示没有更多数据
@@ -80,7 +86,12 @@ public class FollowersFragment extends BaseFragment {
                     binding.refreshLayout.finishLoadMore(false);
                 }
             }
-            binding.emptyLayout.llEmpty.setVisibility(viewModel.mData.isEmpty() ? View.VISIBLE : View.GONE);
+        });
+        //根据数据库刷新列表
+        viewModel.mData.observe(this, list -> {
+            recyclerAdapter.setData(list);
+            recyclerAdapter.notifyDataSetChanged();
+            binding.emptyLayout.llEmpty.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
         });
     }
 

@@ -38,6 +38,8 @@ Android MVVM是一款基于MVVM框架，以Jetpack组件DataBinding+LiveData+Vie
 - **Paging组件**
 
     1. 实现了Network only 和 Network & database 两种模式
+    (仅 FollowersFragment 使用 Room 持久化存储列表数据，Network => DB => LiveData => RecyclerView)
+    
     ![](./img/paging.png)
 
 ## 界面

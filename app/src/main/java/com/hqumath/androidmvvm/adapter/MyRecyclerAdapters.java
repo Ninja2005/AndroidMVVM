@@ -26,6 +26,10 @@ public class MyRecyclerAdapters {
             super(context, mData, R.layout.recycler_item_followers);
         }
 
+        public void setData(List<UserInfoEntity> list) {
+            this.mData = list;
+        }
+
         @Override
         public void convert(BaseRecyclerViewHolder holder, int position) {
             UserInfoEntity data = mData.get(position);
