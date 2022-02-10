@@ -18,7 +18,7 @@ import com.hqumath.androidmvvm.utils.CommonUtil;
  * 版权声明:
  * ****************************************************************
  */
-@Database(entities = {UserInfoEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {UserInfoEntity.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static class AppDataBaseHolder {
         private static final AppDatabase instance =
